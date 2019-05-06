@@ -167,6 +167,7 @@ return [
          */
         Silber\Bouncer\BouncerServiceProvider::class,
         Ixudra\Curl\CurlServiceProvider::class,
+        Sentry\Laravel\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -231,6 +232,7 @@ return [
          */
         'Bouncer' => Silber\Bouncer\BouncerFacade::class,
         'Curl'          => Ixudra\Curl\Facades\Curl::class,
+        'Sentry' => Sentry\Laravel\Facade::class,
 
     ],
 
