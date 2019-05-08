@@ -17,12 +17,20 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/settings', 'SettingsController@index')->name('settings');
-Route::get('/batman', 'SettingsController@admin_menu')->name('admin-settings');
+    Route::get('/settings', 'SettingsController@index')->name('settings');
 
-Route::get('/reports', 'ReportingController@index')->name('reporting');
-Route::get('/live-tracking', 'ReportingController@tracking_menu')->name('live-tracking');
+    Route::group(['prefix' => 'batman'], function () {
+        Route::get('/', 'SettingsController@admin_menu')->name('admin-settings');
+        Route::get('/records', 'SettingsController@admin_records_mgnt')->name('admin-records-mgnt');
+        Route::get('/records/{uuid}', 'SettingsController@admin_get_records_repo_links')->name('admin-records-get-repo-links');
+        Route::get('/records/{uuid}/{repo}', 'SettingsController@admin_show_records_repo')->name('admin-records-get-repo-links');
+    });
+
+    Route::get('/reports', 'ReportingController@index')->name('reporting');
+    Route::get('/live-tracking', 'ReportingController@tracking_menu')->name('live-tracking');
+});
 
 
