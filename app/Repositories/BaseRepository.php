@@ -53,7 +53,7 @@ class BaseRepository implements RepoInterface
     }
 
     // Set the associated model
-    public function setModel($model)
+    private function setModel($model)
     {
         $this->model = $model;
         return $this;

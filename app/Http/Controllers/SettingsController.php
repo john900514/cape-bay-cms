@@ -68,10 +68,6 @@ class SettingsController extends Controller
 
             if($client_module)
             {
-                /**
-                 * High Level Steps to complete
-                 * 3. Send back an array of uuid keys with array elements of repo_name & url
-                 */
                 $repos = $client_module->getModuleRepos();
 
                 if($repos && is_array($repos) && count($repos) > 0)

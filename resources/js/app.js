@@ -25,6 +25,9 @@ Vue.component('records-repo-view-component', require('./components/RecordsRepoVi
 Vue.component('database-record-view-component', require('./components/dbViews/databaseView.vue').default);
 Vue.component('data-report-view-component', require('./components/dbViews/databaseView.vue').default);
 
+Vue.component('reporting-view-component', require('./components/reportingViewComponent.vue').default);
+Vue.component('reporting-report-component', require('./components/reportingReportComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

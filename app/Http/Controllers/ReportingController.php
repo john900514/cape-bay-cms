@@ -19,7 +19,9 @@ class ReportingController extends Controller
 
     public function index()
     {
-        $args = [];
+        $args = [
+            'module' => 'default'
+        ];
 
         $clients = $this->client_svc->getAllClients();
         $final_clients = [];
@@ -29,6 +31,77 @@ class ReportingController extends Controller
         }
 
         $args['clients'] = array_merge(['Select a Client'], $final_clients);
+
+        return view('reporting.reportsdash', $args);
+    }
+
+    public function get_client_reports($uuid)
+    {
+        $results = ['success' => false, 'reason' => 'Unknown Client UUID'];
+
+        $client = $this->client_svc->getClient($uuid);
+
+        // The UUID needs to be a valid record or fail
+        if($client)
+        {
+            $client_module = $this->client_svc->getClientDataModule($uuid);
+
+            if($client_module)
+            {
+                // @todo - use the $client_module to get a list of available reports.
+                $reports = $client_module->getModuleReports();
+
+                if($reports && is_array($reports) && count($reports) > 0)
+                {
+                    $results = [
+                        'success' => true,
+                        'reports' => $reports
+                    ];
+                }
+                else
+                {
+                    $results['reason'] = 'No reports available';
+                }
+            }
+            else
+            {
+                $results['reason'] = 'Missing Client Module. Ask your dev, what\'s really good.';
+            }
+        }
+
+        return response($results, 200);
+
+    }
+
+    public function get_client_report($uuid, $report)
+    {
+        $args = [
+            'module' => 'showReport',
+            'report' => []
+        ];
+
+        $client = $this->client_svc->getClient($uuid);
+
+        // The UUID needs to be a valid record or fail
+        if($client)
+        {
+            $client_module = $this->client_svc->getClientDataModule($uuid);
+
+            if($client_module)
+            {
+                // @todo - use the $client_module to get a list of available reports.
+                $reportResults = $client_module->getModuleReport($report);
+
+                if($reportResults && is_array($reportResults) && count($reportResults) > 0)
+                {
+                    $args['report'] = $reportResults;
+                }
+            }
+            else
+            {
+                $results['reason'] = 'Missing Client Module. Ask your dev, what\'s really good.';
+            }
+        }
 
         return view('reporting.reportsdash', $args);
     }

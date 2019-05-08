@@ -2,16 +2,27 @@
 
 namespace App\Modules;
 
+use App\Repositories\BaseRepository;
+use App\ExternalModels\TruFit\mySQL\Leads;
 use App\ExternalModels\TruFit\mySQL\Stores;
 use App\ExternalModels\TruFit\pgSQL\Locations;
 
 class TruFitDataModule {
 
     protected $client_id = '43d798ee-3247-4749-90a4-346b41d3e745';
+    protected $truFitRepo;
 
     public function __construct()
     {
-
+        $this->truFitRepo = [
+            'web' => [
+                'stores' => new BaseRepository(new Stores()),
+                'leads' => new BaseRepository(new Leads())
+            ],
+            'mobile' => [
+                'locations' => new BaseRepository(new Locations())
+            ]
+        ];
     }
 
     public function getModuleRepos()
@@ -41,6 +52,79 @@ class TruFitDataModule {
                     }
 
                 }
+                break;
+
+            default:
+                $results = false;
+        }
+
+        return $results;
+    }
+
+    public function getModuleReports()
+    {
+        // @todo - be sure to hardcode this
+        return [
+            [
+                'uuid' => 'dfc1108f-f556-4255-afff-6cce4b99c57e',
+                'name' => 'Payment Form Leads',
+                'url' => "reports/{$this->client_id}/payment-leads"
+            ],
+            [
+                'uuid' => 'd5405adc-952a-48a0-a0d8-47cfcdd88f8d',
+                'name' => 'Payment Form Conversions',
+                'url' => "reports/{$this->client_id}/payment-conversions"
+            ],
+            [
+                'uuid' => '1bd6e4b3-2940-405a-aac9-5432d5199feb',
+                'name' => 'Buddy Referral Leads',
+                'url' => "reports/{$this->client_id}/referral-leads"
+            ],
+        ];
+    }
+
+    public function getModuleReport($uuid)
+    {
+        // @todo - ugh, make this DB driven
+        switch($uuid)
+        {
+            // Payment Form Leads
+            case 'dfc1108f-f556-4255-afff-6cce4b99c57e':
+            case 'payment-leads':
+                $results = [
+                    'name' => 'Payment Form Leads',
+                    'results' => []
+                ];
+
+                $report = $this->truFitRepo['web']['leads']->all();
+
+                if(count($report) > 0)
+                {
+                    foreach($report->toArray() as $idx => $r)
+                    {
+                        $r['plan_info'] = json_decode($r['plan_info'], true);
+                        $results['results'][$idx] = $r;
+                    }
+                }
+
+                break;
+
+            // Payment Form Conversions
+            case 'd5405adc-952a-48a0-a0d8-47cfcdd88f8d':
+            case 'payment-conversions':
+                $results = [
+                    'name' => 'Payment Form Conversions',
+                    'results' => []
+                ];
+                break;
+
+            //Buddy Referral Leads
+            case '1bd6e4b3-2940-405a-aac9-5432d5199feb':
+            case 'referral-leads':
+                $results = [
+                    'name' => 'Buddy Referral Leads',
+                    'results' => []
+                ];
                 break;
 
             default:

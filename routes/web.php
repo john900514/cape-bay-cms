@@ -29,7 +29,13 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/records/{uuid}/{repo}', 'SettingsController@admin_show_records_repo')->name('admin-records-get-repo-links');
     });
 
-    Route::get('/reports', 'ReportingController@index')->name('reporting');
+    Route::group(['prefix' => 'reports'], function () {
+        Route::get('/', 'ReportingController@index')->name('reporting');
+        Route::get('/{uuid}', 'ReportingController@get_client_reports')->name('get-client-reports');
+        Route::get('/{uuid}/{report}', 'ReportingController@get_client_report')->name('get-client-reports');
+    });
+
+
     Route::get('/live-tracking', 'ReportingController@tracking_menu')->name('live-tracking');
 });
 
