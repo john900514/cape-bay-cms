@@ -42,6 +42,11 @@ class UserMgntService
         return $this->menu_repo->getMenuOptions('dash', $roles);
     }
 
+    public function getAdminMenuOptions(array $roles)
+    {
+        return $this->menu_repo->getMenuOptions('admin', $roles);
+    }
+
     public function getLiveTrackMenuOptions(array $roles)
     {
         return $this->menu_repo->getMenuOptions('live-tracking', $roles);

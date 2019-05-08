@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Bouncer;
+use App\Modules\TruFitDataModule;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\ClientRepository;
 use App\Repositories\ClientFeaturesRepo;
@@ -44,5 +45,25 @@ class ClientMgntService
     public function getAllFeaturesForClient($page, $client_id)
     {
         return $this->features_repo->getClientFeatures($client_id, $page);
+    }
+
+    public function getClient($uuid)
+    {
+        return $this->clients_repo->getClientviaUUID($uuid);
+    }
+
+    public function getClientDataModule($client_uuid)
+    {
+        $results = false;
+
+        //@todo - make this hardcoded
+        switch($client_uuid)
+        {
+            case '43d798ee-3247-4749-90a4-346b41d3e745':
+                $results = new TruFitDataModule();
+                break;
+        }
+
+        return $results;
     }
 }

@@ -17,4 +17,20 @@ class ClientRepository
     {
         return $this->clients->all();
     }
+
+    public function getClientviaUUID($uuid)
+    {
+        $results = false;
+
+        $record = $this->clients->getModel()
+            ->where('uuid','=', $uuid)
+            ->first();
+
+        if(!is_null($record))
+        {
+            $results = $record;
+        }
+
+        return $results;
+    }
 }
