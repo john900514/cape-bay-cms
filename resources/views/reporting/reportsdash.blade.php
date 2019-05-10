@@ -3,7 +3,7 @@
 @section('head-styles')
     <style>
         .card-header {
-            background-color: lightslategrey;
+            background-color: lightslategrey !important;
             color: white;
         }
 

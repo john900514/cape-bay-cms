@@ -10,16 +10,7 @@
                             <div class="some-other-feature"></div>
 
                             <div id="reportTableWrapper">
-                                <table v-if="('results' in reportData) && ('0' in reportData['results'])">
-                                    <thead>
-                                    <th v-for="(colVal, colName) in reportData['results'][0]" v-if="validColumn(colName) === true">{{ colName }}</th>
-                                    </thead>
-                                    <tbody>
-                                    <tr v-for="(rowski, idx) in reportData['results']">
-                                        <td v-for="(v, c) in rowski" v-if="validColumn(c) === true">{{ c === 'id' ? parseInt(idx + 1) : v }}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <b-table v-if="('results' in reportData) && ('0' in reportData['results'])" striped hover :items="reportData['results']" :fields="fields"></b-table>
                             </div>
 
                             <div class="some-other-feature"></div>
@@ -38,7 +29,45 @@
         props: ['resultdata'],
         data() {
             return {
-                reportData: {}
+                reportData: {},
+                fields: [
+                    {
+                        key: '#',
+                        sortable: true
+                    },
+                    {
+                        key: 'First Name',
+                        sortable: true
+                    },
+                    {
+                        key: 'Last Name',
+                        sortable: true
+                    },
+                    {
+                        key: 'Club',
+                        sortable: true
+                    },
+                    {
+                        key: 'Plan',
+                        sortable: true
+                    },
+                    {
+                        key: 'Contract Price',
+                        sortable: true
+                    },
+                    {
+                        key: 'PromoCode',
+                        sortable: true
+                    },
+                    {
+                        key: 'Captured',
+                        sortable: true
+                    },
+                    {
+                        key: 'Abandoned',
+                        sortable: true
+                    },
+                ]
             };
         },
         computed: {},

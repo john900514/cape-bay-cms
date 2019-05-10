@@ -102,8 +102,20 @@ class TruFitDataModule {
                 {
                     foreach($report->toArray() as $idx => $r)
                     {
-                        $r['plan_info'] = json_decode($r['plan_info'], true);
-                        $results['results'][$idx] = $r;
+                        $plan_info = json_decode($r['plan_info'], true);
+                        $scout = [
+                            '#' => $idx,
+                            'First Name' => $r['first_name'],
+                            'Last Name' => $r['last_name'],
+                            'Club' => $r['paramount_club_id'],
+                            'Plan' => $plan_info['Description'],
+                            'Contract Price' => $plan_info['ContractPrice'],
+                            'PromoCode' => $plan_info['PromoCode'],
+                            'Captured' => $r['created_at'],
+                            'Abandoned' => $r['abandoned'] === 1
+                        ];
+
+                        $results['results'][$idx] = $scout;
                     }
                 }
 
