@@ -6,6 +6,7 @@ use App\Repositories\BaseRepository;
 use App\ExternalModels\TruFit\mySQL\Leads;
 use App\ExternalModels\TruFit\mySQL\Stores;
 use App\ExternalModels\TruFit\pgSQL\Locations;
+use App\ExternalModels\TruFit\mySQL\Conversions;
 
 class TruFitDataModule {
 
@@ -17,7 +18,8 @@ class TruFitDataModule {
         $this->truFitRepo = [
             'web' => [
                 'stores' => new BaseRepository(new Stores()),
-                'leads' => new BaseRepository(new Leads())
+                'leads' => new BaseRepository(new Leads()),
+                'conversions' => new BaseRepository((new Conversions()))
             ],
             'mobile' => [
                 'locations' => new BaseRepository(new Locations())
@@ -93,7 +95,46 @@ class TruFitDataModule {
             case 'payment-leads':
                 $results = [
                     'name' => 'Payment Form Leads',
-                    'results' => []
+                    'results' => [],
+                    'fields' => [
+                        [
+                            'key'=> '#',
+                            'sortable'=> true
+                        ],
+                        [
+                            'key' => 'First Name',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'Last Name',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'Club',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'Plan',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'Contract Price',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'PromoCode',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'Captured',
+                            'sortable' => true
+                        ],
+                        [
+
+                            'key' => 'Abandoned',
+                            'sortable' => true
+                        ]
+                    ]
                 ];
 
                 $report = $this->truFitRepo['web']['leads']->all();
@@ -104,7 +145,7 @@ class TruFitDataModule {
                     {
                         $plan_info = json_decode($r['plan_info'], true);
                         $scout = [
-                            '#' => $idx,
+                            '#' => $idx + 1,
                             'First Name' => $r['first_name'],
                             'Last Name' => $r['last_name'],
                             'Club' => $r['paramount_club_id'],
@@ -126,8 +167,66 @@ class TruFitDataModule {
             case 'payment-conversions':
                 $results = [
                     'name' => 'Payment Form Conversions',
-                    'results' => []
+                    'results' => [],
+                    'fields' => [
+                        [
+                            'key'=> 'Contract #',
+                            'sortable'=> true
+                        ],
+                        [
+                            'key' => 'First Name',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'Last Name',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'Club',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'Plan',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'Down Payment',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'PromoCode',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'Enrolled On',
+                            'sortable' => true
+                        ],
+                    ]
                 ];
+
+            $report = $this->truFitRepo['web']['conversions']->getModel()
+                ->with('lead')
+                ->get();
+
+            if(count($report) > 0)
+            {
+                foreach($report->toArray() as $idx => $r)
+                {
+                    $plan_info = json_decode($r['lead']['plan_info'], true);
+                    $scout = [
+                        'Contract #' => $r['ContractNumber'],
+                        'First Name' => $r['lead']['first_name'],
+                        'Last Name' => $r['lead']['last_name'],
+                        'Club' => $r['lead']['paramount_club_id'],
+                        'Plan' => $plan_info['Description'],
+                        'Down Payment' => '$'.$plan_info['DownPayment'],
+                        'PromoCode' => $plan_info['PromoCode'],
+                        'Enrolled On' => $r['created_at']
+                    ];
+
+                    $results['results'][$idx] = $scout;
+                }
+            }
                 break;
 
             //Buddy Referral Leads

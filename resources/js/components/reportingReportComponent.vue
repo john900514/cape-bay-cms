@@ -10,7 +10,13 @@
                             <div class="some-other-feature"></div>
 
                             <div id="reportTableWrapper">
-                                <b-table v-if="('results' in reportData) && ('0' in reportData['results'])" striped hover :items="reportData['results']" :fields="fields"></b-table>
+                                <b-table
+                                    v-if="('results' in reportData) && ('0' in reportData['results'])"
+                                    striped
+                                    hover
+                                    :items="reportData['results']"
+                                    :fields="reportData['fields']">
+                                </b-table>
                             </div>
 
                             <div class="some-other-feature"></div>
@@ -30,44 +36,7 @@
         data() {
             return {
                 reportData: {},
-                fields: [
-                    {
-                        key: '#',
-                        sortable: true
-                    },
-                    {
-                        key: 'First Name',
-                        sortable: true
-                    },
-                    {
-                        key: 'Last Name',
-                        sortable: true
-                    },
-                    {
-                        key: 'Club',
-                        sortable: true
-                    },
-                    {
-                        key: 'Plan',
-                        sortable: true
-                    },
-                    {
-                        key: 'Contract Price',
-                        sortable: true
-                    },
-                    {
-                        key: 'PromoCode',
-                        sortable: true
-                    },
-                    {
-                        key: 'Captured',
-                        sortable: true
-                    },
-                    {
-                        key: 'Abandoned',
-                        sortable: true
-                    },
-                ]
+                fields: []
             };
         },
         computed: {},

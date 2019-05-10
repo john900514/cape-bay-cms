@@ -2026,40 +2026,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "reportingReportComponent",
   props: ['resultdata'],
   data: function data() {
     return {
       reportData: {},
-      fields: [{
-        key: '#',
-        sortable: true
-      }, {
-        key: 'First Name',
-        sortable: true
-      }, {
-        key: 'Last Name',
-        sortable: true
-      }, {
-        key: 'Club',
-        sortable: true
-      }, {
-        key: 'Plan',
-        sortable: true
-      }, {
-        key: 'Contract Price',
-        sortable: true
-      }, {
-        key: 'PromoCode',
-        sortable: true
-      }, {
-        key: 'Captured',
-        sortable: true
-      }, {
-        key: 'Abandoned',
-        sortable: true
-      }]
+      fields: []
     };
   },
   computed: {},
@@ -66372,7 +66351,7 @@ var render = function() {
                           striped: "",
                           hover: "",
                           items: _vm.reportData["results"],
-                          fields: _vm.fields
+                          fields: _vm.reportData["fields"]
                         }
                       })
                     : _vm._e()
