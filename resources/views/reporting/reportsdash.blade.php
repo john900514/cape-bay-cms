@@ -10,6 +10,22 @@
         #clientSelect {
             text-align: center;
         }
+
+        .card-header > button {
+            background-color: Transparent;
+            background-repeat:no-repeat;
+            border: none;
+            cursor:pointer;
+            overflow: hidden;
+            outline:none;
+            font-size: 1.25em;
+            color: #fff;
+        }
+
+        .card-header > button .fal {
+            font-weight: 400 !important;
+
+        }
     </style>
 @endsection
 
