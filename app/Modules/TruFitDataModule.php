@@ -6,6 +6,7 @@ use App\Repositories\BaseRepository;
 use App\ExternalModels\TruFit\mySQL\Leads;
 use App\ExternalModels\TruFit\mySQL\Stores;
 use App\ExternalModels\TruFit\pgSQL\Locations;
+use App\ExternalModels\TruFit\mySQL\Referrals;
 use App\ExternalModels\TruFit\mySQL\Conversions;
 
 class TruFitDataModule {
@@ -19,7 +20,8 @@ class TruFitDataModule {
             'web' => [
                 'stores' => new BaseRepository(new Stores()),
                 'leads' => new BaseRepository(new Leads()),
-                'conversions' => new BaseRepository((new Conversions()))
+                'conversions' => new BaseRepository((new Conversions())),
+                'referrals' => new BaseRepository((new Referrals()))
             ],
             'mobile' => [
                 'locations' => new BaseRepository(new Locations())
@@ -234,8 +236,61 @@ class TruFitDataModule {
             case 'referral-leads':
                 $results = [
                     'name' => 'Buddy Referral Leads',
-                    'results' => []
+                    'results' => [],
+                    'fields' => [
+                        [
+                            'key'=> '#',
+                            'sortable'=> true
+                        ],
+                        [
+                            'key'=> 'ReferralName',
+                            'sortable'=> true
+                        ],
+                        [
+                            'key'=> 'BuddyFirst',
+                            'sortable'=> true
+                        ],
+                        [
+                            'key'=> 'BuddyLast',
+                            'sortable'=> true
+                        ],
+                        [
+                            'key'=> 'Club',
+                            'sortable'=> true
+                        ],
+                        [
+                            'key'=> 'Email',
+                            'sortable'=> true
+                        ],
+                        [
+                            'key'=> 'Mobile',
+                            'sortable'=> true
+                        ]
+                    ]
                 ];
+
+                $report = $this->truFitRepo['web']['referrals']->getModel()
+                    ->where('campaign', '=', 'buddy')
+                    ->get();
+
+                if(count($report) > 0)
+                {
+                    foreach($report->toArray() as $idx => $r)
+                    {
+                        $scout = [
+                            '#' => $idx + 1,
+                            'ReferralName' => $r['referral_name'],
+                            'BuddyFirst' => $r['first_name'],
+                            'BuddyLast' => $r['last_name'],
+                            'Club' => $r['club'],
+                            'Email' => $r['email'],
+                            'Mobile' => $r['mobile'],
+                        ];
+
+                        $results['results'][$idx] = $scout;
+                    }
+                }
+
                 break;
 
             default:
