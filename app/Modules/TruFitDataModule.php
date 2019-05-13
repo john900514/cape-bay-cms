@@ -218,9 +218,9 @@ class TruFitDataModule {
                         'First Name' => $r['lead']['first_name'],
                         'Last Name' => $r['lead']['last_name'],
                         'Club' => $r['lead']['paramount_club_id'],
-                        'Plan' => $plan_info['Description'],
-                        'Down Payment' => '$'.$plan_info['DownPayment'],
-                        'PromoCode' => $plan_info['PromoCode'],
+                        'Plan' => array_key_exists('Description', $plan_info) ? $plan_info['Description'] : 'N/A',
+                        'Down Payment' => array_key_exists('DownPayment', $plan_info) ? '$'.$plan_info['DownPayment'] : '$0.00',
+                        'PromoCode' => array_key_exists('PromoCode', $plan_info) ? $plan_info['PromoCode'] : 'unknown',
                         'Enrolled On' => $r['created_at']
                     ];
 
