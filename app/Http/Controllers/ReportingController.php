@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ClientMgntService;
 use Illuminate\Http\Request;
 use App\Services\UserMgntService;
+use App\Services\ClientMgntService;
 
 class ReportingController extends Controller
 {
@@ -48,7 +48,7 @@ class ReportingController extends Controller
 
             if($client_module)
             {
-                // @todo - use the $client_module to get a list of available reports.
+                // use the $client_module to get a list of available reports.
                 $reports = $client_module->getModuleReports();
 
                 if($reports && is_array($reports) && count($reports) > 0)
@@ -108,7 +108,9 @@ class ReportingController extends Controller
 
     public function tracking_menu()
     {
-        $args = [];
+        $args = [
+            'module' => 'default'
+        ];
 
         $clients = $this->client_svc->getAllClients(); // Get a list of all the clients the user can access;
 
@@ -130,4 +132,69 @@ class ReportingController extends Controller
 
         //$menu_options = $this->user_svc->getLiveTrackMenuOptions($user['roles']); // Get a list of all Live Track Options
     }
+
+    public function get_client_trackers($uuid)
+    {
+        $results = ['success' => false, 'reason' => 'Unknown Client UUID'];
+
+        $client = $this->client_svc->getClient($uuid);
+
+        if($client)
+        {
+            $client_module = $this->client_svc->getClientDataModule($uuid);
+
+            if($client_module)
+            {
+                // use the $client_module to get a list of available reports.
+                $trackers = $client_module->getModuleTrackers();
+
+                if($trackers && is_array($trackers) && count($trackers) > 0)
+                {
+                    $results = [
+                        'success' => true,
+                        'trackers' => $trackers
+                    ];
+                }
+                else
+                {
+                    $results['reason'] = 'No trackers available';
+                }
+            }
+            else
+            {
+                $results['reason'] = 'Missing Client Module. Ask your dev, what\'s really good.';
+            }
+        }
+
+        return response($results, 200);
+    }
+
+    public function get_client_tracker($uuid, $tracker)
+    {
+        $args = [
+            'module' => 'showTracker',
+            'tracker' => []
+        ];
+
+        $client = $this->client_svc->getClient($uuid);
+
+        if($client)
+        {
+            $client_module = $this->client_svc->getClientDataModule($uuid);
+
+            if($client_module)
+            {
+                $trackerResults = $client_module->getModuleTracker($tracker);
+
+                if($trackerResults && is_array($trackerResults) && count($trackerResults) > 0)
+                {
+                    $args['tracker'] = $trackerResults;
+                }
+            }
+        }
+
+        return view('reporting.tracking', $args);
+    }
+
+
 }

@@ -32,11 +32,15 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'reports'], function () {
         Route::get('/', 'ReportingController@index')->name('reporting');
         Route::get('/{uuid}', 'ReportingController@get_client_reports')->name('get-client-reports');
-        Route::get('/{uuid}/{report}', 'ReportingController@get_client_report')->name('get-client-reports');
+        Route::get('/{uuid}/{report}', 'ReportingController@get_client_report')->name('get-client-report');
     });
 
+    Route::group(['prefix' => 'live-tracking'], function () {
+        Route::get('/', 'ReportingController@tracking_menu')->name('live-tracking');
+        Route::get('/{uuid}', 'ReportingController@get_client_trackers')->name('get-client-trackers');
+        Route::get('/{uuid}/{tracker}', 'ReportingController@get_client_tracker')->name('get-client-tracker');
+    });
 
-    Route::get('/live-tracking', 'ReportingController@tracking_menu')->name('live-tracking');
 });
 
 

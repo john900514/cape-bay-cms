@@ -33,6 +33,10 @@ Vue.component('data-report-view-component', require('./components/dbViews/databa
 Vue.component('reporting-view-component', require('./components/reportingViewComponent.vue').default);
 Vue.component('reporting-report-component', require('./components/reportingReportComponent.vue').default);
 
+Vue.component('livetracking-dash-component', require('./components/liveTracking/dashComponent.vue').default);
+Vue.component('livetracking-view-component', require('./components/liveTracking/viewComponent.vue').default);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

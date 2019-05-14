@@ -24,7 +24,6 @@
 
         .card-header > button .fal {
             font-weight: 400 !important;
-
         }
     </style>
 @endsection

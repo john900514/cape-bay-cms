@@ -92,6 +92,18 @@ class TruFitDataModule {
         ];
     }
 
+    public function getModuleTrackers()
+    {
+        // @todo - make this data driven
+        return [
+            [
+                'uuid' => 'dbccb3cc-840f-4cc9-a85e-e4f49374d4e6',
+                'name' => 'Payment Form Conversions',
+                'url' => "live-tracking/{$this->client_id}/payment-conversions"
+            ],
+        ];
+    }
+
     public function getModuleReport($uuid)
     {
         // @todo - ugh, make this DB driven
@@ -298,6 +310,7 @@ class TruFitDataModule {
 
                 break;
 
+            //Combo6 Leads
             case '1f354a17-040e-4603-b4eb-21694803e539':
             case 'combo6-leads':
                 $results = [
@@ -352,6 +365,25 @@ class TruFitDataModule {
                 }
             }
             break;
+
+            default:
+                $results = false;
+        }
+
+        return $results;
+    }
+
+    public function getModuleTracker($uuid)
+    {
+        switch($uuid)
+        {
+            case 'dbccb3cc-840f-4cc9-a85e-e4f49374d4e6':
+            case 'payment-conversions':
+                $results = [
+                    'name' => 'Payment Form Conversions (aka Total # of Enrollments)',
+                    'ping_url' => 'https://tfapi.capeandbay.com/members/conversions'
+                ];
+                break;
 
             default:
                 $results = false;
