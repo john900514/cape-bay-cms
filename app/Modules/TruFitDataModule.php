@@ -67,7 +67,7 @@ class TruFitDataModule {
 
     public function getModuleReports()
     {
-        // @todo - be sure to hardcode this
+        // @todo - be sure to make this db driven
         return [
             [
                 'uuid' => 'dfc1108f-f556-4255-afff-6cce4b99c57e',
@@ -83,6 +83,11 @@ class TruFitDataModule {
                 'uuid' => '1bd6e4b3-2940-405a-aac9-5432d5199feb',
                 'name' => 'Buddy Referral Leads',
                 'url' => "reports/{$this->client_id}/referral-leads"
+            ],
+            [
+                'uuid' => '1f354a17-040e-4603-b4eb-21694803e539',
+                'name' => 'Combo6 Referral Leads',
+                'url' => "reports/{$this->client_id}/combo6-leads"
             ],
         ];
     }
@@ -292,6 +297,61 @@ class TruFitDataModule {
                 }
 
                 break;
+
+            case '1f354a17-040e-4603-b4eb-21694803e539':
+            case 'combo6-leads':
+                $results = [
+                    'name' => 'Payment Form Leads',
+                    'results' => [],
+                    'fields' => [
+                        [
+                            'key'=> '#',
+                            'sortable'=> true
+                        ],
+                        [
+                            'key' => 'FirstName',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'LastName',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'Club',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'Email',
+                            'sortable' => true
+                        ],
+                        [
+                            'key' => 'Mobile',
+                            'sortable' => true
+                        ],
+                    ]
+                ];
+
+            $report = $this->truFitRepo['web']['referrals']->getModel()
+                ->where('campaign', '=', 'combo6')
+                ->get();
+
+            if(count($report) > 0)
+            {
+                foreach($report->toArray() as $idx => $r)
+                {
+                    $scout = [
+                        '#' => $idx + 1,
+                        'FirstName' => $r['first_name'],
+                        'LastName' => $r['last_name'],
+                        'Club' => $r['club'],
+                        'Email' => $r['email'],
+                        'Mobile' => $r['mobile'],
+                    ];
+
+                    $results['results'][$idx] = $scout;
+                }
+            }
+            break;
 
             default:
                 $results = false;
