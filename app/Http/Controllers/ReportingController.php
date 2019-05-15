@@ -173,7 +173,8 @@ class ReportingController extends Controller
     {
         $args = [
             'module' => 'showTracker',
-            'tracker' => []
+            'tracker' => [],
+            'soundFile' => env('APP_URL').'/mp3/ohyeah.wav'
         ];
 
         $client = $this->client_svc->getClient($uuid);

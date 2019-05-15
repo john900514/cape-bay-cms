@@ -13,9 +13,9 @@
 
                     <div class="card-body">
                         <div id="cardBodyContainer">
-
                             <h1 class="tracking-value">{{ trackedVal }}</h1>
 
+                            <button id="soundButton" @click.prevent="playSound(soundfile)" style="display:none;"></button>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
 <script>
     export default {
         name: "viewComponent",
-        props: ['trackerimport'],
+        props: ['trackerimport', 'soundfile'],
         data() {
             return {
                 tracker: {},
@@ -41,8 +41,17 @@
             },
             loadData: function loadData () {
                 $.get(this.tracker['ping_url'], function (response) {
+                    if(response.number > this.trackedVal && this.trackedVal !== 0)
+                    {
+                        $('#soundButton').click();
+                    }
+
                     this.trackedVal = response.number;
                 }.bind(this));
+            },
+            playSound: function playSound(url) {
+                let audio = new Audio(url);
+                audio.play();
             }
         },
         mounted: function () {

@@ -33,6 +33,6 @@
     @if($module == 'default')
         <livetracking-dash-component :clientele="{{ json_encode($clients) }}"></livetracking-dash-component>
     @elseif($module == 'showTracker')
-        <livetracking-view-component :trackerimport="{{ json_encode($tracker) }}"></livetracking-view-component>
+        <livetracking-view-component :trackerimport="{{ json_encode($tracker) }}" soundfile="{{ $soundFile }}"></livetracking-view-component>
     @endif
 @endsection
