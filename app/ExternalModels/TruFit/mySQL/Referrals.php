@@ -18,6 +18,8 @@ class Referrals extends Model
 
     protected static $logAttributes = ['uuid','referral_name', 'first_name', 'last_name', 'email', 'mobile', 'club'];
 
+    protected $fillable = ['referral_name', 'first_name', 'last_name', 'email', 'mobile', 'club', 'campaign'];
+
     public function insert($data)
     {
         $results = false;

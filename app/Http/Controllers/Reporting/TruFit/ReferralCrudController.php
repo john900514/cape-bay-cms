@@ -31,11 +31,48 @@ class ReferralCrudController extends CrudController
         | CrudPanel Configuration
         |--------------------------------------------------------------------------
         */
-
+        
         // TODO: remove setFromDb() and manually define Fields and Columns
         //$this->crud->setFromDb();
 
         $this->crud->setColumns([
+            [
+                'name' => 'campaign', // the db column name (attribute name)
+                'label' => 'Ref Campaign', // the human-readable label for it
+                'type' => 'text' // the kind of column to show
+            ],
+            [
+                'name' => 'club', // the db column name (attribute name)
+                'label' => 'Club', // the human-readable label for it
+                'type' => 'text' // the kind of column to show
+            ],
+            [
+                'name' => 'first_name', // the db column name (attribute name)
+                'label' => 'First', // the human-readable label for it
+                'type' => 'text' // the kind of column to show
+            ],
+            [
+                'name' => 'last_name', // the db column name (attribute name)
+                'label' => 'Last', // the human-readable label for it
+                'type' => 'text' // the kind of column to show
+            ],
+            [
+                'name' => 'email', // the db column name (attribute name)
+                'label' => 'Email', // the human-readable label for it
+                'type' => 'text' // the kind of column to show
+            ],
+            [
+                'name' => 'mobile', // the db column name (attribute name)
+                'label' => 'Phone', // the human-readable label for it
+                'type' => 'text' // the kind of column to show
+            ],
+            [
+                'name' => 'referral_name', // the db column name (attribute name)
+                'label' => 'Referred By', // the human-readable label for it
+                'type' => 'text' // the kind of column to show
+            ],
+        ]);
+        $this->crud->addFields([
             [
                 'name' => 'campaign', // the db column name (attribute name)
                 'label' => 'Ref Campaign', // the human-readable label for it
@@ -100,7 +137,7 @@ class ReferralCrudController extends CrudController
             $crus->addClause('where','campaign', $filter);
         };
 
-        if(array_key_exists('campaign', $req_vars))
+        if(array_key_exists('campaign', $req_vars) && $req_vars['campaign'] != 0)
         {
             $this->crud->addFilter($filt_args2, $valus, $callback($req_vars['campaign']));
         }
