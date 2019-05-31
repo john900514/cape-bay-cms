@@ -93,6 +93,44 @@ return [
             'schema' => env('TF_PGSQL_SCHEMA', 'public'),
             'sslmode' => 'prefer',
         ],
+
+        'f3mysql' => [
+            'driver' => 'mysql',
+            'host' => env('F3_MYSQL_HOST', '127.0.0.1'),
+            'port' => env('F3_MYSQL_PORT', '3306'),
+            'database' => env('F3_MYSQL_DATABASE', 'forge'),
+            'username' => env('F3_MYSQL_USERNAME', 'forge'),
+            'password' => env('F3_MYSQL_PASSWORD', ''),
+            'unix_socket' => env('F3_MYSQL_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+        'mfmysql' => [
+            'driver' => 'mysql',
+            'host' => env('F3_MYSQL_HOST', '127.0.0.1'),
+            'port' => env('F3_MYSQL_PORT', '3306'),
+            'database' => env('F3_MYSQL_DATABASE', 'forge'),
+            'username' => env('F3_MYSQL_USERNAME', 'forge'),
+            'password' => env('F3_MYSQL_PASSWORD', ''),
+            'unix_socket' => env('F3_MYSQL_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         /*
         'sqlsrv' => [
             'driver' => 'sqlsrv',

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Reporting\TruFit;
+namespace App\Http\Controllers\Reporting\Fitness360;
 
 use App\Services\UserMgntService;
 use App\Http\Requests\ClientsRequest as UpdateRequest;
 use App\Http\Requests\ClientsRequest as StoreRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 
-class ConversionsCrudController extends CrudController
+class FBLeadsCrudController extends CrudController
 {
     protected $user_svc;
 
@@ -24,9 +24,9 @@ class ConversionsCrudController extends CrudController
         | CrudPanel Basic Information
         |--------------------------------------------------------------------------
         */
-        $this->crud->setModel('App\ExternalModels\TruFit\mySQL\Conversions');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/reports/trufit/payment-conversions');
-        $this->crud->setEntityNameStrings('conversion', 'conversions');
+        $this->crud->setModel('App\ExternalModels\Fitness360\mySQL\Leads');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/reports/fitness360/facebook-leads');
+        $this->crud->setEntityNameStrings('Facebook Lead', 'Facebook Leads');
 
         /*
         |--------------------------------------------------------------------------

@@ -27,7 +27,12 @@ class ReportingController extends Controller
         $final_clients = [];
         foreach($clients as $client)
         {
-            $final_clients[$client['uuid']] = $client['name'];
+            $features = $this->client_svc->getAllFeaturesForClient('reporting', $client['id']);
+
+            if(count($features) > 0)
+            {
+                $final_clients[$client['uuid']] = $client['name'];
+            }
         }
 
         $args['clients'] = array_merge(['Select a Client'], $final_clients);
@@ -46,7 +51,7 @@ class ReportingController extends Controller
         // The UUID needs to be a valid record or fail
         if($client)
         {
-            $client_module = $this->client_svc->getClientDataModule($uuid);
+            $client_module = $this->client_svc->getClientDataModule($uuid, $client);
 
             if($client_module)
             {

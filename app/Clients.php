@@ -29,4 +29,9 @@ class Clients extends Model
      */
     protected $hidden = [];
 
+    public function data_module()
+    {
+        return $this->hasOne('App\ClientDataModule', 'client_id', 'id');
+    }
+
 }

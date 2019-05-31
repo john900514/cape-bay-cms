@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Bouncer;
+use App\Clients;
 use App\Modules\TruFitDataModule;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\ClientRepository;
@@ -53,16 +54,26 @@ class ClientMgntService
         return $this->clients_repo->getClientviaUUID($uuid);
     }
 
-    public function getClientDataModule($client_uuid)
+    public function getClientDataModule($client_uuid, Clients $client = null)
     {
         $results = false;
 
-        //@todo - make this hardcoded
-        switch($client_uuid)
+        if($client)
         {
-            case '43d798ee-3247-4749-90a4-346b41d3e745':
-                $results = new TruFitDataModule();
-                break;
+            if($client_uuid != $client->uuid)
+            {
+                //@todo - get the proper client model;
+                $client = $client->where('uuid', '=', $client_uuid)->first();
+
+                if(is_null($client))
+                {
+                    return $results;
+                }
+            }
+
+            $data_module = $client->data_module()->first();
+
+            $results = new $data_module->module();
         }
 
         return $results;
