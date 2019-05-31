@@ -23,7 +23,7 @@ class ConversionsCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\ExternalModels\TruFit\mySQL\Conversions');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/reports/{uuid}/payment-conversions');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/reports/trufit/payment-conversions');
         $this->crud->setEntityNameStrings('conversion', 'conversions');
 
         /*

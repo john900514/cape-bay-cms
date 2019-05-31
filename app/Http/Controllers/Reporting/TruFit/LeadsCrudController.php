@@ -23,7 +23,7 @@ class LeadsCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\ExternalModels\TruFit\mySQL\Leads');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/reports/{uuid}/payment-leads');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/reports/trufit/payment-leads');
         $this->crud->setEntityNameStrings('lead', 'leads');
 
         /*

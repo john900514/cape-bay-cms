@@ -72,27 +72,27 @@ class TruFitDataModule {
             [
                 'uuid' => 'dfc1108f-f556-4255-afff-6cce4b99c57e',
                 'name' => 'Payment Form Leads',
-                'url' => "reports/{$this->client_id}/payment-leads"
+                'url' => "reports/trufit/payment-leads"
             ],
             [
                 'uuid' => 'd5405adc-952a-48a0-a0d8-47cfcdd88f8d',
                 'name' => 'Payment Form Conversions',
-                'url' => "reports/{$this->client_id}/payment-conversions"
+                'url' => "reports/trufit/payment-conversions"
             ],
             [
                 'uuid' => '1bd6e4b3-2940-405a-aac9-5432d5199feb',
                 'name' => 'Buddy Referral Leads',
-                'url' => "reports/{$this->client_id}/referral-leads?campaign=buddy"
+                'url' => "reports/trufit/referral-leads?campaign=buddy"
             ],
             [
                 'uuid' => '1f354a17-040e-4603-b4eb-21694803e539',
                 'name' => 'Combo6 Referral Leads',
-                'url' => "reports/{$this->client_id}/referral-leads/?campaign=combo6"
+                'url' => "reports/trufit/referral-leads/?campaign=combo6"
             ],
             [
                 'uuid' => '25af9b4c-3d5b-4bc9-9409-bf8a3c2522b7',
                 'name' => 'Summer Giveaway Referral Leads',
-                'url' => "reports/{$this->client_id}/referral-leads/?campaign=summer"
+                'url' => "reports/trufit/referral-leads/?campaign=summer"
             ],
         ];
     }

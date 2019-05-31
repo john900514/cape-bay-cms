@@ -33,9 +33,9 @@ Route::group([
         Route::get('/{uuid}', 'ReportingController@get_client_reports')->name('get-client-reports');
         //Route::get('/{uuid}/{report}', 'ReportingController@get_client_report')->name('get-client-report');
 
-        CRUD::resource('/{uuid}/payment-leads', 'Reporting\TruFit\LeadsCrudController');
-        CRUD::resource('/{uuid}/payment-conversions', 'Reporting\TruFit\ConversionsCrudController');
-        CRUD::resource('/{uuid}/referral-leads', 'Reporting\TruFit\ReferralCrudController');
+        CRUD::resource('/trufit/payment-leads', 'Reporting\TruFit\LeadsCrudController');
+        CRUD::resource('/trufit/payment-conversions', 'Reporting\TruFit\ConversionsCrudController');
+        CRUD::resource('/trufit/referral-leads', 'Reporting\TruFit\ReferralCrudController');
     });
 
     Route::group(['prefix' => 'live-tracking'], function () {
