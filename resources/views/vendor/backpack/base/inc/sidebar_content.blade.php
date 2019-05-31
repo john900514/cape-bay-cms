@@ -9,5 +9,5 @@
 @endif
 
 @foreach($menu_options as $order => $option)
-    <li><a href="{{ $option['route'] }}" {{ !is_null($option['onclick']) ? 'onclick='.$option['onclick'] : '' }}><i class="{{ $option['icon'] }}"></i> <span>{{ $option['name'] }}</span></a></li>
+    <li><a href="{{ backpack_url() .'/'. $option['route'] }}" {{ !is_null($option['onclick']) ? 'onclick='.$option['onclick'] : '' }}><i class="{{ $option['icon'] }}"></i> <span>{{ $option['name'] }}</span></a></li>
 @endforeach
