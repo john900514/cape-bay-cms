@@ -38,6 +38,8 @@ Route::group([
         CRUD::resource('/trufit/referral-leads', 'Reporting\TruFit\ReferralCrudController');
 
         CRUD::resource('/fitness360/facebook-leads', 'Reporting\Fitness360\FBLeadsCrudController');
+        CRUD::resource('/morning/payment-leads', 'Reporting\Morning\LeadsCrudController');
+        CRUD::resource('/morning/payment-conversions', 'Reporting\Morning\ConversionsCrudController');
     });
 
     Route::group(['prefix' => 'live-tracking'], function () {
