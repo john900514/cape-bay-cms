@@ -1,34 +1,21 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <button type="button" @click="goBack()"><i class="fal fa-arrow-square-left"></i></button>
-                        Live Tracking
-                    </div>
+    <div class="box-body">
+        <div id="clientSelect">
+            <select v-model="selectedClient" @change="getAvailableClientTrackers()">
+                <option v-for="($client_name, $value) in clients" :value="$value">{{ $client_name }}</option>
+            </select>
+        </div>
 
-                    <div class="card-body">
-                        <div id="clientSelect">
-                            <select v-model="selectedClient" @change="getAvailableClientTrackers()">
-                                <option v-for="($client_name, $value) in clients" :value="$value">{{ $client_name }}</option>
-                            </select>
-                        </div>
+        <div v-if="selectedClient !== '0' && showTrackerView === true" id="trackerView">
+            <div class="centered-text">
+                <h1>{{ clients[selectedClient] }} Tracking Console</h1>
+                <h3>Select a Tracker to Continue</h3>
+            </div>
 
-                        <div v-if="selectedClient !== '0' && showTrackerView === true" id="trackerView">
-                            <div class="centered-text">
-                                <h1>{{ clients[selectedClient] }} Tracking Console</h1>
-                                <h3>Select a Tracker to Continue</h3>
-                            </div>
-
-                            <div id="reposTable">
-                                <ul id="repoList" v-for="(tracker, idx) in clientTrackers">
-                                    <li><a :href="tracker['url']">{{ tracker['name'] }}</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="reposTable">
+                <ul id="repoList" v-for="(tracker, idx) in clientTrackers">
+                    <li><a :href="tracker['url']">{{ tracker['name'] }}</a></li>
+                </ul>
             </div>
         </div>
     </div>

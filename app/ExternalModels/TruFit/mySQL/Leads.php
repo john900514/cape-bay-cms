@@ -3,6 +3,7 @@
 namespace App\ExternalModels\TruFit\mySQL;
 
 use App\Traits\UuidModel;
+use Backpack\CRUD\CrudTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -10,11 +11,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Leads extends Model
 {
-    use LogsActivity, SoftDeletes, UuidModel;
+    use LogsActivity, SoftDeletes, UuidModel, CrudTrait;
 
     protected $table = 'leads';
-    protected $primaryKey = 'id';
+    //protected $primaryKey = 'id';
+    protected $guarded = ['id', 'uuid'];
     protected $connection = 'tfmysql';
+
 
     protected static $logAttributes = ['first_name', 'last_name', 'email', 'mobile_phone', 'paramount_club_id'];
 

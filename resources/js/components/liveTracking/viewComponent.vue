@@ -1,25 +1,9 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <button type="button" @click="goBack()">
-                            <i class="fal fa-arrow-square-left"></i>
-                        </button>
-                        <b>{{ tracker['name'] }}</b>
-                        Live Tracker
-                    </div>
+    <div class="box-body">
+        <div id="cardBodyContainer">
+            <h1 class="tracking-value">{{ trackedVal }}</h1>
 
-                    <div class="card-body">
-                        <div id="cardBodyContainer">
-                            <h1 class="tracking-value">{{ trackedVal }}</h1>
-
-                            <button id="soundButton" @click.prevent="playSound(soundfile)" style="display:none;"></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <button id="soundButton" @click.prevent="playSound(soundfile)" style="display:none;"></button>
         </div>
     </div>
 </template>

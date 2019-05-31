@@ -83,7 +83,7 @@
 
                                     <a class="dropdown-item" href="{{ route('settings') }}">Settings</a>
 
-                                    @if(Bouncer::is(Auth::user())->a('god', 'master'))
+                                    @if(Bouncer::is(backpack_user())->a('god', 'master'))
                                         <a class="dropdown-item" href="{{ route('admin-settings') }}">Admin Settings</a>
                                     @endif
 
