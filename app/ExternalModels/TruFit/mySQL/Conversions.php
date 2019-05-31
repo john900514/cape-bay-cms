@@ -3,13 +3,14 @@
 namespace App\ExternalModels\TruFit\mySQL;
 
 use App\Traits\UuidModel;
+use Backpack\CRUD\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Conversions extends Model
 {
-    use LogsActivity, SoftDeletes, UuidModel;
+    use CrudTrait, LogsActivity, SoftDeletes, UuidModel;
 
     protected $table = "member_conversions";
     protected $primaryKey = 'id';

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Reporting\TruFit;
 
 use App\Services\UserMgntService;
-use App\Http\Requests\ClientsRequest as StoreRequest;
 use App\Http\Requests\ClientsRequest as UpdateRequest;
+use App\Http\Requests\ClientsRequest as StoreRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 
-class LeadsCrudController extends CrudController
+class ConversionsCrudController extends CrudController
 {
     public function __construct(UserMgntService $user_svc)
     {
@@ -22,9 +22,9 @@ class LeadsCrudController extends CrudController
         | CrudPanel Basic Information
         |--------------------------------------------------------------------------
         */
-        $this->crud->setModel('App\ExternalModels\TruFit\mySQL\Leads');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/reports/{uuid}/payment-leads');
-        $this->crud->setEntityNameStrings('lead', 'leads');
+        $this->crud->setModel('App\ExternalModels\TruFit\mySQL\Conversions');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/reports/{uuid}/payment-conversions');
+        $this->crud->setEntityNameStrings('conversion', 'conversions');
 
         /*
         |--------------------------------------------------------------------------

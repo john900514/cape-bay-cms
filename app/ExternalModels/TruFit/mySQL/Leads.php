@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Leads extends Model
 {
-    use LogsActivity, SoftDeletes, UuidModel, CrudTrait;
+    use CrudTrait, LogsActivity, SoftDeletes, UuidModel;
 
     protected $table = 'leads';
     //protected $primaryKey = 'id';
