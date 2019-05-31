@@ -82,12 +82,17 @@ class TruFitDataModule {
             [
                 'uuid' => '1bd6e4b3-2940-405a-aac9-5432d5199feb',
                 'name' => 'Buddy Referral Leads',
-                'url' => "reports/{$this->client_id}/referral-leads"
+                'url' => "reports/{$this->client_id}/referral-leads?campaign=buddy"
             ],
             [
                 'uuid' => '1f354a17-040e-4603-b4eb-21694803e539',
                 'name' => 'Combo6 Referral Leads',
-                'url' => "reports/{$this->client_id}/combo6-leads"
+                'url' => "reports/{$this->client_id}/referral-leads/?campaign=combo6"
+            ],
+            [
+                'uuid' => '25af9b4c-3d5b-4bc9-9409-bf8a3c2522b7',
+                'name' => 'Summer Giveaway Referral Leads',
+                'url' => "reports/{$this->client_id}/referral-leads/?campaign=summer"
             ],
         ];
     }
