@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct(Request $request)
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
 
         $this->request = $request;
     }
@@ -40,6 +40,6 @@ class HomeController extends Controller
         $args['menu_options'] = $user_svc->getDashMenuOptions($user['roles']);
 
 
-        return view('vendor.backpack.base.dashboard', $args);
+        return view('home', $args);
     }
 }

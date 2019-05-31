@@ -24,8 +24,7 @@ class ClientMgntService
 
         // get all client records
         $records = $this->clients_repo->getAllTheClients();
-        //$user = Auth::user();
-        $user = backpack_user();
+        $user = Auth::user();
 
         if(count($records) > 0 && $user)
         {

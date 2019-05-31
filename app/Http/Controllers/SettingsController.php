@@ -8,12 +8,11 @@ use App\Services\ClientMgntService;
 
 class SettingsController extends Controller
 {
-    protected $request, $user_svc, $client_svc;
+    protected $request, $client_svc;
 
-    public function __construct(Request $request, UserMgntService $user_svc, ClientMgntService $client_svc)
+    public function __construct(Request $request, ClientMgntService $client_svc)
     {
         $this->request = $request;
-        $this->user_svc = $user_svc;
         $this->client_svc = $client_svc;
     }
 
@@ -22,11 +21,6 @@ class SettingsController extends Controller
         $args = [
             'page_name' => ''
         ];
-
-        $user = $this->user_svc->getUserRecordAndRole();
-        $args['menu_options'] = $this->user_svc->getDashMenuOptions($user['roles']);
-
-        $args['setting_options'] = [];
 
         return view('settings.generic-settings', $args);
     }

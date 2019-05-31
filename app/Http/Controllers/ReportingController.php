@@ -31,8 +31,6 @@ class ReportingController extends Controller
         }
 
         $args['clients'] = array_merge(['Select a Client'], $final_clients);
-        $user = $this->user_svc->getUserRecordAndRole();
-        $args['menu_options'] = $this->user_svc->getDashMenuOptions($user['roles']);
 
         return view('reporting.reportsdash', $args);
     }
@@ -105,17 +103,13 @@ class ReportingController extends Controller
             }
         }
 
-        $user = $this->user_svc->getUserRecordAndRole();
-        $args['menu_options'] = $this->user_svc->getDashMenuOptions($user['roles']);
-
         return view('reporting.reportsdash', $args);
     }
 
     public function tracking_menu()
     {
         $args = [
-            'module' => 'default',
-            'tracker' => null
+            'module' => 'default'
         ];
 
         $clients = $this->client_svc->getAllClients(); // Get a list of all the clients the user can access;
@@ -133,8 +127,6 @@ class ReportingController extends Controller
         }
 
         $args['clients'] = array_merge(['Please Select a Client'], $final_clients);
-        $user = $this->user_svc->getUserRecordAndRole();
-        $args['menu_options'] = $this->user_svc->getDashMenuOptions($user['roles']);
 
         return view('reporting.tracking', $args);
 
@@ -202,8 +194,6 @@ class ReportingController extends Controller
             }
         }
 
-        $user = $this->user_svc->getUserRecordAndRole();
-        $args['menu_options'] = $this->user_svc->getDashMenuOptions($user['roles']);
         return view('reporting.tracking', $args);
     }
 
