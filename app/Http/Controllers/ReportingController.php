@@ -154,7 +154,7 @@ class ReportingController extends Controller
 
         if($client)
         {
-            $client_module = $this->client_svc->getClientDataModule($uuid);
+            $client_module = $this->client_svc->getClientDataModule($uuid, $client);
 
             if($client_module)
             {
