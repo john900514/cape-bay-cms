@@ -19,7 +19,8 @@ class UserMgntService
     {
         $results = false;
 
-        $user = Auth::user();
+        //$user = Auth::user();
+        $user = backpack_user();
 
         if($user)
         {

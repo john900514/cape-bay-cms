@@ -3,13 +3,14 @@
 namespace App;
 
 use App\Traits\UuidModel;
+use Backpack\CRUD\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Clients extends Model
 {
-    use SoftDeletes, UuidModel, LogsActivity;
+    use SoftDeletes, UuidModel, LogsActivity, CrudTrait;
     /**
      * The attributes that are mass assignable.
      *
@@ -18,6 +19,8 @@ class Clients extends Model
     protected $fillable = [
         'name'
     ];
+
+    protected $guarded = ['id', 'uuid'];
 
     /**
      * The attributes that should be hidden for arrays.
