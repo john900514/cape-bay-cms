@@ -14,7 +14,10 @@ Route::group([
 
     CRUD::resource('clients', 'ClientsCrudController');
 
-    Route::get('/dashboard', 'HomeController@index')->name('home');
+    Route::get('/repo', 'RepoController@index')->name('home');
+    Route::get('/repo/{client_uuid}', 'RepoController@get_client_data_stores')->name('home');
+    Route::get('/repo/trufit/amenities', 'RepoController@get_client_data_store')->name('home');
+
 }); // this should be the absolute last line of this file
 
 Route::group([
@@ -53,5 +56,5 @@ Route::group([
     Route::get('change-password', 'Auth\MyAccountController@getChangePasswordForm')->name('backpack.account.password');
     Route::post('change-password', 'Auth\MyAccountController@postChangePasswordForm');
 
-
+    CRUD::resource('repo/trufit/amenities/view', 'DataRepos\TruFit\AmenitiesCrudController');
 });

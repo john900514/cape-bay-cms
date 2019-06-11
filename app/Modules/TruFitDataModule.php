@@ -2,26 +2,31 @@
 
 namespace App\Modules;
 
+use App\ClientDataMaps;
 use App\Repositories\BaseRepository;
 use App\ExternalModels\TruFit\mySQL\Leads;
 use App\ExternalModels\TruFit\mySQL\Stores;
 use App\ExternalModels\TruFit\pgSQL\Locations;
 use App\ExternalModels\TruFit\mySQL\Referrals;
 use App\ExternalModels\TruFit\mySQL\Conversions;
+use App\ExternalModels\TruFit\mySQL\PromoAmenities;
 
 class TruFitDataModule {
 
     protected $client_id = '43d798ee-3247-4749-90a4-346b41d3e745';
-    protected $truFitRepo;
+    protected $truFitRepo, $client_maps;
 
     public function __construct()
     {
+        $this->client_maps = new ClientDataMaps ();
+
         $this->truFitRepo = [
             'web' => [
-                'stores' => new BaseRepository(new Stores()),
                 'leads' => new BaseRepository(new Leads()),
+                'stores' => new BaseRepository(new Stores()),
+                'referrals' => new BaseRepository((new Referrals())),
                 'conversions' => new BaseRepository((new Conversions())),
-                'referrals' => new BaseRepository((new Referrals()))
+                'promo_amenities' => new BaseRepository((new PromoAmenities()))
             ],
             'mobile' => [
                 'locations' => new BaseRepository(new Locations())
@@ -60,6 +65,30 @@ class TruFitDataModule {
 
             default:
                 $results = false;
+        }
+
+        return $results;
+    }
+
+    public function getModuleDataStores()
+    {
+        $results = false;
+
+        /**
+         * Steps
+         * 1. Write a query to get the data stores from client_data_maps
+         * 2. Return an array of those if results
+         */
+        $data_stores = $this->client_maps->select('client_data_maps.uuid', 'client_data_maps.name', 'client_data_maps.url')
+            ->join('clients', 'clients.id', '=', 'client_data_maps.client_id')
+            ->where('client_data_maps.type', '=', 'data-repo')
+            ->where('clients.uuid', '=', $this->client_id)
+            ->where('client_data_maps.active', '=', 1)
+            ->get();
+
+        if(count($data_stores) > 0)
+        {
+            $results = $data_stores->toArray();
         }
 
         return $results;
@@ -395,5 +424,10 @@ class TruFitDataModule {
         }
 
         return $results;
+    }
+
+    public function getStoresModel()
+    {
+        return $this->truFitRepo['web']['stores']->getModel();
     }
 }

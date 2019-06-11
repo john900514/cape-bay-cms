@@ -36,6 +36,8 @@ Vue.component('reporting-report-component', require('./components/reportingRepor
 Vue.component('livetracking-dash-component', require('./components/liveTracking/dashComponent.vue').default);
 Vue.component('livetracking-view-component', require('./components/liveTracking/viewComponent.vue').default);
 
+Vue.component('main-repo-component', require('./components/dataRepository/mainRepoComponent.vue').default);
+Vue.component('store-select-component', require('./components/dataRepository/storeSelectComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

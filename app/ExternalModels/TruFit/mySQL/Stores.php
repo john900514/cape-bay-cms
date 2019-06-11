@@ -114,4 +114,10 @@ class Stores extends Model
     {
         return $this->hasOne('App\ExternalModels\TruFit\pgSQL\Locations', 'phone_number', 'phone');
     }
+
+    public function promo_codes()
+    {
+        return $this->hasMany('App\ExternalModels\TruFit\mySQL\PromoCodes', 'ClubId', 'ClubId')
+            ->with('amenities');
+    }
 }
