@@ -14,7 +14,35 @@ class PromoAmenities extends Model
     protected $table = 'promo_amenities';
     protected $primaryKey = 'id';
     protected $connection = 'tfmysql';
-    protected $fillable = ['amenity'];
+    protected $fillable = ['amenity', 'promo_id'];
+
+    public function getPlanNamesFromClubCode($club_id, $promo_id)
+    {
+        $results = [];
+
+        $records = $this->select('membership_promos.id', 'membership_promos.Description')
+            ->where('promo_amenities.clubId','=', $club_id)
+            ->where('membership_promos.PromoCode','=', $promo_id)
+            ->join('membership_promos', 'membership_promos.id', 'promo_amenities.promo_id')
+            ->get();
+
+        if(count($records) > 0)
+        {
+            $codedescs = [];
+
+            foreach ($records as $record)
+            {
+                if(!array_key_exists($record->id, $codedescs))
+                {
+                    $codedescs[$record->id] = $record->Description;
+                }
+            }
+
+            $results = $codedescs;
+        }
+
+        return $results;
+    }
 
     public function promo()
     {

@@ -6,17 +6,22 @@ use Illuminate\Http\Request;
 use App\Services\UserMgntService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\ExternalModels\TruFit\mySQL\Stores;
+use App\ExternalModels\TruFit\mySQL\PromoAmenities;
 use App\Http\Requests\ClientsRequest as StoreRequest;
 use App\Http\Requests\ClientsRequest as UpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 
 class AmenitiesCrudController extends CrudController
 {
-    public function __construct(UserMgntService $user_svc, Request $request)
+    protected $amenities, $stores, $user_svc;
+
+    public function __construct(UserMgntService $user_svc, Request $request, PromoAmenities $amen, Stores $stores)
     {
+        $this->amenities = $amen;
+        $this->stores = $stores;
         $this->user_svc = $user_svc;
         parent::__construct();
-
     }
 
     public function setup()
@@ -39,34 +44,14 @@ class AmenitiesCrudController extends CrudController
             $promo = session()->get('promo');
         }
 
+        $store = $this->stores->getDataRecord($club);
+
         $this->crud->setRoute(config('backpack.base.route_prefix') . "/repo/trufit/amenities/view");
-        $this->crud->setEntityNameStrings('amenity', 'amenities for promo code - '.$promo);
+        $this->crud->setEntityNameStrings('amenity', "amenities for promo code - \"{$promo}\" ({$store->ClubName})");
 
-        $this->crud->addColumn([
-            'name' => 'clubId',
-            'type' => 'text',
-            'label' => 'Club',
-            'attributes' => [
-                'readonly' => 'readonly',
-                'disabled' => 'disabled'
-            ]
-        ]);
+        $column_args = $this->getColumnArgs();
 
-        $this->crud->addColumn([
-            'name' => 'Description',
-            'type' => 'text',
-            'label' => 'Plan',
-            'attributes' => [
-                'readonly' => 'readonly',
-                'disabled' => 'disabled'
-            ]
-        ]);
-
-        $this->crud->addColumn([
-            'name' => 'amenity',
-            'type' => 'text',
-            'label' => 'Amenity'
-        ]);
+        $this->crud->addColumns($column_args);
 
         $this->crud->addClause('select', [
             'promo_amenities.id',
@@ -77,14 +62,10 @@ class AmenitiesCrudController extends CrudController
         $this->crud->addClause('where','promo_amenities.clubId','=', $club);
         $this->crud->addClause('where','membership_promos.PromoCode','=', $promo);
         $this->crud->addClause('join', 'membership_promos', 'membership_promos.id', 'promo_amenities.promo_id');
-        //$this->crud->with('promo');
 
-        $this->crud->addField([
-            'name' => 'amenity',
-            'type' => 'text',
-            'label' => 'Amenity'
-        ]);
-
+        $drop_options = $this->amenities->getPlanNamesFromClubCode($club, $promo);
+        $field_args = $this->getEditArgs($club, $drop_options);
+        $this->crud->addFields($field_args);
 
         $user = $this->user_svc->getUserRecordAndRole();
         $this->data['menu_options'] = $this->user_svc->getDashMenuOptions($user['roles']);
@@ -107,5 +88,72 @@ class AmenitiesCrudController extends CrudController
         // your additional operations after save here
         // use $this->data['entry'] or $this->crud->entry
         return $redirect_location;
+    }
+
+    /**
+     * @return array
+     */
+    public function getColumnArgs()
+    {
+        return [
+            [
+                'name' => 'clubId',
+                'type' => 'text',
+                'label' => 'Club',
+                'attributes' => [
+                    'readonly' => 'readonly',
+                    'disabled' => 'disabled'
+                ]
+            ],
+            [
+                'name' => 'Description',
+                'type' => 'text',
+                'label' => 'Plan',
+                'attributes' => [
+                    'readonly' => 'readonly',
+                    'disabled' => 'disabled'
+                ]
+            ],
+            [
+                'name' => 'amenity',
+                'type' => 'text',
+                'label' => 'Amenity'
+            ]
+        ];
+    }
+
+    public function getEditArgs($club, $drop)
+    {
+        return [
+            [
+                'name' => 'clubId',
+                'type' => 'text',
+                'label' => 'Club',
+                'default' => $club,
+                'attributes' => [
+                    'readonly' => 'readonly',
+                ]
+            ],
+            [ // select_from_array
+                'name' => 'promo_id',
+                'label' => "Template",
+                'type' => 'select_from_array',
+                'options' => $drop,
+                'allows_null' => false,
+                'default' => 'one',
+                // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
+            ],
+            [
+                'name' => 'amenity',
+                'type' => 'text',
+                'label' => 'Amenity'
+            ]
+        ];
+    }
+
+    public function getPlanDropDownFields($club, $promo)
+    {
+
+        return [];
     }
 }
