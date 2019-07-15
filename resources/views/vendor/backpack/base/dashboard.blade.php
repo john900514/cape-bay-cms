@@ -1,6 +1,7 @@
 @extends('backpack::layout')
 
 @section('header')
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <link href="{{ env('APP_URL') }}/css/font-awesome/css/all.min.css" rel="stylesheet">
@@ -38,7 +39,7 @@
 @endsection
 
 @section('content')
-    <div class="row">
+    <div id="app" class="row">
         <div class="col-md-12">
             <div class="box">
                 <div class="box-body">
@@ -47,6 +48,20 @@
                             {{ session('status') }}
                         </div>
                     @endif
+
+                        @if(count($widgets) > 0)
+                            <div id="widgetSection">
+                                <h1>Widget Dashboard</h1>
+                                @foreach($widgets as $client_name => $section_widget)
+                                    <div class="section-widget-section">
+                                        <h2> {!! $client_name !!}</h2>
+                                        @foreach($section_widget as $idx => $widget)
+                                        {!! $widget['vue_component'] !!}
+                                        @endforeach
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
 
                     <div id="dashMenu">
                         @foreach($menu_options as $order => $option)

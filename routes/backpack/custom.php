@@ -24,7 +24,8 @@ Route::group([
     'prefix'     => config('backpack.base.route_prefix', 'admin'),
     'middleware' => ['web', config('backpack.base.middleware_key', 'admin')],
     'namespace'  => 'App\Http\Controllers',
-], function () { // custom admin routes
+],
+    function () { // custom admin routes
     Route::get('/settings', 'SettingsController@index')->name('settings');
     Route::get('/dashboard', 'HomeController@index')->name('home');
 
@@ -51,10 +52,16 @@ Route::group([
         Route::get('/{uuid}/{tracker}', 'ReportingController@get_client_tracker')->name('get-client-tracker');
     });
 
+    Route::group(['prefix' => 'csupport'], function () {
+        Route::get('/', 'ClientSupportController@index')->name('client-support');
+    });
+
     Route::get('edit-account-info', 'Auth\MyAccountController@getAccountInfoForm')->name('backpack.account.info');
     Route::post('edit-account-info', 'Auth\MyAccountController@postAccountInfoForm');
     Route::get('change-password', 'Auth\MyAccountController@getChangePasswordForm')->name('backpack.account.password');
     Route::post('change-password', 'Auth\MyAccountController@postChangePasswordForm');
 
     CRUD::resource('repo/trufit/amenities/view', 'DataRepos\TruFit\AmenitiesCrudController');
+
+
 });

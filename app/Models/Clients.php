@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\UuidModel;
 use Backpack\CRUD\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 class Clients extends Model
 {
-    use CrudTrait;
+    use CrudTrait, LogsActivity, SoftDeletes, UuidModel;
 
     /*
     |--------------------------------------------------------------------------

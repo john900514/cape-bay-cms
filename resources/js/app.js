@@ -39,6 +39,8 @@ Vue.component('livetracking-view-component', require('./components/liveTracking/
 Vue.component('main-repo-component', require('./components/dataRepository/mainRepoComponent.vue').default);
 Vue.component('store-select-component', require('./components/dataRepository/storeSelectComponent.vue').default);
 
+// Widgets
+Vue.component('cool-counter-component', require('./components/widgets/CoolCounterComponent.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

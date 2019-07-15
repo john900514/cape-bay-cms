@@ -5,12 +5,13 @@ namespace App;
 use App\Traits\UuidModel;
 use Backpack\CRUD\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Clients extends Model
 {
-    use SoftDeletes, UuidModel, LogsActivity, CrudTrait;
+    use HasRolesAndAbilities, SoftDeletes, UuidModel, LogsActivity, CrudTrait;
     /**
      * The attributes that are mass assignable.
      *

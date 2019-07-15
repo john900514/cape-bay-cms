@@ -25,6 +25,8 @@
     },
     "dependencies": {
         "bootstrap-vue": "^2.0.0-rc.19",
-        "pdfmake": "^0.1.56"
+        "countup.js": "^2.0.4",
+        "pdfmake": "^0.1.56",
+        "vue-countup-v2": "^4.0.0"
     }
 }

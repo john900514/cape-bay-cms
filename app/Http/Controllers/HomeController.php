@@ -3,22 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\WidgetService;
 use App\Services\UserMgntService;
 
 
 class HomeController extends Controller
 {
-    protected $request;
+    protected $request, $widgets;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, WidgetService $wsvc)
     {
         //$this->middleware('auth');
 
         $this->request = $request;
+        $this->widgets = $wsvc;
     }
 
     /**
@@ -39,6 +41,8 @@ class HomeController extends Controller
         $user = $user_svc->getUserRecordAndRole();
         $args['menu_options'] = $user_svc->getDashMenuOptions($user['roles']);
 
+
+        $args['widgets'] = $this->widgets->getAllWidgets();
 
         return view('vendor.backpack.base.dashboard', $args);
     }
