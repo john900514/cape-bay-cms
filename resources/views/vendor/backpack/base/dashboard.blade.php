@@ -35,6 +35,11 @@
         .dash-menu-link a span:hover {
             color: slategray;
         }
+
+        .inner-widget-wrap {
+            display:flex;
+            flex-flow: row wrap;
+        }
     </style>
 @endsection
 
@@ -55,9 +60,11 @@
                                 @foreach($widgets as $client_name => $section_widget)
                                     <div class="section-widget-section">
                                         <h2> {!! $client_name !!}</h2>
-                                        @foreach($section_widget as $idx => $widget)
-                                        {!! $widget['vue_component'] !!}
-                                        @endforeach
+                                        <div class="inner-widget-wrap">
+                                            @foreach($section_widget as $idx => $widget)
+                                                {!! $widget['vue_component'] !!}
+                                            @endforeach
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>

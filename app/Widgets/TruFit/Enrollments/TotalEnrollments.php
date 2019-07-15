@@ -10,7 +10,7 @@ class TotalEnrollments extends BaseWidget
 {
     public function __construct()
     {
-        parent::__construct('Total Free Pass Leads');
+        parent::__construct('Total Enrollments');
     }
 
     public function collect()

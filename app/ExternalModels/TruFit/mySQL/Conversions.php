@@ -35,6 +35,27 @@ class Conversions extends Model
         return $results;
     }
 
+    public function getLatestEnrollments($within = '-24 hours')
+    {
+        $results = false;
+
+        $date = new \DateTime();
+        $date->modify($within);
+        $formatted_date = $date->format('Y-m-d H:i:s');
+
+        $setup = $this//->where('active', '=', 1)
+            ->where('created_at', '>', $formatted_date);
+
+        $records = $setup->get();
+
+        if(count($records) > 0)
+        {
+            $results = $records;
+        }
+
+        return $results;
+    }
+
     public function lead()
     {
         return $this->hasOne('App\ExternalModels\TruFit\mySQL\Leads', 'id', 'lead_id');
