@@ -66,9 +66,20 @@
 
 <style scoped>
     .iCountUp {
-        font-size: 12em;
         margin: 0;
         color: #4d63bc;
+    }
+
+    @media screen and (min-width: 721px) {
+        .iCountUp {
+            font-size: 12em;
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+        .iCountUp {
+            font-size: 9em;
+        }
     }
 
     .widget-container {

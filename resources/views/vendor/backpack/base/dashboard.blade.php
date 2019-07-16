@@ -36,10 +36,20 @@
             color: slategray;
         }
 
-        .inner-widget-wrap {
-            display:flex;
-            flex-flow: row wrap;
+        @media screen and (min-width: 721px) {
+            .inner-widget-wrap {
+                display:flex;
+                flex-flow: row wrap;
+            }
         }
+
+        @media screen and (max-width: 720px) {
+            .inner-widget-wrap {
+                display:flex;
+                flex-flow: column;
+            }
+        }
+
     </style>
 @endsection
 
