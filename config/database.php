@@ -130,6 +130,24 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
+        'tac-mysql' => [
+            'driver' => 'mysql',
+            'host' => env('TAC_MYSQL_HOST', '127.0.0.1'),
+            'port' => env('TAC_MYSQL_PORT', '3306'),
+            'database' => env('TAC_MYSQL_DATABASE', 'forge'),
+            'username' => env('TAC_MYSQL_USERNAME', 'forge'),
+            'password' => env('TAC_MYSQL_PASSWORD', ''),
+            'unix_socket' => env('TAC_MYSQL_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
 
         /*
         'sqlsrv' => [

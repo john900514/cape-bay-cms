@@ -64,21 +64,21 @@
                         </div>
                     @endif
 
-                        @if(count($widgets) > 0)
-                            <div id="widgetSection">
-                                <h1>Widget Dashboard</h1>
-                                @foreach($widgets as $client_name => $section_widget)
-                                    <div class="section-widget-section">
-                                        <h2> {!! $client_name !!}</h2>
-                                        <div class="inner-widget-wrap">
-                                            @foreach($section_widget as $idx => $widget)
-                                                {!! $widget['vue_component'] !!}
-                                            @endforeach
-                                        </div>
+                    @if(count($widgets) > 0)
+                        <div id="widgetSection">
+                            <h1>Widget Dashboard</h1>
+                            @foreach($widgets as $client_name => $section_widget)
+                                <div class="section-widget-section">
+                                    <h2> {!! $client_name !!}</h2>
+                                    <div class="inner-widget-wrap">
+                                        @foreach($section_widget as $idx => $widget)
+                                            {!! $widget['vue_component'] !!}
+                                        @endforeach
                                     </div>
-                                @endforeach
-                            </div>
-                        @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
 
                     <div id="dashMenu">
                         @foreach($menu_options as $order => $option)
@@ -86,6 +86,7 @@
                                 <h1><a href="{{ $option['route'] }}" {{ !is_null($option['onclick']) ? 'onclick='.$option['onclick'] : '' }}><i class="{{ $option['icon'] }}"></i> <span>{{ $option['name'] }}</span></a></h1>
                             </div>
                         @endforeach
+                    </div>
                 </div>
             </div>
         </div>
