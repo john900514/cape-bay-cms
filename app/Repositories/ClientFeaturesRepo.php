@@ -29,4 +29,17 @@ class ClientFeaturesRepo
         }
         return $results;
     }
+
+    public function getClientFeature($feature_id)
+    {
+        $results = [];
+
+        $records = $this->features->getModel()->find($feature_id);
+
+        if(!is_null($records))
+        {
+            $results = $records;
+        }
+        return $results;
+    }
 }

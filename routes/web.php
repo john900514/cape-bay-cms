@@ -19,7 +19,6 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function() {
 
-
     Route::group(['prefix' => 'batman'], function () {
         Route::get('/', 'SettingsController@admin_menu')->name('admin-settings');
         Route::get('/records', 'SettingsController@admin_records_mgnt')->name('admin-records-mgnt');

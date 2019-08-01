@@ -33,4 +33,19 @@ class ClientRepository
 
         return $results;
     }
+
+    public function getClientviaID($id)
+    {
+        $results = false;
+
+        $record = $this->clients->getModel()
+            ->find($id);
+
+        if(!is_null($record))
+        {
+            $results = $record;
+        }
+
+        return $results;
+    }
 }

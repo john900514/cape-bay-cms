@@ -4,6 +4,7 @@ namespace App\Modules;
 
 use App\ClientDataMaps;
 use App\Repositories\BaseRepository;
+use App\ExternalModels\TruFit\pgSQL\Users;
 use App\ExternalModels\TruFit\mySQL\Leads;
 use App\ExternalModels\TruFit\mySQL\Stores;
 use App\ExternalModels\TruFit\pgSQL\Locations;
@@ -29,6 +30,7 @@ class TruFitDataModule {
                 'promo_amenities' => new BaseRepository((new PromoAmenities()))
             ],
             'mobile' => [
+                'users' => new BaseRepository(new Users()),
                 'locations' => new BaseRepository(new Locations())
             ]
         ];
@@ -429,5 +431,28 @@ class TruFitDataModule {
     public function getStoresModel()
     {
         return $this->truFitRepo['web']['stores']->getModel();
+    }
+
+    public function getMobileUsersModel()
+    {
+        return $this->truFitRepo['mobile']['users']->getModel();
+    }
+
+    public function getMobileUsers($type = 'default')
+    {
+        $results = [];
+
+        switch($type)
+        {
+            default:
+                $records = $this->getMobileUsersModel()->getMobileUsers();
+        }
+
+        if(count($records) > 0)
+        {
+            $results = $records->toArray();
+        }
+
+        return $results;
     }
 }

@@ -69,7 +69,10 @@
                             <h1>Widget Dashboard</h1>
                             @foreach($widgets as $client_name => $section_widget)
                                 <div class="section-widget-section">
-                                    <h2> {!! $client_name !!}</h2>
+                                    <div class="widget-section-head" onclick="toggleWidgetSection(this)">
+                                        <h2> {!! $client_name !!}</h2>
+                                    </div>
+
                                     <div class="inner-widget-wrap">
                                         @foreach($section_widget as $idx => $widget)
                                             {!! $widget['vue_component'] !!}
@@ -91,4 +94,21 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('after_scripts')
+    <script>
+        function toggleWidgetSection(elem) {
+            let theDiv = elem.parentElement;
+            let theChild = theDiv.children[1];
+
+            if ($(theChild).is(':visible')) {
+                $(theChild).slideUp();
+            }
+            else {
+                $(theChild).slideDown();
+            }
+
+        }
+    </script>
 @endsection

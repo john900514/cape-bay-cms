@@ -168,6 +168,7 @@ return [
         Silber\Bouncer\BouncerServiceProvider::class,
         Ixudra\Curl\CurlServiceProvider::class,
         Sentry\Laravel\ServiceProvider::class,
+        NotificationChannels\ExpoPushNotifications\ExpoPushNotificationsServiceProvider::class,
         /*
          * Application Service Providers...
          */

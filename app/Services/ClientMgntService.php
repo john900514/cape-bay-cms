@@ -44,6 +44,24 @@ class ClientMgntService
         return $results;
     }
 
+    public function getClientFeature($id)
+    {
+        $results = false;
+
+        $feature = $this->features_repo->getClientFeature($id);
+
+        if($feature)
+        {
+            $client = $this->clients_repo->getClientviaID($feature->client_id);
+            if(backpack_user()->can('view', $client))
+            {
+                $results = $feature;
+            }
+        }
+
+        return $results;
+    }
+
     public function getAllFeaturesForClient($page, $client_id)
     {
         return $this->features_repo->getClientFeatures($client_id, $page);
@@ -51,7 +69,20 @@ class ClientMgntService
 
     public function getClient($uuid)
     {
-        return $this->clients_repo->getClientviaUUID($uuid);
+        $results = false;
+
+        $client = $this->clients_repo->getClientviaUUID($uuid);
+
+        if($client)
+        {
+            $results = $client;
+        }
+        else
+        {
+            $results = $this->clients_repo->getClientviaID($uuid);
+        }
+
+        return $results;
     }
 
     public function getClientDataModule($client_uuid, Clients $client = null)

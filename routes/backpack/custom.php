@@ -63,5 +63,8 @@ Route::group([
 
     CRUD::resource('repo/trufit/amenities/view', 'DataRepos\TruFit\AmenitiesCrudController');
 
-
+    Route::group(['prefix' => 'messaging'], function () {
+        Route::get('/', 'MessagingController@index')->name('push-notifications');
+        Route::get('/{app_id}', 'MessagingController@manage');
+    });
 });
