@@ -137,22 +137,23 @@ class Users extends Model
 
         if(count($records) > 0)
         {
-
+            // @todo - place this snippet somewhere else
+            /*
             $interest = new Interest();
             $class_name = $this->getMorphClass();
             $class_dots = str_replace("\\", '.', $class_name);
             // before passing them on, make sure the interests are set
             foreach ($records as $muser)
             {
-                //@todo - cut or update interest record
+                // cut or update interest record
                 $model = $interest->where('entity_id', '=', $muser->id)
                     ->where('entity_type', '=', $class_name)
                     ->first();
 
                 if(!is_null($model))
                 {
-                    $model->value = $muser->expo_push_token;
-                    $model->save();
+                    //$model->value = $muser->expo_push_token;
+                    //$model->save();
                 }
                 else
                 {
@@ -164,7 +165,7 @@ class Users extends Model
                     $model->save();
                 }
             }
-
+            */
             $results = $records;
         }
 
