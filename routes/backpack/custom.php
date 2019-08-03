@@ -66,5 +66,6 @@ Route::group([
     Route::group(['prefix' => 'messaging'], function () {
         Route::get('/', 'MessagingController@index')->name('push-notifications');
         Route::get('/{app_id}', 'MessagingController@manage');
+        Route::post('/push/fire', 'MessagingController@firePushNotes');
     });
 });

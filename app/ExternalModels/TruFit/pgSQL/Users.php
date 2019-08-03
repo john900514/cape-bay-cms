@@ -5,6 +5,7 @@ namespace App\ExternalModels\TruFit\pgSQL;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\LogsActivity;
+use NotificationChannels\ExpoPushNotifications\Models\Interest;
 
 class Users extends Model
 {
@@ -136,6 +137,34 @@ class Users extends Model
 
         if(count($records) > 0)
         {
+            /*
+            $interest = new Interest();
+            $class_name = $this->getMorphClass();
+            $class_dots = str_replace("\\", '.', $class_name);
+            // before passing them on, make sure the interests are set
+            foreach ($records as $muser)
+            {
+                //@todo - cut or update interest record
+                $model = $interest->where('entity_id', '=', $muser->id)
+                    ->where('entity_type', '=', $class_name)
+                    ->first();
+
+                if(!is_null($model))
+                {
+                    //$model->value = $muser->expo_push_token;
+                    //$model->save();
+                }
+                else
+                {
+                    $model = new Interest();
+                    $model->key = $class_dots.".{$muser->id}";
+                    $model->value = $muser->expo_push_token;
+                    $model->entity_id = $muser->id;
+                    $model->entity_type = $class_name;
+                    $model->save();
+                }
+            }
+            */
             $results = $records;
         }
 

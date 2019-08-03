@@ -7,6 +7,8 @@ use App\Services\UserMgntService;
 use App\Services\ClientMgntService;
 use App\ExternalModels\TruFit\pgSQL\Users;
 use App\Notifications\TruFit\WereGladYoureHere;
+use App\Services\Messaging\Actions\FirePushNote;
+use App\Services\Messaging\PushNotificationsService;
 
 class MessagingController extends Controller
 {
@@ -53,7 +55,7 @@ class MessagingController extends Controller
         return view('messaging.index', $args);
     }
 
-    public function manage($app_id)
+    public function manage($app_id, PushNotificationsService $push_svc)
     {
         $args = [
             'module' => 'showtable',
@@ -68,22 +70,7 @@ class MessagingController extends Controller
         }
         else
         {
-            // Get the client's data module
-            $client = $this->client_svc->getClient($feature->client_id);
-            $client_module = $this->client_svc->getClientDataModule($client->uuid, $client);
-
-            // Run the module's getMobileUsers(default) function
-            $args['mobile_users'] = $client_module->getMobileUsers();
-
-            if(count($args['mobile_users']) > 0)
-            {
-                foreach($args['mobile_users'] as $idx => $mu)
-                {
-                    $mu['primary_location_name'] = is_null($mu['primary_location_name']) ? $mu['home_club_id'] : $mu['primary_location_name'];
-                    $mu['selected'] = false;
-                    $args['mobile_users'][$idx] = $mu;
-                }
-            }
+            $args['mobile_users'] = $this->getMobileUsers($feature);
 
             $args['fields'] = [
                 'selected'=> [
@@ -91,12 +78,12 @@ class MessagingController extends Controller
                     'class' => 'checking dumb'
                 ],
                 'first_name' => [
-                    'label' => 'First',
+                    'label' => 'First Name',
                     'class' => 'rname dumb',
                     'sortable' => true
                 ],
                 'last_name' => [
-                    'label' => 'Last',
+                    'label' => 'Last Name',
                     'class' => 'rname dumb',
                     'sortable' => true
                 ],
@@ -110,13 +97,16 @@ class MessagingController extends Controller
                     'class' => 'no-mobile dumb',
                     'sortable' => true
                 ],
-                'last_login' => [
+                'last_login_readable' => [
                     'label' => 'Last Login',
                     'class' => 'no-mobile dumb',
                     'sortable' => true
                 ]
 
             ];
+
+            //  get available templates
+            $args['note_templates'] = $push_svc->getTemplates($feature->client_id);
         }
 
         $user = $this->user_svc->getUserRecordAndRole();
@@ -129,8 +119,8 @@ class MessagingController extends Controller
     {
         $results = ['success' => false, 'reason' => "User not found..."];
 
-        //$user = Users::find(309);
-        $user = Users::find(16577);
+        $user = Users::find(309);
+        //$user = Users::find(16577);
 
         if(!is_null($user))
         {
@@ -145,5 +135,39 @@ class MessagingController extends Controller
         }
 
         return response($results, 200);
+    }
+
+    public function firePushNotes(FirePushNote $action)
+    {
+        $results = $action->fire($this->request->all());
+
+        return response()->json($results);
+    }
+
+    private function getMobileUsers($feature)
+    {
+        $results = [];
+        // Get the client's data module
+        $client = $this->client_svc->getClient($feature->client_id);
+        $client_module = $this->client_svc->getClientDataModule($client->uuid, $client);
+
+        // Run the module's getMobileUsers(default) function
+        $mobile_users = $client_module->getMobileUsers();
+
+        if(count($mobile_users) > 0)
+        {
+            date_default_timezone_set('America/New_York');
+            foreach($mobile_users as $idx => $mu)
+            {
+                $mu['primary_location_name'] = is_null($mu['primary_location_name']) ? $mu['home_club_id'] : $mu['primary_location_name'];
+                $mu['selected'] = false;
+                $mu['last_login_readable'] = date('m/d/Y h:i:s', $mu['last_login']);
+                $mobile_users[$idx] = $mu;
+            }
+
+            $results = $mobile_users;
+        }
+
+        return $results;
     }
 }

@@ -32,7 +32,7 @@
     @elseif($module == 'showtable')
         <style>
             .overflow-hidden {
-                height: 30em;
+                height: 33em;
                 overflow: scroll;
             }
 
@@ -83,6 +83,25 @@
                 width: 5%;
             }
 
+            #filterPanel {
+                margin: 3em 2em;
+                display:flex;
+                flex-flow: row wrap;
+            }
+
+            .filter-section {
+                margin: 1.25em;
+            }
+
+            .boxed.filter-section {
+                border: 2px solid black;
+                display: flex;
+                flex-flow: column;
+            }
+
+            #usersInner {
+                border: 2px solid black;
+            }
         </style>
 
         <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />

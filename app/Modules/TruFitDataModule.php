@@ -455,4 +455,9 @@ class TruFitDataModule {
 
         return $results;
     }
+
+    public function getPushNotifiableModel()
+    {
+        return $this->truFitRepo['mobile']['users']->getModel();
+    }
 }

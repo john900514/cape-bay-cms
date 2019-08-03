@@ -1,4 +1,35 @@
 <div class="row" id="pnTableSection">
+    <div id="filterPanel">
+        <!-- dropdown for message to send -->
+        <div id="msgTemplateSelectSection" class="filter-section">
+            <select v-model="msgTemplateSelect">
+                <option value="0">Select a Message To Send</option>
+                @foreach($note_templates as $note_idx => $note)
+                    <option value="{!! $note_idx+1 !!}">{!! $note['name'] !!}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <!-- column filter -->
+        <div id="columnFilterSection" class="filter-section">
+            <select v-model="columnSelect">
+                <option value="0">Column Filters</option>
+                @foreach($fields as $field_idx => $field_attr)
+                    @if($field_idx != 'selected' && $field_idx != 'primary_location_name' && $field_idx != 'last_login_readable')
+                    <option value="{!! $field_idx !!}">{!! $field_attr['label'] !!}</option>
+                    @endif
+                @endforeach
+            </select>
+            <input type="textbox" v-if="columnSelect !== '0'" v-model="columnSelectText"/>
+        </div>
+
+        <div id="actionCtrlPanel" class="boxed filter-section">
+            <h2>Actions</h2>
+            <div><p>@{{ users_selected }} users selected.</p></div>
+            <div v-if="users_selected > 0"><button type="button" @click="confirmFireMessages()" class="red-type panel-button">Fire</button></div>
+        </div>
+    </div>
+
     <div class="col-md-12">
         <div class="">
             <div class="overflow-hidden">
