@@ -137,7 +137,7 @@ class Users extends Model
 
         if(count($records) > 0)
         {
-            /*
+
             $interest = new Interest();
             $class_name = $this->getMorphClass();
             $class_dots = str_replace("\\", '.', $class_name);
@@ -151,8 +151,8 @@ class Users extends Model
 
                 if(!is_null($model))
                 {
-                    //$model->value = $muser->expo_push_token;
-                    //$model->save();
+                    $model->value = $muser->expo_push_token;
+                    $model->save();
                 }
                 else
                 {
@@ -164,7 +164,7 @@ class Users extends Model
                     $model->save();
                 }
             }
-            */
+
             $results = $records;
         }
 
