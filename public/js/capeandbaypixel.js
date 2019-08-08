@@ -78,7 +78,7 @@
     api.send = function() {
         var pixel = document.createElement("img");
         var queryParams = api.toQueryString();
-        pixel.src = "https://anchor.capeandbay.test/pizza/" + clientId + "?" + queryParams;
+        pixel.src = "https://anchor.capeandbay.com/pizza/" + clientId + "?" + queryParams;
         document.body.appendChild(pixel);
     };
 
