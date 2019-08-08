@@ -48,8 +48,8 @@ class PixelErmPizzaController extends Controller
                 $tempImage = tempnam(sys_get_temp_dir(), $filename);
                 copy('https://amchorcms-assets.s3.amazonaws.com/pixel.png', $tempImage);
 
-                return response()->header('Content-Type', 'text/javascript')
-                    ->download($tempImage, $filename);
+                return response()
+                    ->download($tempImage, $filename, ['Content-Type', 'text/javascript']);
             }
             else
             {
