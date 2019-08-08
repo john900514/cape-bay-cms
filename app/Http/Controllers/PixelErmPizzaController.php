@@ -69,6 +69,8 @@ class PixelErmPizzaController extends Controller
         //copy('https://amchorcms-assets.s3.amazonaws.com/capeandbaypixel.js', $tempImage);
         copy(public_path().'/js/capeandbaypixel.js', $tempImage);
 
-        return response()->header('Content-Type', 'text/javascript')->download($tempImage, $filename);
+        return response('',200)
+            ->header('Content-Type', 'text/javascript')
+            ->download($tempImage, $filename);
     }
 }
