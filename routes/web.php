@@ -27,4 +27,9 @@ Route::group(['middleware' => 'auth'], function() {
     });
 });
 
+// Muthafuckin Tracking Pixels You fucking Son of bitch!
+Route::group(['prefix' => 'pizza'], function () {
+    Route::get('{client_uuid}', 'PixelErmPizzaController@get_pixel')->name('admin-settings');
+    Route::get('{client_uuid}/pizza-lib', 'PixelErmPizzaController@get_pixel_js')->name('admin-settings');
+});
 
