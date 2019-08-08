@@ -70,6 +70,6 @@ class PixelErmPizzaController extends Controller
         copy(public_path().'/js/capeandbaypixel.js', $tempImage);
 
         return response()
-            ->download($tempImage, $filename,['Content-Type', 'text/javascript']);
+            ->file($tempImage, ['Content-Type', 'text/javascript']);
     }
 }
