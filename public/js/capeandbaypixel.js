@@ -77,6 +77,8 @@
     // the resulting pixel URL to your document
     api.send = function() {
         var pixel = document.createElement("img");
+        pixel.setAttribute("class", "cnbpx");
+        pixel.setAttribute("style", "width:1px;");
         var queryParams = api.toQueryString();
         pixel.src = "https://anchor.capeandbay.com/pizza/" + clientId + "?" + queryParams;
         document.body.appendChild(pixel);
