@@ -5,7 +5,6 @@ namespace App\ExternalModels\TruFit\pgSQL;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\LogsActivity;
-use NotificationChannels\ExpoPushNotifications\Models\Interest;
 
 class Users extends Model
 {

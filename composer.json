@@ -43,12 +43,19 @@
         }
     },
     "autoload": {
+        "exclude-from-classmap": [
+            "vendor\\alymosul\\laravel-exponent-push-notifications\\src\\ExpoMessage.php"
+        ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "NotificationChannels\\": "patches/"
         },
         "classmap": [
             "database/seeds",
             "database/factories"
+        ],
+        "files": [
+            "patches/ExpoMessage.php"
         ]
     },
     "autoload-dev": {

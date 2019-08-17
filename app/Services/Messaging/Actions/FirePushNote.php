@@ -4,15 +4,20 @@ namespace App\Services\Messaging\Actions;
 
 use App\MessagingTemplates;
 use App\Services\ClientMgntService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use App\Notifications\TruFit\GenericPushNote;
 use App\Services\Messaging\PushNotificationsService;
+use NotificationChannels\ExpoPushNotifications\ExpoChannel;
 
 class FirePushNote extends PushNotificationsService
 {
-    public function __construct(MessagingTemplates $templates, ClientMgntService $clients)
+    public $expoChannel;
+
+    public function __construct(MessagingTemplates $templates, ClientMgntService $clients, ExpoChannel $channel)
     {
         parent::__construct($templates, $clients);
+        $this->expoChannel = $channel;
     }
 
     public function fire(array $data)
@@ -47,6 +52,14 @@ class FirePushNote extends PushNotificationsService
             //The Laravel notifcation object
             $push_note = new GenericPushNote($template);
 
+            // @todo - we need to see if the user(s) is/are subscribed before firing
+            foreach ($data['users'] as $u_id => $notey)
+            {
+                $devic_user = $notifable_model->find($u_id);
+                $this->subscribe($notey, $devic_user);
+            }
+
+
             // Fire the message to all the users (From the PushNotifications Svc)
             $result = $this->execute($notifable_model, $data['users'], $push_note);
 
@@ -59,4 +72,28 @@ class FirePushNote extends PushNotificationsService
 
         return $results;
     }
+
+    public function subscribe($token, Model $model)
+    {
+        $interest = $this->expoChannel->interestName($model);
+
+        try
+        {
+            $this->expoChannel->expo->subscribe($interest, $token);
+
+            $results = [
+                'status'    =>  'succeeded',
+                'expo_token' => $token,
+            ];
+
+        } catch (\Exception $e) {
+            $results = [
+                'status'    => 'failed',
+                'reason'     =>  $e->getMessage()
+            ];
+        }
+
+        return $results;
+    }
+
 }
