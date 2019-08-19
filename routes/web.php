@@ -33,3 +33,5 @@ Route::group(['prefix' => 'pizza'], function () {
     Route::get('{client_uuid}/pizza-lib', 'PixelErmPizzaController@get_pixel_js')->name('admin-settings');
 });
 
+Route::get('/testpush', 'MessagingController@test_push_expo_notification');
+

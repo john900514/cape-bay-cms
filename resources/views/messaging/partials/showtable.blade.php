@@ -2,6 +2,7 @@
     <div id="filterPanel">
         <!-- dropdown for message to send -->
         <div id="msgTemplateSelectSection" class="filter-section">
+            <label><b>Step 1</b> - Select a Message to Send</label>
             <select v-model="msgTemplateSelect">
                 <option value="0">Select a Message To Send</option>
                 @foreach($note_templates as $note_idx => $note)
@@ -12,15 +13,23 @@
 
         <!-- column filter -->
         <div id="columnFilterSection" class="filter-section">
-            <select v-model="columnSelect">
-                <option value="0">Column Filters</option>
+            <label><b>Step 2</b> - Filter Your Audience (if needed)</label>
+
+            <div id="filterWrapper" class="boxed filter-section">
                 @foreach($fields as $field_idx => $field_attr)
                     @if($field_idx != 'selected' && $field_idx != 'primary_location_name' && $field_idx != 'last_login_readable')
-                    <option value="{!! $field_idx !!}">{!! $field_attr['label'] !!}</option>
+                    <div class="idv-filter-field">
+                        <div class="label-area">
+                            <label>{!! $field_attr['label'] !!}</label>
+                        </div>
+                        <div class="input-area">
+                            <input type="textbox" />
+                        </div>
+
+                    </div>
                     @endif
                 @endforeach
-            </select>
-            <input type="textbox" v-if="columnSelect !== '0'" v-model="columnSelectText"/>
+            </div>
         </div>
 
         <div id="actionCtrlPanel" class="boxed filter-section">

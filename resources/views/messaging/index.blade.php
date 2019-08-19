@@ -31,77 +31,182 @@
         </script>
     @elseif($module == 'showtable')
         <style>
-            .overflow-hidden {
-                height: 33em;
-                overflow: scroll;
+            @media screen {
+                .overflow-hidden {
+                    height: 33em;
+                    overflow: scroll;
+                }
+
+                #myTable,
+                #myTable>thead,
+                #myTable>tbody,
+                #myTable>tfoot,
+                #myTable>tbody>tr,
+                #myTable>thead>tr {
+                    width: 100%;
+                    display: flex;
+                    flex-flow: row wrap;
+                }
+
+                #myTable>thead,
+                #myTable>tbody,
+                #myTable>tfoot {
+                    display: block;
+                    width: 100%;
+                    overflow-y: scroll;
+                }
+
+                #myTable>thead,
+                #myTable>tfoot {
+                    height: auto;
+                }
+
+                #myTable>tbody {
+                    max-height: 20em;
+                }
+
+                #myTable>thead>tr>th:first-child,
+                #myTable>thead>tr>td:first-child,
+                #myTable>tbody>tr>th:first-child,
+                #myTable>tbody>tr>td:first-child,
+                #myTable>tfoot>tr>th:first-child,
+                #myTable>tfoot>tr>td:first-child {
+                    width: 5%;
+                }
+
+                #filterPanel {
+                    margin: 3em 2em;
+                    display:flex;
+                }
+
+                .filter-section {
+                    margin: 1.25em;
+                }
+
+                .boxed.filter-section {
+                    border: 2px solid black;
+                    display: flex;
+                    flex-flow: column;
+                }
+
+                #usersInner {
+                    border: 2px solid black;
+                    margin: 0 5%;
+                }
+
+                #msgTemplateSelectSection {
+                    display: flex;
+                    flex-flow: column;
+                }
+
+                #bottomCtrlPanel {
+                    text-align: center;
+                    margin-top: 2em;
+                }
+
+                .idv-filter-field {
+                    margin: 0.5em 2.5%;
+                    display: flex;
+                    flex-flow: row;
+                }
+
+                .label-area {
+                    width: 15%;
+                    margin-right: 1em;
+                }
+
+                .label-area label {
+                    width: 100%
+                }
+
+                .input-area {
+                    width: 85%;
+                }
+
+                .input-area input {
+                    width: 100% !important;
+                }
+
+
             }
 
-            #myTable,
-            #myTable>thead,
-            #myTable>tbody,
-            #myTable>tfoot,
-            #myTable>tbody>tr,
-            #myTable>thead>tr {
-                width: 100%;
-                display: flex;
-                flex-flow: row wrap;
+            @media screen and (max-width: 767px) {
+                #myTable>thead>tr>th,
+                #myTable>thead>tr>td,
+                #myTable>tbody>tr>th,
+                #myTable>tbody>tr>td,
+                #myTable>tfoot>tr>th,
+                #myTable>tfoot>tr>td {
+                    display: inline-block;
+                    width: 25%;
+                }
+
+                .no-mobile {
+                    display: none !important;
+                }
+
+                #filterPanel {
+                    flex-flow: column;
+                    text-align: center;
+                }
+
+                .idv-filter-field input {
+                    width: 70%;
+                }
             }
 
-            #myTable>thead,
-            #myTable>tbody,
-            #myTable>tfoot {
-                display: block;
-                width: 100%;
-                overflow-y: scroll;
+            @media screen and (min-width: 768px) and (max-width: 999px) {
+                #myTable>thead>tr>th,
+                #myTable>thead>tr>td,
+                #myTable>tbody>tr>th,
+                #myTable>tbody>tr>td,
+                #myTable>tfoot>tr>th,
+                #myTable>tfoot>tr>td {
+                    display: inline-block;
+                    width: 23%;
+                }
+
+                .no-tablet {
+                    display: none !important;
+                }
+
+                #filterPanel {
+                    flex-flow: column;
+                    text-align: center;
+                }
+
+                .idv-filter-field input {
+                    width: 50%;
+                }
             }
 
-            #myTable>thead,
-            #myTable>tfoot {
-                height: auto;
+            @media screen and (min-width: 1000px) {
+                #myTable>thead>tr>th,
+                #myTable>thead>tr>td,
+                #myTable>tbody>tr>th,
+                #myTable>tbody>tr>td,
+                #myTable>tfoot>tr>th,
+                #myTable>tfoot>tr>td {
+                    display: inline-block;
+                    width: 19%;
+                }
+
+                #filterPanel {
+                    flex-flow: row wrap;
+                    text-align: center;
+                }
+
+                .filter-section {
+                    width: 46%;
+                }
+
+                #filterWrapper {
+                    width: 100%;
+                }
+
+
             }
 
-            #myTable>tbody {
-                max-height: 20em;
-            }
-
-            #myTable>thead>tr>th,
-            #myTable>thead>tr>td,
-            #myTable>tbody>tr>th,
-            #myTable>tbody>tr>td,
-            #myTable>tfoot>tr>th,
-            #myTable>tfoot>tr>td {
-                display: inline-block;
-                width: 19%;
-            }
-
-            #myTable>thead>tr>th:first-child,
-            #myTable>thead>tr>td:first-child,
-            #myTable>tbody>tr>th:first-child,
-            #myTable>tbody>tr>td:first-child,
-            #myTable>tfoot>tr>th:first-child,
-            #myTable>tfoot>tr>td:first-child {
-                width: 5%;
-            }
-
-            #filterPanel {
-                margin: 3em 2em;
-                display:flex;
-                flex-flow: row wrap;
-            }
-
-            .filter-section {
-                margin: 1.25em;
-            }
-
-            .boxed.filter-section {
-                border: 2px solid black;
-                display: flex;
-                flex-flow: column;
-            }
-
-            #usersInner {
-                border: 2px solid black;
-            }
         </style>
 
         <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />

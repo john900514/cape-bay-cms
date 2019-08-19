@@ -94,12 +94,12 @@ class MessagingController extends Controller
                 ],
                 'primary_location_name' => [
                     'label' => 'Club',
-                    'class' => 'no-mobile dumb',
+                    'class' => 'dumb',
                     'sortable' => true
                 ],
                 'last_login_readable' => [
                     'label' => 'Last Login',
-                    'class' => 'no-mobile dumb',
+                    'class' => 'no-mobile no-tablet dumb',
                     'sortable' => true
                 ]
 
