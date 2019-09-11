@@ -4,10 +4,13 @@ namespace App;
 
 use Backpack\Base\app\Models\Traits\InheritsRelationsFromParentModel;
 use Backpack\Base\app\Notifications\ResetPasswordNotification as ResetPasswordNotification;
+use Backpack\CRUD\CrudTrait;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class BackpackUser extends User
 {
     use InheritsRelationsFromParentModel;
+    use CrudTrait, HasRolesAndAbilities;
 
     protected $table = 'users';
 
@@ -31,5 +34,21 @@ class BackpackUser extends User
     public function getEmailForPasswordReset()
     {
         return $this->email;
+    }
+
+    public function userrole()
+    {
+        return $this->hasOne('App\AssignedRoles', 'entity_id', 'id')
+            ->where('entity_type', '=', 'App\BackpackUser')
+            ->with('role');
+        /*
+        return $this->hasOneThrough(
+            'App\Roles',
+            'App\AssignedRoles',
+            'role_id',
+            'id',
+            'id',
+            'entity_id');
+        */
     }
 }

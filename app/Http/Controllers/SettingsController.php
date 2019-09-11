@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\UserMgntService;
 use App\Services\ClientMgntService;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class SettingsController extends Controller
 {
@@ -26,22 +27,31 @@ class SettingsController extends Controller
         $user = $this->user_svc->getUserRecordAndRole();
         $args['menu_options'] = $this->user_svc->getDashMenuOptions($user['roles']);
 
-        $args['setting_options'] = [];
+        $args['setting_options'] = $this->user_svc->getSettingsMenuOptions($user['roles']);;
 
         return view('settings.generic-settings', $args);
     }
 
     public function admin_menu(UserMgntService $user_svc)
     {
-        $args = [
-            'page_name' => 'Admin',
-            'menu_options' => [],
-        ];
+        // restrict this page or redirect to '404'
+        if(Bouncer::is(backpack_user())->a('god', 'master'))
+        {
+            $args = [
+                'page_name' => 'Admin',
+                'menu_options' => [],
+            ];
 
-        $user = $user_svc->getUserRecordAndRole();
-        $args['menu_options'] = $user_svc->getAdminMenuOptions($user['roles']);
+            $user = $user_svc->getUserRecordAndRole();
+            $args['menu_options'] = $user_svc->getAdminMenuOptions($user['roles']);
 
-        return view('settings.generic-settings', $args);
+            $args['setting_options'] = $this->user_svc->getAdminMenuOptions($user['roles']);;
+
+            return view('settings.generic-settings', $args);
+        }
+
+        return view('errors.404');
+
     }
 
     public function admin_records_mgnt()

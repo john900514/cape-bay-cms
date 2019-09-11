@@ -43,6 +43,11 @@ class UserMgntService
         return $this->menu_repo->getMenuOptions('dash', $roles);
     }
 
+    public function getSettingsMenuOptions(array $roles)
+    {
+        return $this->menu_repo->getMenuOptions('settings', $roles);
+    }
+
     public function getAdminMenuOptions(array $roles)
     {
         return $this->menu_repo->getMenuOptions('admin', $roles);

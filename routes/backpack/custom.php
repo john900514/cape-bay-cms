@@ -11,12 +11,18 @@ Route::group([
     'middleware' => ['web', config('backpack.base.middleware_key', 'admin')],
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
-
     CRUD::resource('clients', 'ClientsCrudController');
 
     Route::get('/repo', 'RepoController@index')->name('home');
     Route::get('/repo/{client_uuid}', 'RepoController@get_client_data_stores')->name('home');
     Route::get('/repo/trufit/amenities', 'RepoController@get_client_data_store')->name('home');
+
+    Route::group(['prefix' => 'batman'], function () {
+        Route::group(['prefix' => 'users'], function () {
+            CRUD::resource('mgnt', 'UsersCrudController');
+            //Route::get('/mgnt/create', 'SettingsController@admin_menu')->name('admin-settings');
+        });
+    });
 
 }); // this should be the absolute last line of this file
 
@@ -67,5 +73,9 @@ Route::group([
         Route::get('/', 'MessagingController@index')->name('push-notifications');
         Route::get('/{app_id}', 'MessagingController@manage');
         Route::post('/push/fire', 'MessagingController@firePushNotes');
+    });
+
+    Route::group(['prefix' => 'batman'], function () {
+        Route::get('/', 'SettingsController@admin_menu')->name('admin-settings');
     });
 });
