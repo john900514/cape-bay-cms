@@ -1,0 +1,43 @@
+<?php
+
+namespace App;
+
+use App\Traits\UuidModel;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
+use Illuminate\Foundation\Auth\User as AuthUser;
+
+
+class User extends AuthUser
+{
+    use HasRolesAndAbilities, LogsActivity, Notifiable, SoftDeletes, UuidModel;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'email', 'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+}
