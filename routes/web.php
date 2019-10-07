@@ -14,3 +14,16 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['prefix' => 'components'], function () {
+    Route::get('/sidebar', 'API\ComponentsAPIController@get_sidebar');
+    Route::get('/clients/{for}', 'API\ComponentsAPIController@get_clients');
+    Route::get('/push-notes/platforms/{client_id}', 'API\ComponentsAPIController@get_push_note_platforms');
+
+});
+
+Route::group(['prefix' => 'users'], function () {
+    Route::get('/push-notes/{client_id}/{platform_id}', 'API\PushNotesAPIController@get_push_notes_users');
+    Route::post('/push-notes/fire', 'API\PushNotesAPIController@fire');
+});
+
