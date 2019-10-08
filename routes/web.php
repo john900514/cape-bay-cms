@@ -23,6 +23,8 @@ Route::group(['prefix' => 'components'], function () {
 });
 
 Route::group(['prefix' => 'users'], function () {
+    Route::get('/dashboard/widgets/info-box-grid/{client}', 'API\DashboardAPIController@get_info_box_grid_data');
+
     Route::get('/push-notes/{client_id}/{platform_id}', 'API\PushNotesAPIController@get_push_notes_users');
     Route::post('/push-notes/fire', 'API\PushNotesAPIController@fire');
 });

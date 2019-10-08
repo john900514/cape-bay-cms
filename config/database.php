@@ -43,7 +43,7 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
-        'mysql' => [
+        'mysql' => [ // This is this app's primary DB
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -76,12 +76,31 @@ return [
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
+        'trufit-main-api-mysql' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('TF_MYSQL_HOST', '127.0.0.1'),
+            'port' => env('TF_MYSQL_PORT', '3306'),
+            'database' => env('TF_MYSQL_NAME', 'forge'),
+            'username' => env('TF_MYSQL_USER', 'forge'),
+            'password' => env('TF_MYSQL_PASS', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
         'trufit-mobile-app-mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('TRUFIT_MOBILE_MYDB_HOST', '127.0.0.1'),
             'port' => env('TRUFIT_MOBILE_MYDB_PORT', '3306'),
-            'database' => env('MTRUFIT_MOBILE_YDB_NAME', 'forge'),
+            'database' => env('TRUFIT_MOBILE_MYDB_NAME', 'forge'),
             'username' => env('TRUFIT_MOBILE_MYDB_USER', 'forge'),
             'password' => env('TRUFIT_MOBILE_MYDB_PASS', ''),
             'unix_socket' => env('DB_SOCKET', ''),

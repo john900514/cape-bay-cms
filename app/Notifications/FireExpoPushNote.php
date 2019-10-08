@@ -21,7 +21,6 @@ class FireExpoPushNote extends Notification
 
     public function toExpoPush($notifiable)
     {
-        $hello = $notifiable;
         return ExpoMessage::create()
             ->badge(1)
             ->enableSound()

@@ -85,7 +85,7 @@
 
     <div class="content">
         <div class="title m-b-md">
-            <img src="img/anchorCMSLogo.png">
+            <img src="https://amchorcms-assets.s3.amazonaws.com/anchorCMSLogo.png">
         </div>
 
         <div class="links">

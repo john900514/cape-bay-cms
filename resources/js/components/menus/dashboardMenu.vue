@@ -3,15 +3,23 @@
         <div id="innerDashWrapper">
             <div id="widgetRow">
                 <div class="widget-row">
-                    <info-box-grid></info-box-grid>
+                    <info-box-grid
+                        client="default"
+                    ></info-box-grid>
                 </div>
             </div>
 
             <div id="infoRow">
+                <div id="rightWidget">
+                    <div id="innerRightWidget">
+                        <pie-chart-widget></pie-chart-widget>
+                    </div>
+                </div>
+
                 <div class="info-row">
                     <div id="leftWidget">
                         <div id="innerLeftWidget">
-                            <pie-chart-widget></pie-chart-widget>
+                            <recent-added-list></recent-added-list>
                         </div>
                     </div>
 
@@ -21,11 +29,6 @@
                         </div>
                     </div>
 
-                    <div id="rightWidget">
-                        <div id="innerRightWidget">
-                            <recent-added-list></recent-added-list>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
