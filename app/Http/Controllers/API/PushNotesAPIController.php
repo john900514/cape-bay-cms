@@ -8,6 +8,7 @@ use App\Notifications\FireExpoPushNote;
 use App\Services\PNMobileAppService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use NotificationChannels\ExpoPushNotifications\ExpoChannel;
 
@@ -39,8 +40,13 @@ class PushNotesAPIController extends Controller
 
                             if(!is_null($app_user))
                             {
+                                Log::info('Hoping to send push note to user ', $app_user->toArray());
                                 $this->subscribe($user['push_token'], $app_user, $channel);
                                 $app_user->notify(new FireExpoPushNote($data['message']));
+                            }
+                            else
+                            {
+                                Log::info('Unable to locate user with token -'.$user['push_token']);
                             }
                         }
                         elseif($user['push_type'] == 'wallet')
