@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar-menu">
         <li>
-            <a :href="$parent.anchorCMS.dashboardURL">
+            <a :href="dashboardurl">
                 <i class="fa fa-dashboard"></i> <span>{{ $parent.anchorCMS.transDash }}</span>
             </a>
         </li>
@@ -10,7 +10,18 @@
                 <i :class="opt.icon"></i> <span>{{ opt.name }}</span>
             </a>
         </li>
-
+        <li class="treeview">
+            <a href="#"><i class="fa fa-link"></i> <span>Clients</span>
+                <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+                <li v-for="(ray, idx) in clients">
+                    <a :href="dashboardurl+'/'+ray.client_id">{{ray.name}}</a>
+                </li>
+            </ul>
+        </li>
     </div>
 </template>
 
@@ -18,10 +29,12 @@
 
     export default {
         name: "SidebarComponent",
-        props: ['user'],
+        props: ['user', 'dashboardurl', 'clientId'],
         data() {
             return {
-                options: {}
+                options: {},
+                clients: [],
+                activeClient: 0,
             };
         },
         methods: {
@@ -35,11 +48,24 @@
                         console.log('Anchor Response - ', data);
                         _this.options = data;
                     })
+            },
+            getClientOptions() {
+                let _this = this;
+                console.log('Reaching out to Anchor for Client Options...')
+                axios
+                    .get('/components/sidebar/clients')
+                    .then(response => {
+                        let data = response.data;
+                        console.log('Anchor Response - ', data);
+                        _this.clients = data;
+                    })
             }
         },
         mounted() {
             console.log('Sidebar Loaded', this.user);
+            console.log('Client Sidebar linked to -'+ this.clientId);
             this.getMenuOptions();
+            this.getClientOptions();
         }
     }
 </script>

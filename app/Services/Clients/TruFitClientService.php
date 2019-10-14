@@ -2,15 +2,22 @@
 
 namespace App\Services\Clients;
 
+use App\Models\TruFit\Leads;
 use App\Models\TruFit\AppUsers;
+use Illuminate\Support\Facades\DB;
+use App\Models\TruFit\Conversions;
 
 class TruFitClientService
 {
-    protected $app_users;
+    protected $app_users, $conversions, $leads;
 
-    public function __construct(AppUsers $app_users)
+    public function __construct(AppUsers $app_users,
+                                Leads $leads,
+                                Conversions $conversions)
     {
+        $this->leads = $leads;
         $this->app_users = $app_users;
+        $this->conversions = $conversions;
     }
 
     public function getMobileUsers()
@@ -53,5 +60,47 @@ class TruFitClientService
          */
 
         return $result;
+    }
+
+    public function getTotalSales()
+    {
+        $results = [];
+
+        // @todo - fine tune this query to be more accurate
+        $records = $this->conversions->select(DB::raw('count(*) as total'))->first();
+
+        if(!is_null($records))
+        {
+            $results = [
+                'class'  => '',
+                'icon'   => 'ion ion-ios-gear-outline',
+                'iconbg' => 'bg-aqua',
+                'text'   => 'TruFit Total Enrollments',
+                'value'  => $records->total
+            ];
+        }
+
+        return $results;
+    }
+
+    public function getTotalLeads()
+    {
+        $results = [];
+
+        // @todo - fine tune this query to be more accurate
+        $records = $this->leads->select(DB::raw('count(*) as total'))->first();
+
+        if(!is_null($records))
+        {
+            $results = [
+                'class'  => '',
+                'icon'   => 'ion ion-ios-gear-outline',
+                'iconbg' => 'bg-red',
+                'text'   => 'TruFit Total Leads',
+                'value'  => $records->total
+            ];
+        }
+
+        return $results;
     }
 }

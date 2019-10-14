@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Ixudra\Curl\Facades\Curl;
 use App\Models\TruFit\AppUsers;
 use App\Actions\PushNotes\GetPushNotesUsers;
 use App\Notifications\FireExpoPushNote;
@@ -30,29 +31,99 @@ class PushNotesAPIController extends Controller
         {
             if($data['clientId'] == 2)
             {
-                foreach($data['users'] as $idx => $user)
+                if(count($data['users']) <= 30)
                 {
-                    if(array_key_exists('push_type', $user))
+                    foreach($data['users'] as $idx => $user)
                     {
-                        if($user['push_type'] == 'mobile')
+                        if(array_key_exists('push_type', $user))
                         {
-                            $app_user = AppUsers::where('expo_push_token','=', $user['push_token'])->first();
+                            if($user['push_type'] == 'mobile')
+                            {
+                                $app_user = AppUsers::where('expo_push_token','=', $user['push_token'])->first();
 
-                            if(!is_null($app_user))
-                            {
-                                Log::info('Hoping to send push note to user ', $app_user->toArray());
-                                $this->subscribe($user['push_token'], $app_user, $channel);
-                                $app_user->notify(new FireExpoPushNote($data['message']));
+                                if(!is_null($app_user))
+                                {
+                                    Log::info('Hoping to send push note to user '.$app_user->id);
+                                    $this->subscribe($user['push_token'], $app_user, $channel);
+                                    $app_user->notify(new FireExpoPushNote($data['message']));
+                                }
+                                else
+                                {
+                                    Log::info('Unable to locate user with token -'.$app_user->id);
+                                }
                             }
-                            else
+                            elseif($user['push_type'] == 'wallet')
                             {
-                                Log::info('Unable to locate user with token -'.$user['push_token']);
+
                             }
                         }
-                        elseif($user['push_type'] == 'wallet')
-                        {
+                    }
+                }
+                else
+                {
+                    // batch send 100 users at a time to an API call
+                    $member_count = 0;
+                    $batch_count = 0;
+                    $batch = [];
 
+                    foreach($data['users'] as $idx => $user)
+                    {
+                        if(array_key_exists('push_type', $user))
+                        {
+                            if ($user['push_type'] == 'mobile')
+                            {
+                               // $app_user = AppUsers::where('expo_push_token','=', $user['push_token'])->first();
+                                if(true)//!is_null($app_user))
+                                {
+                                    Log::info('Hoping to send push note to user '.$user['email']);
+                                    //$this->subscribe($user['push_token'], $app_user, $channel);
+                                    $member_count++;
+
+                                    if($member_count == 99)
+                                    {
+                                        $member_count = 0;
+                                        $batch_count++;
+                                    }
+
+                                    $batch[$batch_count][] = $user['push_token'];
+                                }
+                                else
+                                {
+                                    Log::info('Unable to locate user with token -'.$app_user->id);
+                                }
+                            }
                         }
+                    }
+
+                    foreach($batch as $page => $expo_users)
+                    {
+                        $hello = 'hey!';
+                        $args = [
+
+                            [
+                                'to' => $expo_users,
+                                'title' => 'TruFit Announcements',
+                                'body' => $data['message'],
+                                '_category'=> '@capeandbay/trufit:announce',
+                                '_displayInForeground'=> true
+                            ],
+
+                            [
+                                'to' => 'ExponentPushToken[4n9_WhLIx7z8HXj7Q8Ctnq]',
+                                'title' => 'Push Notification Status',
+                                'body' => 'Messages were sent!',
+                                '_category'=> '@capeandbay/trufit:announce',
+                                '_displayInForeground'=> true
+                            ]
+                        ];
+
+                        $response = Curl::to('https://exp.host/--/api/v2/push/send')
+                            ->withData($args)
+                            ->asJson(true)
+                            ->post();
+
+                        //Log:info('Response from Expo - ', $response);
+                        Log:info("Sent Batch #{$page} to Expo");
                     }
                 }
 

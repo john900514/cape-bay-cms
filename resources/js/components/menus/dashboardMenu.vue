@@ -4,7 +4,7 @@
             <div id="widgetRow">
                 <div class="widget-row">
                     <info-box-grid
-                        client="default"
+                        :client="clientID"
                     ></info-box-grid>
                 </div>
             </div>
@@ -28,7 +28,6 @@
                             <metered-info-grid></metered-info-grid>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -36,15 +35,18 @@
 </template>
 
 <script>
+    // @todo - get the needed data for all four widgets
+    // @todo - if no data for a widget, don't show it.
     export default {
         name: "dashboardMenu",
+        props: ['clientID'],
         data() {
             return {
 
             };
         },
         mounted() {
-            console.log('Dashboard Loaded')
+            console.log('Dashboard Loaded for client ID - '+this.clientID);
         }
     }
 </script>

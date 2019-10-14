@@ -1,14 +1,16 @@
 <template>
     <div class="info-box-container">
-        <div class="row" v-show="infoBoxData.length > 0">
-            <div
-            <info-box v-for="(box, idx) in infoBoxData"
+        <div v-if="authorized === true" class="row" v-show="infoBoxData.length > 0">
+            <info-box v-for="(box, idx) in infoBoxData" v-bind:key="idx"
                 :class="box.class"
                 :icon="box.icon"
                 :iconbg="box.iconbg"
                 :text="box.text"
                 :value="box.value"
             ></info-box>
+        </div>
+        <div v-else>
+            <h1> Not Authorized to Access Widget Line Up. </h1>
         </div>
     </div>
 </template>
@@ -19,7 +21,8 @@
         props: ['client'],
         data() {
             return {
-                infoBoxData: []
+                infoBoxData: [],
+                authorized: true
             };
         },
         methods: {
@@ -36,6 +39,9 @@
                         }
                         else {
                             if('reason' in data) {
+                                if(data['reason'] === 'Unauthorized') {
+                                    this.authorized = false;
+                                }
                                 console.log(data['reason']);
                             }
                             else {

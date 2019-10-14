@@ -35,4 +35,8 @@ class Clients extends Model
         return $this->hasOne('App\ClientDataModule', 'client_id', 'id');
     }
 
+    public function widgets()
+    {
+        return $this->hasMany('App\WidgetDefaults', 'client_id', 'id');
+    }
 }

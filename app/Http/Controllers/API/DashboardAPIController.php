@@ -2,59 +2,56 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Repositories\ClientServiceRepository;
+use Bouncer;
+use App\Clients;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class DashboardAPIController extends Controller
 {
-    protected $request;
+    protected $clients, $client_svc_repo, $request;
 
-    public function __construct(Request $request)
+    public function __construct(Request $request, Clients $clients, ClientServiceRepository $c_repo)
     {
-        //$this->middleware('auth');
         $this->request = $request;
+        $this->clients = $clients;
+        $this->client_svc_repo = $c_repo;
     }
 
     public function get_info_box_grid_data(string $client)
     {
-        $results = ['success' => false];
+        $results = ['success' => false, 'reason'=> 'Unauthorized'];
 
         $user = backpack_user();
 
         if(!is_null($user))
         {
-            // @todo - get the real data
-            $boxes = [
-                [
-                    'class'  => '',
-                    'icon'   => 'ion ion-ios-gear-outline',
-                    'iconbg' => 'bg-aqua',
-                    'text'   => 'TruFit Total Sales',
-                    'value'  => '3559'
-                ],
-                [
-                    'class'  => '',
-                    'icon'   => 'ion ion-ios-gear-outline',
-                    'iconbg' => 'bg-red',
-                    'text'   => 'TruFit Total Leads',
-                    'value'  => '14528'
-                ],
-                [
-                    'class'  => '',
-                    'icon'   => 'ion ion-ios-gear-outline',
-                    'iconbg' => 'bg-green',
-                    'text'   => 'THE Athletic Club Sales',
-                    'value'  => '17'
-                ],
-                [
-                    'class'  => '',
-                    'icon'   => 'ion ion-ios-gear-outline',
-                    'iconbg' => 'bg-orange',
-                    'text'   => 'THE Athletic Club Leads',
-                    'value'  => '931'
-                ]
-            ];
-            $results = ['success' => true, 'data' => $boxes];
+            $client = $this->clients->find(intval($client));
+            if((!Bouncer::is($user)->a('client')) || ($user->can('access-client', $client)))
+            {
+                $widgets = $client->widgets()->where('widget_type', '=', 'info-box')->get();
+                // @todo - get user_widget_overrides
+
+                if(count($widgets) > 0)
+                {
+                    $boxes = [];
+                    foreach($widgets as $widget)
+                    {
+                        $service = $this->client_svc_repo->getService($widget->service);
+
+                        // @todo - get props if necessary
+                        $box = $service->{$widget->function}();
+
+                        if(count($box) > 0)
+                        {
+                            $boxes[] = $box;
+                        }
+                    }
+
+                    $results = ['success' => true, 'data' => $boxes];
+                }
+            }
         }
 
         return response()->json($results);

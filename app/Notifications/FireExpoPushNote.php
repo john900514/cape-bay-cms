@@ -24,7 +24,7 @@ class FireExpoPushNote extends Notification
         return ExpoMessage::create()
             ->badge(1)
             ->enableSound()
-            ->title('Welcome!')
+            ->title('TruFit Announcement!')
             ->body($this->msg);
     }
 }

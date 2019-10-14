@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\HasEnhancedRolesAndAbilities;
 use App\Traits\UuidModel;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\LogsActivity;

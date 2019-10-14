@@ -1,4 +1,4 @@
-@extends('backpack::layout')
+@extends('backpack::layout', ['client_id'=> $client_id])
 
 @section('header')
     <section class="content-header">
@@ -10,8 +10,6 @@
             <li class="active">{{ trans('backpack::base.dashboard') }}</li>
         </ol>
     </section>
-
-
 @endsection
 
 @section('content')
@@ -25,8 +23,10 @@
                         </div>
                     @endif
 
-                        <!-- put content here.... -->
-                        <dashboard></dashboard>
+                        <!-- @todo - pass in the client id -->
+                        <dashboard
+                            :client-i-d="{!! $client_id !!}"
+                        ></dashboard>
                 </div>
             </div>
         </div>

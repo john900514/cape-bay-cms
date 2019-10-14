@@ -62,7 +62,10 @@
                             :search="search"
                             show-select
                             item-key="name"
-                            class="elevation-2">
+                            :items-per-page="itemsPerPage"
+                            class="elevation-2"
+                            :footer-props="footerProps"
+                        >
                         </v-data-table>
                     </v-card>
 
@@ -98,9 +101,6 @@
             return {
                 search: '',
                 selected: [],
-                pagination: {
-                    sortBy: 'memberno'
-                },
                 headers: [
                     { text: 'Member ID', align: 'left', value: 'name', sortable: true},
                     { text: 'First Name', sortable: false, value: 'fname'},
@@ -113,6 +113,14 @@
                 selectedTemplate: '',
                 messageTemplates: [],
                 customMessage: '',
+                itemsPerPage: 200,
+                footerProps: {
+                    'items-per-page-options': [10,100,200,500,1000,-1]
+                },
+                pagination: {
+                    rowsPerPage: 200,
+                    sortBy: 'memberno'
+                },
             };
         },
         methods: {

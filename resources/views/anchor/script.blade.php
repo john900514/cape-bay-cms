@@ -2,7 +2,7 @@
     let anchorCMS = {
         backpackUser: {!! json_encode(backpack_user()->toArray()) !!},
         backpackURL: '{{ backpack_url() }}',
-        dashboardURL: '{{ backpack_url('dashboard') }}',
+        dashboardURL: '{{ Bouncer::is(backpack_user())->a('client') ? env('APP_URL').'/dashboard' :backpack_url('dashboard') }}',
         transDash: '{{ trans('backpack::base.dashboard') }}'
     };
 </script>

@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Actions\Dropdowns\GetPushPlatformsOptions;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Actions\Dropdowns\GetClientsOptions;
 use App\Actions\Sidebar\GetSideBarMenuOptions;
-use phpDocumentor\Reflection\Types\Integer;
-
+use App\Actions\Sidebar\GetClientsSideBarOptions;
+use App\Actions\Dropdowns\GetPushPlatformsOptions;
 
 class ComponentsAPIController extends Controller
 {
@@ -20,6 +19,13 @@ class ComponentsAPIController extends Controller
     }
 
     public function get_sidebar(GetSideBarMenuOptions $action)
+    {
+        $results = $action->execute();
+
+        return response()->json($results);
+    }
+
+    public function get_clients_sidebar(GetClientsSideBarOptions $action)
     {
         $results = $action->execute();
 

@@ -15,8 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('dashboard', 'DashboardController@client_dashboard')->name('dashboard');
+Route::get('dashboard/{client_id}', 'DashboardController@client_dashboard');
+
 Route::group(['prefix' => 'components'], function () {
     Route::get('/sidebar', 'API\ComponentsAPIController@get_sidebar');
+    Route::get('/sidebar/clients', 'API\ComponentsAPIController@get_clients_sidebar');
     Route::get('/clients/{for}', 'API\ComponentsAPIController@get_clients');
     Route::get('/push-notes/platforms/{client_id}', 'API\ComponentsAPIController@get_push_note_platforms');
 
