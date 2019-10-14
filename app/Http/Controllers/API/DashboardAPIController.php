@@ -56,4 +56,44 @@ class DashboardAPIController extends Controller
 
         return response()->json($results);
     }
+
+    public function get_pie_chart_data(string $client)
+    {
+        $results = ['success' => false, 'reason'=> 'Unauthorized'];
+
+        $user = backpack_user();
+
+        if(!is_null($user))
+        {
+            $client = $this->clients->find(intval($client));
+            if((!Bouncer::is($user)->a('client')) || ($user->can('access-client', $client)))
+            {
+                $widget = $client->widgets()->where('widget_type', '=', 'pie-chart')->first();
+                // @todo - get user_widget_overrides
+
+                if(!is_null($widget))
+                {
+                    $service = $this->client_svc_repo->getService($widget->service);
+
+                    // @todo - get props if necessary
+                    $box = $service->{$widget->function}();
+
+                    // @todo - get list of other pie charts available to the user
+                    // @todo - if client is 1 get all pie chart widgets
+                    // @todo - else scope the client id.
+
+                    if(count($box) > 0)
+                    {
+                        $results = ['success' => true, 'data' => $box];
+                    }
+                    else
+                    {
+                        $results['reason'] = 'No Pie Chart Widget Data Available';
+                    }
+                }
+            }
+        }
+
+        return response()->json($results);
+    }
 }

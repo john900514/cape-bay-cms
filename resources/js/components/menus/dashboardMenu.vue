@@ -10,9 +10,13 @@
             </div>
 
             <div id="infoRow">
-                <div id="rightWidget">
-                    <div id="innerRightWidget">
-                        <pie-chart-widget></pie-chart-widget>
+                <div class="info-row">
+                    <div id="rightWidget">
+                        <div id="innerRightWidget">
+                            <pie-chart-widget
+                                :client="clientID"
+                            ></pie-chart-widget>
+                        </div>
                     </div>
                 </div>
 

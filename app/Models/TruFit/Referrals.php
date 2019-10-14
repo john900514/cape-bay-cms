@@ -1,9 +1,10 @@
 <?php
 
-namespace App\ExternalModels\TruFit\mySQL;
+namespace App\Models\TruFit;
 
 use App\Traits\UuidModel;
 use Backpack\CRUD\CrudTrait;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -36,6 +37,22 @@ class Referrals extends Model
         if($model->save())
         {
             $results = $model;
+        }
+
+        return $results;
+    }
+
+    public function getReferralBreakDown()
+    {
+        $results = false;
+
+        $report = $this->select('campaign', DB::raw('count(campaign) as total'))
+            ->groupBy('campaign')
+            ->get();
+
+        if(count($report) > 0)
+        {
+            $results = $report->toArray();
         }
 
         return $results;

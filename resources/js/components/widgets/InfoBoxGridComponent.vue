@@ -1,17 +1,33 @@
 <template>
-    <div class="info-box-container">
-        <div v-if="authorized === true" class="row" v-show="infoBoxData.length > 0">
-            <info-box v-for="(box, idx) in infoBoxData" v-bind:key="idx"
-                :class="box.class"
-                :icon="box.icon"
-                :iconbg="box.iconbg"
-                :text="box.text"
-                :value="box.value"
-            ></info-box>
+    <div class="info-box-container box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Latest News Flash</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
         </div>
-        <div v-else>
-            <h1> Not Authorized to Access Widget Line Up. </h1>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div v-if="authorized === true" class="row" v-show="infoBoxData.length > 0">
+                        <info-box v-for="(box, idx) in infoBoxData" v-bind:key="idx"
+                                  :class="box.class"
+                                  :icon="box.icon"
+                                  :iconbg="box.iconbg"
+                                  :text="box.text"
+                                  :value="box.value"
+                        ></info-box>
+                    </div>
+                    <div v-else>
+                        <h1> Not Authorized to Access Widget Line Up. </h1>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 </template>
 

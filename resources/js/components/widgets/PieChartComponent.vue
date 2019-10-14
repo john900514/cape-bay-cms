@@ -10,16 +10,18 @@
     import Chart from 'chart.js'
     export default {
         name: "PieChartComponent",
+        props: ['labels', 'dataset', 'bgColor'],
         methods: {
             renderPieChart() {
+                let _this = this;
                 let pieChartCanvas = $('#pieChart');
                 let data = {
                     datasets: [{
-                        data: [700,500,400,600,300,100],
-                        "backgroundColor": ["#f56954","#00a65a","#f39c12",'#00c0ef','#3c8dbc', '#d2d6de']
+                        data: _this.dataset,//[700,500,400,600,300,100],
+                        "backgroundColor": _this.bgColor,//["#f56954","#00a65a","#f39c12",'#00c0ef','#3c8dbc', '#d2d6de']
 
                     }],
-                    labels: ['Chrome', 'IE', 'FireFox', 'Safari', 'Opera', 'Navigator']
+                    labels: _this.labels//['Chrome', 'IE', 'FireFox', 'Safari', 'Opera', 'Navigator']
                     /*
                      misc: {
                             "type":"doughnut",
@@ -83,6 +85,7 @@
         },
         mounted() {
             this.renderPieChart();
+            console.log('Pie Chart Loaded')
         }
     }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="box box-primary">
+    <div class="box box-primary" v-show="hasData">
         <div class="box-header with-border">
             <h3 class="box-title">Recently Added Products</h3>
 
@@ -75,7 +75,12 @@
 
 <script>
     export default {
-        name: "RecentlyAddedComponent"
+        name: "RecentlyAddedComponent",
+        data() {
+            return {
+                hasData: false,
+            };
+        },
     }
 </script>
 

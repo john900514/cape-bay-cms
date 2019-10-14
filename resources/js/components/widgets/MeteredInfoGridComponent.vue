@@ -1,5 +1,5 @@
 <template>
-    <div id="infoBoxGridContainer">
+    <div id="infoBoxGridContainer" v-show="hasData">
         <!-- Info Boxes Style 2 -->
         <div class="info-box bg-yellow">
             <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
@@ -74,7 +74,12 @@
 
 <script>
     export default {
-        name: "MeteredInfoGridComponent"
+        name: "MeteredInfoGridComponent",
+        data() {
+            return {
+                hasData: false,
+            };
+        },
     }
 </script>
 
