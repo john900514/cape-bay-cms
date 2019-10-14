@@ -84,6 +84,7 @@
             }
         },
         mounted() {
+            // @todo - detect screen size so the chart can render with a viewable width
             this.renderPieChart();
             console.log('Pie Chart Loaded')
         }
