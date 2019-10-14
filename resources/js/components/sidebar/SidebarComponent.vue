@@ -11,14 +11,14 @@
             </a>
         </li>
         <li class="treeview">
-            <a href="#"><i class="fa fa-link"></i> <span>Clients</span>
+            <a href="#"><i class="fa fa-link"></i> <span>{{ clientLabel }}</span>
                 <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
                 <li v-for="(ray, idx) in clients">
-                    <a :href="dashboardurl+'/'+ray.client_id">{{ray.name}}</a>
+                    <a :href="dashboardurl+'/'+ray.client_id">{{ getName(ray.name, ray.client_id) }}</a>
                 </li>
             </ul>
         </li>
@@ -35,6 +35,7 @@
                 options: {},
                 clients: [],
                 activeClient: 0,
+                clientLabel: ''
             };
         },
         methods: {
@@ -59,6 +60,18 @@
                         console.log('Anchor Response - ', data);
                         _this.clients = data;
                     })
+            },
+            getName(name, client_id) {
+                 if(client_id === 1) {
+                     this. clientLabel = 'Clients';
+                 }
+                 else {
+                     if(this.clientLabel !== 'Clients' && this.clientLabel !== 'Accounts') {
+                         this.clientLabel = 'Accounts'
+                     }
+                 }
+
+                return name;
             }
         },
         mounted() {
