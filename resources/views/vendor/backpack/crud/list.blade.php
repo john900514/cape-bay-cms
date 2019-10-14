@@ -1,4 +1,4 @@
-@extends('backpack::layout')
+@extends('backpack::layout', ['client_id'=> $client_id])
 
 @section('header')
 	<section class="content-header">
@@ -15,87 +15,92 @@
 @endsection
 
 @section('content')
-<!-- Default box -->
-  <div class="row">
+    <!-- Default box -->
+    @if($can_report)
+      <div class="row">
+        <!-- THE ACTUAL CONTENT -->
+        <div class="{{ $crud->getListContentClass() }}">
+          <div class="">
 
-    <!-- THE ACTUAL CONTENT -->
-    <div class="{{ $crud->getListContentClass() }}">
-      <div class="">
+            <div class="row m-b-10">
+              <div class="col-xs-6">
+                @if ( $crud->buttons->where('stack', 'top')->count() ||  $crud->exportButtons())
+                <div class="hidden-print {{ $crud->hasAccess('create')?'with-border':'' }}">
 
-        <div class="row m-b-10">
-          <div class="col-xs-6">
-            @if ( $crud->buttons->where('stack', 'top')->count() ||  $crud->exportButtons())
-            <div class="hidden-print {{ $crud->hasAccess('create')?'with-border':'' }}">
+                  @include('crud::inc.button_stack', ['stack' => 'top'])
 
-              @include('crud::inc.button_stack', ['stack' => 'top'])
-
+                </div>
+                @endif
+              </div>
+              <div class="col-xs-6">
+                  <div id="datatable_search_stack" class="pull-right"></div>
+              </div>
             </div>
+
+            {{-- Backpack List Filters --}}
+            @if ($crud->filtersEnabled())
+              @include('crud::inc.filters_navbar')
             @endif
-          </div>
-          <div class="col-xs-6">
-              <div id="datatable_search_stack" class="pull-right"></div>
-          </div>
+
+            <div class="overflow-hidden">
+
+            <table id="crudTable" class="box table table-striped table-hover display responsive nowrap m-t-0" cellspacing="0">
+                <thead>
+                  <tr>
+                    {{-- Table columns --}}
+                    @foreach ($crud->columns as $column)
+                      <th
+                        data-orderable="{{ var_export($column['orderable'], true) }}"
+                        data-priority="{{ $column['priority'] }}"
+                        data-visible="{{ var_export($column['visibleInTable'] ?? true) }}"
+                        data-visible-in-modal="{{ var_export($column['visibleInModal'] ?? true) }}"
+                        data-visible-in-export="{{ var_export($column['visibleInExport'] ?? true) }}"
+                        >
+                        {!! $column['label'] !!}
+                      </th>
+                    @endforeach
+
+                    @if ( $crud->buttons->where('stack', 'line')->count() )
+                      <th data-orderable="false" data-priority="{{ $crud->getActionsColumnPriority() }}" data-visible-in-export="false">{{ trans('backpack::crud.actions') }}</th>
+                    @endif
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    {{-- Table columns --}}
+                    @foreach ($crud->columns as $column)
+                      <th>{!! $column['label'] !!}</th>
+                    @endforeach
+
+                    @if ( $crud->buttons->where('stack', 'line')->count() )
+                      <th>{{ trans('backpack::crud.actions') }}</th>
+                    @endif
+                  </tr>
+                </tfoot>
+              </table>
+
+              @if ( $crud->buttons->where('stack', 'bottom')->count() )
+              <div id="bottom_buttons" class="hidden-print">
+                @include('crud::inc.button_stack', ['stack' => 'bottom'])
+
+                <div id="datatable_button_stack" class="pull-right text-right hidden-xs"></div>
+              </div>
+              @endif
+
+            </div><!-- /.box-body -->
+
+          </div><!-- /.box -->
         </div>
-
-        {{-- Backpack List Filters --}}
-        @if ($crud->filtersEnabled())
-          @include('crud::inc.filters_navbar')
-        @endif
-
-        <div class="overflow-hidden">
-
-        <table id="crudTable" class="box table table-striped table-hover display responsive nowrap m-t-0" cellspacing="0">
-            <thead>
-              <tr>
-                {{-- Table columns --}}
-                @foreach ($crud->columns as $column)
-                  <th
-                    data-orderable="{{ var_export($column['orderable'], true) }}"
-                    data-priority="{{ $column['priority'] }}"
-                    data-visible="{{ var_export($column['visibleInTable'] ?? true) }}"
-                    data-visible-in-modal="{{ var_export($column['visibleInModal'] ?? true) }}"
-                    data-visible-in-export="{{ var_export($column['visibleInExport'] ?? true) }}"
-                    >
-                    {!! $column['label'] !!}
-                  </th>
-                @endforeach
-
-                @if ( $crud->buttons->where('stack', 'line')->count() )
-                  <th data-orderable="false" data-priority="{{ $crud->getActionsColumnPriority() }}" data-visible-in-export="false">{{ trans('backpack::crud.actions') }}</th>
-                @endif
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-              <tr>
-                {{-- Table columns --}}
-                @foreach ($crud->columns as $column)
-                  <th>{!! $column['label'] !!}</th>
-                @endforeach
-
-                @if ( $crud->buttons->where('stack', 'line')->count() )
-                  <th>{{ trans('backpack::crud.actions') }}</th>
-                @endif
-              </tr>
-            </tfoot>
-          </table>
-
-          @if ( $crud->buttons->where('stack', 'bottom')->count() )
-          <div id="bottom_buttons" class="hidden-print">
-            @include('crud::inc.button_stack', ['stack' => 'bottom'])
-
-            <div id="datatable_button_stack" class="pull-right text-right hidden-xs"></div>
-          </div>
-          @endif
-
-        </div><!-- /.box-body -->
-
-      </div><!-- /.box -->
-    </div>
-
-  </div>
-
+      </div>
+    @else
+        <div>
+            <unauthorized
+                error-code="401"
+            ></unauthorized>
+        </div>
+    @endif
 @endsection
 
 @section('after_styles')

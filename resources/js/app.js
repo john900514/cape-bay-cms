@@ -45,6 +45,8 @@ Vue.component('pie-chart-widget', require('./components/widgets/PieChartWidgetCo
 Vue.component('metered-info-grid', require('./components/widgets/MeteredInfoGridComponent.vue').default);
 Vue.component('recent-added-list', require('./components/widgets/RecentlyAddedComponent.vue').default);
 
+Vue.component('unauthorized', require('./components/widgets/UnAuthorizedComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

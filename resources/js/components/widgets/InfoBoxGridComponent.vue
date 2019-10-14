@@ -19,6 +19,7 @@
                                   :iconbg="box.iconbg"
                                   :text="box.text"
                                   :value="box.value"
+                                  :url="box.url"
                         ></info-box>
                     </div>
                     <div v-else>

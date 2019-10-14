@@ -32,4 +32,38 @@ class ClientServiceRepository
 
         return $results;
     }
+
+    public function getEnrollmentCrudModel($client_id)
+    {
+        switch($client_id)
+        {
+            case 2:
+                $results = '\App\Models\TruFit\Conversions';
+                break;
+
+            case 7:
+                $results = '\App\Models\TAC\Transactions';
+                break;
+            default:
+                $results = false;
+        }
+
+        return $results;
+    }
+
+    public function getEnrollmentFieldDefs($client_id)
+    {
+        switch($client_id)
+        {
+            case 2:
+                $results = $this->trufit->getEnrollmentCrudFields();
+                break;
+
+            case 7:
+            default:
+                $results = [];
+        }
+
+        return $results;
+    }
 }

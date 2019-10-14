@@ -1,7 +1,9 @@
 <template>
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
-            <span class="info-box-icon" :class="iconbg"><i :class="icon"></i></span>
+            <span class="info-box-icon" :class="iconbg">
+                <a :href="url"><i :class="icon"></i></a>
+            </span>
 
             <div class="info-box-content">
                 <span class="info-box-text">{{ text }}</span>
@@ -16,7 +18,7 @@
 <script>
     export default {
         name: "InfoBoxComponenet",
-        props: ['icon','iconbg','text','value'],
+        props: ['icon','iconbg','text','value', 'url'],
     }
 </script>
 

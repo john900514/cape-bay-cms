@@ -31,7 +31,8 @@ class TheAtheticClubClientService
                 'icon'   => 'ion ion-ios-gear-outline',
                 'iconbg' => 'bg-green',
                 'text'   => 'TAC Enrollments',
-                'value'  => $records->total
+                'value'  => $records->total,
+                'url'    => '/cms/7/enrollments'
             ];
         }
 
@@ -51,7 +52,8 @@ class TheAtheticClubClientService
                 'icon'   => 'ion ion-ios-gear-outline',
                 'iconbg' => 'bg-orange',
                 'text'   => 'TAC Leads',
-                'value'  => $records->total
+                'value'  => $records->total,
+                'url'    => '/cms/7/leads/'
             ];
         }
 

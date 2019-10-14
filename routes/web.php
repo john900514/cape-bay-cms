@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/error/{code}', function(string $code) {
+    return view('errors.'.$code);
+});
+
 Route::get('dashboard', 'DashboardController@client_dashboard')->name('dashboard');
 Route::get('dashboard/{client_id}', 'DashboardController@client_dashboard');
 

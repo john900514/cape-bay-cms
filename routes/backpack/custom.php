@@ -25,4 +25,6 @@ Route::group([
         Route::get('/', 'MessagingController@push_notes_index');
     });
 
+    CRUD::resource('/{client_id}/enrollments', 'EnrollmentCrudController');
+
 }); // this should be the absolute last line of this file

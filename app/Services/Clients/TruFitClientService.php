@@ -79,7 +79,8 @@ class TruFitClientService
                 'icon'   => 'ion ion-ios-gear-outline',
                 'iconbg' => 'bg-aqua',
                 'text'   => 'TruFit Total Enrollments',
-                'value'  => $records->total
+                'value'  => $records->total,
+                'url'    => '/cms/2/enrollments'
             ];
         }
 
@@ -100,7 +101,8 @@ class TruFitClientService
                 'icon'   => 'ion ion-ios-gear-outline',
                 'iconbg' => 'bg-red',
                 'text'   => 'TruFit Total Leads',
-                'value'  => $records->total
+                'value'  => $records->total,
+                'url'    => '/cms/2/leads'
             ];
         }
 
@@ -139,6 +141,64 @@ class TruFitClientService
             // Add the label at the end
             $results['name'] = 'TruFit Referral Breakdown';
         }
+
+        return $results;
+    }
+
+    public function getEnrollmentCrudFields()
+    {
+        $results = [
+            [
+                'name' => 'created_at', // the db column name (attribute name)
+                'label' => "Date", // the human-readable label for it
+                'type' => 'text', // the kind of column to show
+                'priority' => 2
+            ],
+            [
+                'name' => 'lead.first_name', // the db column name (attribute name)
+                'label' => "First Name", // the human-readable label for it
+                'type' => 'text', // the kind of column to show
+                'priority' => 1
+            ],
+            [
+                'name' => 'lead.last_name', // the db column name (attribute name)
+                'label' => "Last Name", // the human-readable label for it
+                'type' => 'text', // the kind of column to show
+                'priority' => 1
+            ],
+            [
+                'name' => 'ContractNumber', // the db column name (attribute name)
+                'label' => "Member No.", // the human-readable label for it
+                'type' => 'text', // the kind of column to show
+                'priority' => 2
+            ],
+            [
+                'name' => 'lead.email', // the db column name (attribute name)
+                'label' => "Email", // the human-readable label for it
+                'type' => 'text' // the kind of column to show
+            ],
+            [
+                'name' => 'lead.mobile_phone', // the db column name (attribute name)
+                'label' => "Mobile", // the human-readable label for it
+                'type' => 'text' // the kind of column to show
+            ],
+            [
+                'name' => 'lead.paramount_club_id', // the db column name (attribute name)
+                'label' => "Club ID", // the human-readable label for it
+                'type' => 'text' // the kind of column to show
+            ],
+            [
+                'name' => 'lead.plan_info', // the db column name (attribute name)
+                'label' => "Plan", // the human-readable label for it
+                'type' => 'closure', // the kind of column to show
+                'function' => function($entry) {
+                    $plan_info = json_decode($entry['lead']['plan_info'], true);
+                    return $plan_info['Description'];
+                },
+                'priority' => 1
+            ],
+        ];
+
 
         return $results;
     }
