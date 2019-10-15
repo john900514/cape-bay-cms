@@ -13,6 +13,8 @@ Route::group(
     ], function () {
     Route::get('dashboard', 'DashboardController@dashboard')->name('backpack.dashboard');
     Route::get('dashboard/{client_id}', 'DashboardController@dashboard');
+    Route::get('edit-account-info', 'Auth\AccountController@getAccountInfoForm')->name('backpack.account.info');
+    Route::get('change-password', 'Auth\AccountController@getChangePasswordForm')->name('backpack.account.password');
 });
 
 
@@ -26,5 +28,6 @@ Route::group([
     });
 
     CRUD::resource('/{client_id}/enrollments', 'EnrollmentCrudController');
+    CRUD::resource('/{client_id}/amenities', 'AmenityCrudController');
 
 }); // this should be the absolute last line of this file

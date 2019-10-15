@@ -2,6 +2,7 @@
 
 namespace App\Services\Clients;
 
+use Bouncer;
 use App\Models\TruFit\Leads;
 use App\Models\TruFit\AppUsers;
 use App\Models\TruFit\Referrals;
@@ -80,7 +81,7 @@ class TruFitClientService
                 'iconbg' => 'bg-aqua',
                 'text'   => 'TruFit Total Enrollments',
                 'value'  => $records->total,
-                'url'    => '/cms/2/enrollments'
+                'url'    => (Bouncer::is(backpack_user())->a('client')? '/features/' : '/cms/').'2/enrollments'
             ];
         }
 
@@ -102,7 +103,7 @@ class TruFitClientService
                 'iconbg' => 'bg-red',
                 'text'   => 'TruFit Total Leads',
                 'value'  => $records->total,
-                'url'    => '/cms/2/leads'
+                'url'    => (Bouncer::is(backpack_user())->a('client')? '/features/' : '/cms/').'2/leads'
             ];
         }
 

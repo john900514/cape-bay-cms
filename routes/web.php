@@ -22,6 +22,12 @@ Route::get('/error/{code}', function(string $code) {
 Route::get('dashboard', 'DashboardController@client_dashboard')->name('dashboard');
 Route::get('dashboard/{client_id}', 'DashboardController@client_dashboard');
 
+Route::group(['prefix' => 'features'], function () {
+    CRUD::resource('/{client_id}/enrollments', 'Admin\EnrollmentCrudController');
+    CRUD::resource('/{client_id}/amenities', 'Admin\AmenityCrudController');
+});
+
+
 Route::group(['prefix' => 'components'], function () {
     Route::get('/sidebar', 'API\ComponentsAPIController@get_sidebar');
     Route::get('/sidebar/clients', 'API\ComponentsAPIController@get_clients_sidebar');

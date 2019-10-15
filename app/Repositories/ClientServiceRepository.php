@@ -51,6 +51,21 @@ class ClientServiceRepository
         return $results;
     }
 
+    public function getAmenitiesCrudModel($client_id)
+    {
+        switch($client_id)
+        {
+            case 2:
+                $results = '\App\Models\TruFit\PromoAmenities';
+                break;
+
+            default:
+                $results = false;
+        }
+
+        return $results;
+    }
+
     public function getEnrollmentFieldDefs($client_id)
     {
         switch($client_id)

@@ -8,16 +8,16 @@ use App\Repositories\ClientServiceRepository;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 
 // VALIDATION: change the requests to match your own file names if you need form validation
-use App\Http\Requests\EnrollmentRequest as StoreRequest;
-use App\Http\Requests\EnrollmentRequest as UpdateRequest;
+use App\Http\Requests\AmenityRequest as StoreRequest;
+use App\Http\Requests\AmenityRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
 
 /**
- * Class EnrollmentCrudController
+ * Class AmenityCrudController
  * @package App\Http\Controllers\Admin
  * @property-read CrudPanel $crud
  */
-class EnrollmentCrudController extends CrudController
+class AmenityCrudController extends CrudController
 {
     protected $clients, $client_svc_repo;
 
@@ -37,31 +37,30 @@ class EnrollmentCrudController extends CrudController
 
         if(Bouncer::is(backpack_user())->a('client'))
         {
-            $this->crud->setRoute( "features/{$client_id}/enrollments");
+            $this->crud->setRoute( "features/{$client_id}/amenities");
         }
         else
         {
-            $this->crud->setRoute(config('backpack.base.route_prefix') . "/{$client_id}/enrollments");
+            $this->crud->setRoute(config('backpack.base.route_prefix') . "/{$client_id}/amenities");
         }
 
-        $this->crud->setEntityNameStrings('enrollment', 'enrollments');
+        $this->crud->setEntityNameStrings('amenity', 'amenities');
 
-        $can_report = $client->abilities()->get()->where('name', '=', 'report-enrollments')->first();
+        $can_adjust = $client->abilities()->get()->where('name', '=', 'has-amenities')->first();
 
-        if(!is_null($can_report) > 0)
+        if(!is_null($can_adjust) > 0)
         {
             if((!Bouncer::is(backpack_user())->a('client')) || (backpack_user()->can('access-client', $client)))
             {
                 /*
-                 |--------------------------------------------------------------------------
-                 | CrudPanel Basic Information
-                 |--------------------------------------------------------------------------
+                |--------------------------------------------------------------------------
+                | CrudPanel Basic Information
+                |--------------------------------------------------------------------------
                 */
-                $model_name = $this->client_svc_repo->getEnrollmentCrudModel($client_id);
+                $model_name = $this->client_svc_repo->getAmenitiesCrudModel($client_id);
                 if($model_name)
                 {
                     $this->crud->setModel($model_name);
-                    $this->crud->with('lead');
 
                     /*
                     |--------------------------------------------------------------------------
@@ -70,15 +69,11 @@ class EnrollmentCrudController extends CrudController
                     */
 
                     // TODO: remove setFromDb() and manually define Fields and Columns
-                    //$this->crud->setFromDb();
+                    $this->crud->setFromDb();
 
-                    $column_defs = $this->client_svc_repo->getEnrollmentFieldDefs($client_id);
-                    $this->crud->addColumns($column_defs);
-                    $this->crud->denyAccess('update');
-
-                    // add asterisk for fields that are required in EnrollmentRequest
-                    $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+                    // add asterisk for fields that are required in AmenityRequest
                     $this->crud->setRequiredFields(StoreRequest::class, 'create');
+                    $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
                     $this->data['can_report'] = true;
                 }
                 else
