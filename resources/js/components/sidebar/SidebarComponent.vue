@@ -22,6 +22,11 @@
                 </li>
             </ul>
         </li>
+        <li v-for="(opt, idx) in contextOptions">
+            <a :href="$parent.anchorCMS.backpackURL+'/'+clientId+'/'+opt.route">
+                <i :class="opt.icon" :style="'margin-right: 5px;'"></i> <span>{{ opt.name }}</span>
+            </a>
+        </li>
     </div>
 </template>
 
@@ -33,6 +38,7 @@
         data() {
             return {
                 options: {},
+                contextOptions: {},
                 clients: [],
                 activeClient: 0,
                 clientLabel: ''
@@ -61,6 +67,17 @@
                         _this.clients = data;
                     })
             },
+            getClientContextOptions() {
+                let _this = this;
+                console.log('Reaching out to Anchor for Client Context Options...')
+                axios
+                    .get('/components/sidebar/clients/'+_this.clientId+'/context')
+                    .then(response => {
+                        let data = response.data;
+                        console.log('Anchor Context Response - ', data);
+                        _this.contextOptions = data;
+                    })
+            },
             getName(name, client_id) {
                  if(client_id === 1) {
                      this. clientLabel = 'Clients';
@@ -79,6 +96,7 @@
             console.log('Client Sidebar linked to -'+ this.clientId);
             this.getMenuOptions();
             this.getClientOptions();
+            this.getClientContextOptions();
         }
     }
 </script>

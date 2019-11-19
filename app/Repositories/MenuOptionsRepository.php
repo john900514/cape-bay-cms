@@ -21,6 +21,26 @@ class MenuOptionsRepository
             ->where('active', '=', 1)
             ->where('menu_name', '=', $menu_name)
             ->whereIn('permitted_role', $roles)
+            ->whereNull('client_id')
+            ->orderBy('order')
+            ->get();
+
+        if(count($records) > 0)
+        {
+            $results = $records->toArray();
+        }
+        return $results;
+    }
+
+    public function getContextMenuOptions($menu_name, array $roles, $client_id)
+    {
+        $results = [];
+
+        $records = $this->menu_options->getModel()
+            ->where('active', '=', 1)
+            ->where('menu_name', '=', $menu_name)
+            ->whereIn('permitted_role', $roles)
+            ->where('client_id', '=', $client_id)
             ->orderBy('order')
             ->get();
 

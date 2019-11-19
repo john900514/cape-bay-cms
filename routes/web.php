@@ -31,6 +31,7 @@ Route::group(['prefix' => 'features'], function () {
 Route::group(['prefix' => 'components'], function () {
     Route::get('/sidebar', 'API\ComponentsAPIController@get_sidebar');
     Route::get('/sidebar/clients', 'API\ComponentsAPIController@get_clients_sidebar');
+    Route::get('/sidebar/clients/{client_id}/context', 'API\ComponentsAPIController@get_clients_context_sidebar');
     Route::get('/clients/{for}', 'API\ComponentsAPIController@get_clients');
     Route::get('/push-notes/platforms/{client_id}', 'API\ComponentsAPIController@get_push_note_platforms');
 
