@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ExternalModels\TruFit\mySQL;
+namespace App\Models\TruFit;
 
 use App\Traits\UuidModel;
 use Illuminate\Database\Eloquent\Model;

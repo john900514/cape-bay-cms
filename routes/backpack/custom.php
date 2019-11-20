@@ -30,5 +30,6 @@ Route::group([
     CRUD::resource('/{client_id}/enrollments', 'EnrollmentCrudController');
     CRUD::resource('/{client_id}/amenities', 'AmenityCrudController');
     CRUD::resource('/{client_id}/pixels', 'PixelCrudController');
+    CRUD::resource('/{client_id}/budgets', 'AdBudgetsCrudController');
 
 }); // this should be the absolute last line of this file
