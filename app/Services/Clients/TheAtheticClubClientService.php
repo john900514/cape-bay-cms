@@ -3,6 +3,7 @@
 namespace App\Services\Clients;
 
 use App\Models\TAC\Leads;
+use App\Models\TAC\AppUsers;
 use App\Models\TAC\Transactions;
 use Illuminate\Support\Facades\DB;
 
@@ -10,9 +11,10 @@ class TheAtheticClubClientService
 {
     protected $leads, $transactions;
 
-    public function __construct(Transactions $transactions, Leads $leads)
+    public function __construct(AppUsers $app_users,Transactions $transactions, Leads $leads)
     {
         $this->leads = $leads;
+        $this->app_users = $app_users;
         $this->transactions = $transactions;
     }
 
@@ -58,5 +60,32 @@ class TheAtheticClubClientService
         }
 
         return $results;
+    }
+
+    public function getMobileUsers()
+    {
+        $result = false;
+
+        $users = $this->app_users->whereNotNull('expo_push_token')
+            //->limit(100)
+            ->get();
+
+        if(count($users) > 0)
+        {
+            $prog = [];
+            foreach($users as $user)
+            {
+                $user->last_login = date('Y-m-d m:i:s', $user->last_login);
+                $prog[] = $user->toArray();
+
+            }
+            // @todo - any any of necessary data
+            $result = [
+                'note' => 'mobile',
+                'users' => $prog
+            ];
+        }
+
+        return $result;
     }
 }

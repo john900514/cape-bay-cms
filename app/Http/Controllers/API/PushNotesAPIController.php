@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Ixudra\Curl\Facades\Curl;
 use App\Models\TruFit\AppUsers;
+use App\Models\TAC\AppUsers as TACAppUsers;
 use App\Actions\PushNotes\GetPushNotesUsers;
 use App\Notifications\FireExpoPushNote;
 use App\Services\PNMobileAppService;
@@ -29,7 +30,7 @@ class PushNotesAPIController extends Controller
         $data = $this->request->all();
         if(array_key_exists('clientId', $data))
         {
-            if($data['clientId'] == 2)
+            if($data['clientId'] == 2 || $data['clientId'] == 7)
             {
                 if(count($data['users']) <= 30)
                 {
@@ -39,7 +40,10 @@ class PushNotesAPIController extends Controller
                         {
                             if($user['push_type'] == 'mobile')
                             {
-                                $app_user = AppUsers::where('expo_push_token','=', $user['push_token'])->first();
+                                $app_user = ($data['clientId'] == 2)
+                                    ? AppUsers::where('expo_push_token','=', $user['push_token'])->first()
+                                    : TACAppUsers::where('expo_push_token','=', $user['push_token'])->first()
+                                ;
 
                                 if(!is_null($app_user))
                                 {

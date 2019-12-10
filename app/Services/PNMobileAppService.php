@@ -2,15 +2,17 @@
 
 namespace App\Services;
 
+use App\Services\Clients\TheAtheticClubClientService;
 use App\Services\Clients\TruFitClientService;
 
 class PNMobileAppService
 {
-    public $trufit;
+    public $tac, $trufit;
 
-    public function __construct(TruFitClientService $trufit)
+    public function __construct(TruFitClientService $trufit, TheAtheticClubClientService $tac)
     {
         $this->trufit = $trufit;
+        $this->tac = $tac;
     }
 
     public function getUsers(int $client_id)
@@ -21,6 +23,10 @@ class PNMobileAppService
         {
             case 2:
                 $results = $this->trufit->getMobileUsers();
+                break;
+
+            case 7:
+                $results = $this->tac->getMobileUsers();
                 break;
         }
 
