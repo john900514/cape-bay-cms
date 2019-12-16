@@ -8,10 +8,11 @@ use Illuminate\Notifications\Notification;
 
 class FireExpoPushNote extends Notification
 {
-    protected $msg;
-    public function __construct(string $msg)
+    protected $msg, $url;
+    public function __construct(string $msg, string $url = '')
     {
         $this->msg = $msg;
+        $this->url = $url;
     }
 
     public function via($notifiable)
@@ -25,6 +26,7 @@ class FireExpoPushNote extends Notification
             ->badge(1)
             ->enableSound()
             ->title('TruFit Announcement!')
+            ->setJsonData(['url' => $this->url])
             ->body($this->msg);
     }
 }

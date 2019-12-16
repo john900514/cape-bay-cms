@@ -15,13 +15,24 @@
                             </div>
                             <div class="custom-msg">
                                 <v-textarea
-                                    v-show="selectedTemplate === 0"
+                                    v-show="(selectedTemplate === 0) || (selectedTemplate === 1)"
                                     outlined
                                     name="input-7-4"
                                     label="Custom Message"
                                     :value="customMessage"
                                     v-model="customMessage"
                                 ></v-textarea>
+                            </div>
+
+                            <div class="url">
+                                <v-text-field
+                                    v-show="selectedTemplate === 1"
+                                    outlined
+                                    name="input-7-4"
+                                    label="URL - e.g example.com"
+                                    :value="customURL"
+                                    v-model="customURL"
+                                ></v-text-field>
                             </div>
                         </div>
 
@@ -113,6 +124,7 @@
                 selectedTemplate: '',
                 messageTemplates: [],
                 customMessage: '',
+                customURL: '',
                 itemsPerPage: 200,
                 footerProps: {
                     'items-per-page-options': [10,100,200,500,1000,-1]
@@ -154,7 +166,8 @@
             },
             getTemplates() {
                 let results = [
-                    {text: 'Custom (One-Time) Message', value: 0}
+                    {text: 'Custom (One-Time) Message', value: 0},
+                    {text: 'Custom (One-Time) Msg & Page Load', value: 1}
                 ];
                 // @todo - ping the server for templates;
 
@@ -171,7 +184,8 @@
                             let data = {
                                 users: this.selected,
                                 message: this.customMessage,
-                                clientId: this.$parent.clients[this.$parent.selectedClient]
+                                clientId: this.$parent.clients[this.$parent.selectedClient],
+                                url: this.customURL
                             };
                             axios({
                                 method: 'POST',

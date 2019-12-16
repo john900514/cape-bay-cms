@@ -49,7 +49,10 @@ class PushNotesAPIController extends Controller
                                 {
                                     Log::info('Hoping to send push note to user '.$app_user->id);
                                     $this->subscribe($user['push_token'], $app_user, $channel);
-                                    $app_user->notify(new FireExpoPushNote($data['message']));
+                                    $app_user->notify(new FireExpoPushNote($data['message'], $data['url']));
+
+                                    // @todo - log the push note in the client's push_notes pgSQL table
+
                                 }
                                 else
                                 {
@@ -134,7 +137,7 @@ class PushNotesAPIController extends Controller
                 $results = ['success' => true];
             }
             //@todo - support other clients here
-            // @todo - make this dynamic
+            //@todo - make this dynamic
         }
 
         return response()->json($results);
