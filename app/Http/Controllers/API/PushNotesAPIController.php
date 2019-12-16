@@ -34,6 +34,29 @@ class PushNotesAPIController extends Controller
             {
                 if(count($data['users']) <= 30)
                 {
+                    switch($data['clientId'])
+                    {
+                        case 7:
+                            $push_note = new \App\Models\TAC\PushNotifications();
+                            $push_note->text = $data['message'];
+                            $push_note->date = date('Y-m-d m:i:s').'.000+00';
+                            $push_note->number_recipients = count($data['users']);
+                            $push_note->open_count = 0;
+                            $push_note->did_send = true;
+                            $push_note->save();
+                            break;
+
+                        case 2:
+                        default:
+                            $push_note = new \App\Models\TruFit\PushNotifications();
+                            $push_note->text = $data['message'];
+                            $push_note->date = date('Y-m-d m:i:s').'.000+00';
+                            $push_note->number_recipients = count($data['users']);
+                            $push_note->open_count = 0;
+                            $push_note->did_send = true;
+                            $push_note->save();
+                    }
+
                     foreach($data['users'] as $idx => $user)
                     {
                         if(array_key_exists('push_type', $user))
@@ -49,10 +72,7 @@ class PushNotesAPIController extends Controller
                                 {
                                     Log::info('Hoping to send push note to user '.$app_user->id);
                                     $this->subscribe($user['push_token'], $app_user, $channel);
-                                    $app_user->notify(new FireExpoPushNote($data['message'], $data['url']));
-
-                                    // @todo - log the push note in the client's push_notes pgSQL table
-
+                                    $app_user->notify(new FireExpoPushNote($data['message'], $push_note->id, $data['url']));
                                 }
                                 else
                                 {
