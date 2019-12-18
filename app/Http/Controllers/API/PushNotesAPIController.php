@@ -72,7 +72,8 @@ class PushNotesAPIController extends Controller
                                 {
                                     Log::info('Hoping to send push note to user '.$app_user->id);
                                     $this->subscribe($user['push_token'], $app_user, $channel);
-                                    $app_user->notify(new FireExpoPushNote($data['message'], $push_note->id, $data['url']));
+                                    $url = is_null($data['url']) ? '' : $data['url'];
+                                    $app_user->notify(new FireExpoPushNote($data['message'], $push_note->id, $url));
                                 }
                                 else
                                 {

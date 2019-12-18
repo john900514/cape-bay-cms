@@ -27,7 +27,6 @@ Route::group(['prefix' => 'features'], function () {
     CRUD::resource('/{client_id}/amenities', 'Admin\AmenityCrudController');
 });
 
-
 Route::group(['prefix' => 'components'], function () {
     Route::get('/sidebar', 'API\ComponentsAPIController@get_sidebar');
     Route::get('/sidebar/clients', 'API\ComponentsAPIController@get_clients_sidebar');
@@ -47,5 +46,11 @@ Route::group(['prefix' => 'users'], function () {
 
     Route::get('/push-notes/{client_id}/{platform_id}', 'API\PushNotesAPIController@get_push_notes_users');
     Route::post('/push-notes/fire', 'API\PushNotesAPIController@fire');
+});
+
+// Muthafuckin Tracking Pixels You fucking Son of bitch!
+Route::group(['prefix' => 'pizza'], function () {
+    Route::get('{client_uuid}', 'PixelErmPizzaController@get_pixel');
+    Route::get('{client_uuid}/pizza-lib', 'PixelErmPizzaController@get_pixel_js');
 });
 

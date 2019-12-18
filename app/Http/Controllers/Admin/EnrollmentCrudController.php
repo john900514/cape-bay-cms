@@ -61,7 +61,10 @@ class EnrollmentCrudController extends CrudController
                 if($model_name)
                 {
                     $this->crud->setModel($model_name);
-                    $this->crud->with('lead');
+                    if($client_id == '2')
+                    {
+                        $this->crud->with('lead');
+                    }
 
                     /*
                     |--------------------------------------------------------------------------

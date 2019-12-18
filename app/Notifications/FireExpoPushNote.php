@@ -26,7 +26,7 @@ class FireExpoPushNote extends Notification
         return ExpoMessage::create()
             ->badge(1)
             ->enableSound()
-            ->title('TruFit Announcement!')
+            ->title('Mobile Announcement!')
             ->setJsonData(['url' => $this->url, 'pushnotes_id' => $this->note_id])
             ->body($this->msg);
     }

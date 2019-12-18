@@ -3,13 +3,14 @@
 namespace App\Models\TAC;
 
 use App\Traits\UuidModel;
+use Backpack\CRUD\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Transactions extends Model
 {
-    use LogsActivity, SoftDeletes, UuidModel;
+    use CrudTrait, LogsActivity, SoftDeletes, UuidModel;
 
     protected $connection = 'tac-main-api-mysql';
 
