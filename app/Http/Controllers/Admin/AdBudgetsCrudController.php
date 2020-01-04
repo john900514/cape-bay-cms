@@ -70,6 +70,7 @@ class AdBudgetsCrudController extends CrudController
                 'entity' => 'market',
                 'priority' => 2
             ];
+
             $v_club_name = [
                 'name' => 'club_id',
                 'label' => 'Club',
@@ -120,8 +121,55 @@ class AdBudgetsCrudController extends CrudController
                 },
                 'priority' => 3
             ];
+            $v_fb_current_spend = [
+                'name' => 'created_at', // the db column name (attribute name)
+                'label' => "Current Spend (Facebook)", // the human-readable label for it
+                'type' => 'closure',
+                'function' => function($entry) {
+                    $results = 'Requires Budget';
 
-            $column_defs = [$v_market_name, $v_club_name, $v_facebook_budget, $v_google_budget];
+                    if(!is_null($entry->facebook_ig_budget))
+                    {
+                        // Get the day of the month (yesterday)
+                        $day_of_mo = intval(date('d',strtotime('-1 day')));
+                        // Get the amount of days in the current month
+                        $days_in_mo = intval(date('t'));
+                        // Do the math
+                        $spend = number_format(($entry->facebook_ig_budget / $days_in_mo) * $day_of_mo, 2);
+                        // Return with a $sign
+                        $results = '$'.$spend;
+                    }
+
+                    return $results;
+                },
+                'priority' => 3
+            ];
+
+            $v_google_current_spend = [
+                'name' => 'updated_at', // the db column name (attribute name)
+                'label' => "Current Spend (Google)", // the human-readable label for it
+                'type' => 'closure',
+                'function' => function($entry) {
+                    $results = 'Requires Budget';
+
+                    if(!is_null($entry->google_budget))
+                    {
+                        // Get the day of the month (yesterday)
+                        $day_of_mo = intval(date('d',strtotime('-1 day')));
+                        // Get the amount of days in the current month
+                        $days_in_mo = intval(date('t'));
+                        // Do the math
+                        $spend = number_format(($entry->google_budget / $days_in_mo) * $day_of_mo, 2);
+                        // Return with a $sign
+                        $results = '$'.$spend;
+                    }
+
+                    return $results;
+                },
+                'priority' => 3
+            ];
+
+            $column_defs = [$v_market_name, $v_club_name, $v_facebook_budget, $v_fb_current_spend, $v_google_budget, $v_google_current_spend];
             $this->crud->addColumns($column_defs);
 
             $cu_client_id = [   // Hidden
@@ -164,6 +212,7 @@ class AdBudgetsCrudController extends CrudController
             // add asterisk for fields that are required in AdBudgetsRequest
             $this->crud->setRequiredFields(StoreRequest::class, 'create');
             $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+            $this->crud->enableExportButtons();
             $this->data['can_report'] = true;
         }
         else
