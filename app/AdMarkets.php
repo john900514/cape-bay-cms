@@ -11,4 +11,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class AdMarkets extends Model
 {
     use CrudTrait, LogsActivity, SoftDeletes,UuidModel;
+
+    protected $table = 'ad_markets';
 }
