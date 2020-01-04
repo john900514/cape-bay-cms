@@ -18,3 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/clients/{client_uuid}/leads', 'API\ClientLeadsAPIController@post_lead');
+
+Route::get('/clients/{client_uuid}/budgets', 'API\ClientAdBudgetsAPIController@get_all_budget_data');
+Route::get('/clients/{client_uuid}/budgets/market/{name}', 'API\ClientAdBudgetsAPIController@get_budget_data_for_market');
+Route::get('/clients/{client_uuid}/budgets/club/{club_id}', 'API\ClientAdBudgetsAPIController@get_budget_data_for_club');
