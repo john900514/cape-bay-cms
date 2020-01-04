@@ -6,4 +6,11 @@
         transDash: '{{ trans('backpack::base.dashboard') }}'
     };
 </script>
-<script src="{{ asset('js/app.js') }}" defer></script>
+
+@switch(true)
+    @case(strpos(request()->route()->uri(),'budgets') !== false)
+    @break
+    @default
+    <script src="{{ asset('js/app.js') }}" defer></script>
+@endswitch
+
