@@ -54,3 +54,6 @@ Route::group(['prefix' => 'pizza'], function () {
     Route::get('{client_uuid}/pizza-lib', 'PixelErmPizzaController@get_pixel_js');
 });
 
+
+Route::get('/get-wifi', 'ConnectWifiController@index');
+
