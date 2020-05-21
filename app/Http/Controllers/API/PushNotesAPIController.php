@@ -56,8 +56,7 @@ class PushNotesAPIController extends Controller
                         $push_note->save();
                 }
 
-                // @todo - change this you fool!
-                if(count($data['users']) <= 0)
+                if(count($data['users']) <= 100)
                 {
                     foreach($data['users'] as $idx => $user)
                     {
