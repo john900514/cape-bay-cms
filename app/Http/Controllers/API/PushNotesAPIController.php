@@ -33,31 +33,32 @@ class PushNotesAPIController extends Controller
         {
             if($data['clientId'] == 2 || $data['clientId'] == 7)
             {
-                if(count($data['users']) <= 100)
+                switch($data['clientId'])
                 {
-                    switch($data['clientId'])
-                    {
-                        case 7:
-                            $push_note = new \App\Models\TAC\PushNotifications();
-                            $push_note->text = $data['message'];
-                            $push_note->date = date('Y-m-d m:i:s');//.'.000+00';
-                            $push_note->number_recipients = count($data['users']);
-                            $push_note->open_count = 0;
-                            $push_note->did_send = true;
-                            $push_note->save();
-                            break;
+                    case 7:
+                        $push_note = new \App\Models\TAC\PushNotifications();
+                        $push_note->text = $data['message'];
+                        $push_note->date = date('Y-m-d m:i:s');//.'.000+00';
+                        $push_note->number_recipients = count($data['users']);
+                        $push_note->open_count = 0;
+                        $push_note->did_send = true;
+                        $push_note->save();
+                        break;
 
-                        case 2:
-                        default:
-                            $push_note = new \App\Models\TruFit\PushNotifications();
-                            $push_note->text = $data['message'];
-                            $push_note->date = date('Y-m-d m:i:s').'.000+00';
-                            $push_note->number_recipients = count($data['users']);
-                            $push_note->open_count = 0;
-                            $push_note->did_send = true;
-                            $push_note->save();
-                    }
+                    case 2:
+                    default:
+                        $push_note = new \App\Models\TruFit\PushNotifications();
+                        $push_note->text = $data['message'];
+                        $push_note->date = date('Y-m-d m:i:s').'.000+00';
+                        $push_note->number_recipients = count($data['users']);
+                        $push_note->open_count = 0;
+                        $push_note->did_send = true;
+                        $push_note->save();
+                }
 
+                // @todo - change this you fool!
+                if(count($data['users']) <= 0)
+                {
                     foreach($data['users'] as $idx => $user)
                     {
                         if(array_key_exists('push_type', $user))
@@ -95,29 +96,6 @@ class PushNotesAPIController extends Controller
                     $batch_count = 0;
                     $batch = [];
 
-                    switch($data['clientId'])
-                    {
-                        case 7:
-                            $push_note = new \App\Models\TAC\PushNotifications();
-                            $push_note->text = $data['message'];
-                            $push_note->date = date('Y-m-d m:i:s');//.'.000+00';
-                            $push_note->number_recipients = count($data['users']);
-                            $push_note->open_count = 0;
-                            $push_note->did_send = true;
-                            $push_note->save();
-                            break;
-
-                        case 2:
-                        default:
-                            $push_note = new \App\Models\TruFit\PushNotifications();
-                            $push_note->text = $data['message'];
-                            $push_note->date = date('Y-m-d m:i:s').'.000+00';
-                            $push_note->number_recipients = count($data['users']);
-                            $push_note->open_count = 0;
-                            $push_note->did_send = true;
-                            $push_note->save();
-                    }
-
                     foreach($data['users'] as $idx => $user)
                     {
                         if(array_key_exists('push_type', $user))
@@ -147,16 +125,25 @@ class PushNotesAPIController extends Controller
                         }
                     }
 
-                    foreach($batch as $page => $expo_users)
-                    {
+                    foreach($batch as $page => $expo_users) {
                         $proj = ($data['clientId'] == 2) ? 'trufit' : 'the-athletic-club';
                         $payload = [
                             'to' => $expo_users,
                             'title' => 'Mobile Announcement',
                             'body' => $data['message'],
-                            '_category'=> '@capeandbay/'.$proj.':announce',
-                            '_displayInForeground'=> true
+                            '_category' => '@capeandbay/' . $proj . ':announce',
+                            '_displayInForeground' => true,
+                            'data' => [
+                                'pushnotes_id' => $push_note->id,
+                                'add_user_id' => true
+                            ]
                         ];
+
+                        $url = is_null($data['url']) ? '' : $data['url'];
+                        if ($url != '')
+                        {
+                            $payload['data']['url'] = $url;
+                        }
 
                         $args = [
                             $payload
@@ -256,11 +243,10 @@ class PushNotesAPIController extends Controller
         } catch (\Exception $e) {
             $results = [
                 'status'    => 'failed',
-                'reason'     =>  $e->getMessage()
+                'reason'    =>  $e->getMessage()
             ];
         }
 
         return $results;
     }
-
 }
