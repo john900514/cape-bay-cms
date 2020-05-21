@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff5be15f58250a07beb9a1f2c9400159",
+    "content-hash": "46f8b58ba08f7eb523e6baa2e4a7760c",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -596,12 +596,12 @@
             "version": "v0.11.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/barryvdh/laravel-cors.git",
+                "url": "https://github.com/fruitcake/laravel-cors.git",
                 "reference": "03492f1a3bc74a05de23f93b94ac7cc5c173eec9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-cors/zipball/03492f1a3bc74a05de23f93b94ac7cc5c173eec9",
+                "url": "https://api.github.com/repos/fruitcake/laravel-cors/zipball/03492f1a3bc74a05de23f93b94ac7cc5c173eec9",
                 "reference": "03492f1a3bc74a05de23f93b94ac7cc5c173eec9",
                 "shasum": ""
             },
@@ -1731,6 +1731,68 @@
             "time": "2019-07-01T23:21:34+00:00"
         },
         {
+            "name": "hollodotme/fast-cgi-client",
+            "version": "v3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hollodotme/fast-cgi-client.git",
+                "reference": "d4a31fba1f0432fdffafa8746e5a4460d83028b6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hollodotme/fast-cgi-client/zipball/d4a31fba1f0432fdffafa8746e5a4460d83028b6",
+                "reference": "d4a31fba1f0432fdffafa8746e5a4460d83028b6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "tm/tooly-composer-script": "^1.0"
+            },
+            "bin": [
+                "bin/fcgiget"
+            ],
+            "type": "library",
+            "extra": {
+                "tools": {
+                    "phpunit7": {
+                        "url": "https://phar.phpunit.de/phpunit-7.phar",
+                        "replace": true,
+                        "only-dev": true
+                    },
+                    "phpunit8": {
+                        "url": "https://phar.phpunit.de/phpunit-8.phar",
+                        "replace": true,
+                        "only-dev": true
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "hollodotme\\FastCGI\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Holger Woltersdorf",
+                    "email": "hw@hollo.me"
+                }
+            ],
+            "description": "A PHP fast CGI client to send requests (a)synchronously to PHP-FPM.",
+            "keywords": [
+                "Socket",
+                "async",
+                "fastcgi",
+                "php-fpm"
+            ],
+            "time": "2019-10-24T11:14:40+00:00"
+        },
+        {
             "name": "http-interop/http-factory-guzzle",
             "version": "1.0.0",
             "source": {
@@ -2403,6 +2465,74 @@
                 "ui"
             ],
             "time": "2019-09-02T16:34:23+00:00"
+        },
+        {
+            "name": "laravel/vapor-core",
+            "version": "v2.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/vapor-core.git",
+                "reference": "55be299c2a4e25cac466a86c116af5fd3473ffa8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/vapor-core/zipball/55be299c2a4e25cac466a86c116af5fd3473ffa8",
+                "reference": "55be299c2a4e25cac466a86c116af5fd3473ffa8",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "^3.80",
+                "guzzlehttp/guzzle": "^6.3",
+                "hollodotme/fast-cgi-client": "^3.0",
+                "illuminate/container": "^6.0",
+                "illuminate/http": "^6.0",
+                "illuminate/queue": "^6.0",
+                "illuminate/support": "^6.0",
+                "monolog/monolog": "^1.12|^2.0",
+                "php": "^7.1",
+                "riverline/multipart-parser": "^2.0",
+                "symfony/process": "^4.2",
+                "symfony/psr-http-message-bridge": "^1.2",
+                "zendframework/zend-diactoros": "^2.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.2",
+                "orchestra/testbench": "^4.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Vapor\\VaporServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Vapor\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The kernel and invokation handlers for Laravel Vapor",
+            "homepage": "https://github.com/laravel/vapor-core",
+            "keywords": [
+                "laravel",
+                "vapor"
+            ],
+            "time": "2019-12-19T15:37:12+00:00"
         },
         {
             "name": "lcobucci/jwt",
@@ -4251,6 +4381,58 @@
             "time": "2018-07-19T23:38:55+00:00"
         },
         {
+            "name": "riverline/multipart-parser",
+            "version": "2.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Riverline/multipart-parser.git",
+                "reference": "f71c80281d8f04e840c31edede6516b63f4d699b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Riverline/multipart-parser/zipball/f71c80281d8f04e840c31edede6516b63f4d699b",
+                "reference": "f71c80281d8f04e840c31edede6516b63f4d699b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.2 || ^6.0 || ^7.0",
+                "psr/http-message": "^1.0",
+                "symfony/psr-http-message-bridge": "^1.1",
+                "zendframework/zend-diactoros": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Riverline\\MultiPartParser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Romain Cambien",
+                    "email": "romain@cambien.net"
+                },
+                {
+                    "name": "Riverline",
+                    "homepage": "http://www.riverline.fr"
+                }
+            ],
+            "description": "One class library to parse multipart content with encoding and charset support.",
+            "keywords": [
+                "http",
+                "multipart",
+                "parser"
+            ],
+            "time": "2019-12-16T11:23:08+00:00"
+        },
+        {
             "name": "sentry/sdk",
             "version": "2.0.4",
             "source": {
@@ -5885,6 +6067,71 @@
             "time": "2019-08-26T08:26:39+00:00"
         },
         {
+            "name": "symfony/psr-http-message-bridge",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/psr-http-message-bridge.git",
+                "reference": "9ab9d71f97d5c7d35a121a7fb69f74fee95cd0ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/psr-http-message-bridge/zipball/9ab9d71f97d5c7d35a121a7fb69f74fee95cd0ad",
+                "reference": "9ab9d71f97d5c7d35a121a7fb69f74fee95cd0ad",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "psr/http-message": "^1.0",
+                "symfony/http-foundation": "^3.4 || ^4.0"
+            },
+            "require-dev": {
+                "nyholm/psr7": "^1.1",
+                "symfony/phpunit-bridge": "^3.4.20 || ^4.0",
+                "zendframework/zend-diactoros": "^1.4.1 || ^2.0"
+            },
+            "suggest": {
+                "nyholm/psr7": "For a super lightweight PSR-7/17 implementation"
+            },
+            "type": "symfony-bridge",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Bridge\\PsrHttpMessage\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "PSR HTTP message bridge",
+            "homepage": "http://symfony.com",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr-17",
+                "psr-7"
+            ],
+            "time": "2019-03-11T18:22:33+00:00"
+        },
+        {
             "name": "symfony/routing",
             "version": "v4.3.4",
             "source": {
@@ -6523,6 +6770,7 @@
                 "psr",
                 "psr-7"
             ],
+            "abandoned": "laminas/laminas-diactoros",
             "time": "2019-07-10T16:13:25+00:00"
         }
     ],

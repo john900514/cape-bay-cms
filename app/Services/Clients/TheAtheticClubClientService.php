@@ -2,8 +2,10 @@
 
 namespace App\Services\Clients;
 
-use App\Models\TAC\Leads;
-use App\Models\TAC\AppUsers;
+//use App\Models\TAC\Leads;
+//use App\Models\TAC\AppUsers;
+use App\Models\TAC\Vapor\Leads;
+use App\Models\TAC\Vapor\AppUser;
 use App\Models\TAC\Transactions;
 use Illuminate\Support\Facades\DB;
 
@@ -11,7 +13,7 @@ class TheAtheticClubClientService
 {
     protected $leads, $transactions;
 
-    public function __construct(AppUsers $app_users,Transactions $transactions, Leads $leads)
+    public function __construct(AppUser $app_users,Transactions $transactions, Leads $leads)
     {
         $this->leads = $leads;
         $this->app_users = $app_users;
@@ -60,6 +62,11 @@ class TheAtheticClubClientService
         }
 
         return $results;
+    }
+
+    public function getUsers()
+    {
+        return $this->getMobileUsers();
     }
 
     public function getMobileUsers()

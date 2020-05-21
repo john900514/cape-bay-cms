@@ -21,6 +21,7 @@
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.0",
+        "laravel/vapor-core": "^2.2",
         "projectsaturn/appypass": "dev-master",
         "ramsey/uuid": "^3.8",
         "sentry/sentry-laravel": "^1.3",

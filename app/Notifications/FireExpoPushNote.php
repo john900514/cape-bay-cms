@@ -27,7 +27,7 @@ class FireExpoPushNote extends Notification
             ->badge(1)
             ->enableSound()
             ->title('Mobile Announcement!')
-            ->setJsonData(['url' => $this->url, 'pushnotes_id' => $this->note_id])
+            ->setJsonData(['url' => $this->url, 'pushnotes_id' => $this->note_id, 'user_id'=> $notifiable->id])
             ->body($this->msg);
     }
 }
