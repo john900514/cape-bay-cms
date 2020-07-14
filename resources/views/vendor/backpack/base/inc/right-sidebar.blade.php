@@ -29,7 +29,9 @@
 <div class="tab-content">
     <div class="tab-pane active" id="timeline" role="tabpanel">
         <div class="list-group list-group-accent">
-            <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase c-small">Today</div>
+            <!-- <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase c-small">Today</div> -->
+            <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase c-small">Nothing Scheduled</div>
+            <!--
             <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
                 <div class="c-avatar float-right">
                     <img class="c-avatar-img" src="https://coreui.io/vue/demo/3.0.0/dark/img/avatars/4.jpg" alt="user@email.com">
@@ -78,6 +80,7 @@
                     <i class="fad fa-map-marker-smile c-icon"></i>&nbsp; Palo Alto, CA
                 </small>
             </div>
+
             <div class="list-group-item list-group-item-accent-primary list-group-item-divider">
                 <div><strong>Team meeting</strong></div>
                 <small class="text-muted mr-3">
@@ -95,18 +98,20 @@
                     <div class="c-avatar c-avatar-xs"><img class="c-avatar-img" src="https://coreui.io/vue/demo/3.0.0/dark/img/avatars/8.jpg" alt="user@email.com"></div>
                 </div>
             </div>
+            -->
         </div>
     </div>
 
     <div class="tab-pane p-3" id="messages" role="tabpanel">
         <div class="message">
             <div class="py-3 pb-5 mr-3 float-left">
-                <div class="c-avatar"><img class="c-avatar-img" src="https://coreui.io/vue/demo/3.0.0/dark/img/avatars/7.jpg" alt="user@email.com"><span class="c-avatar-status bg-success"></span></div>
+                <div class="c-avatar"><img class="c-avatar-img" src="https://touchless-nfc.s3.amazonaws.com/users/51418ef0-8ddc-4e27-995d-e194a2920b42/profile-1593322673.jpeg" alt="{!! backpack_user()->email !!}"><span class="c-avatar-status bg-success"></span></div>
             </div>
-            <div><small class="text-muted">Lukasz Holeczek</small><small class="text-muted float-right mt-1">1:52 PM</small></div>
-            <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div><small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+            <div><small class="text-muted">No Messages</small><small class="text-muted float-right mt-1">1:52 PM</small></div>
+            <div class="text-truncate font-weight-bold">Your Messages Will Appear Here</div><small class="text-muted">Try back later!</small>
         </div>
         <hr>
+        <!--
         <div class="message">
             <div class="py-3 pb-5 mr-3 float-left">
                 <div class="c-avatar"><img class="c-avatar-img" src="https://coreui.io/vue/demo/3.0.0/dark/img/avatars/7.jpg" alt="user@email.com"><span class="c-avatar-status bg-success"></span></div>
@@ -138,10 +143,12 @@
             <div><small class="text-muted">Lukasz Holeczek</small><small class="text-muted float-right mt-1">1:52 PM</small></div>
             <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div><small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
         </div>
+        -->
     </div>
 
     <div class="tab-pane p-3" id="settings" role="tabpanel">
         <h6>Settings</h6>
+        <!--
         <div class="c-aside-options">
             <div class="clearfix mt-4"><small><b>Option 1</b></small>
                 <label class="c-switch c-switch-label c-switch-pill c-switch-success c-switch-sm float-right">
@@ -172,7 +179,9 @@
                 </label>
             </div>
         </div>
+        -->
         <hr>
+        <!--
         <h6>System Utilization</h6>
         <div class="text-uppercase mb-1 mt-4"><small><b>CPU Usage</b></small></div>
         <div class="progress progress-xs">
@@ -190,5 +199,6 @@
         <div class="progress progress-xs">
             <div class="progress-bar bg-success" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
         </div><small class="text-muted">25GB/256GB</small>
+        -->
     </div>
 </div>

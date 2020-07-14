@@ -1,14 +1,15 @@
 <li class="c-header-nav-item dropdown d-md-down-none mx-2">
     <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
         <i class="fad fa-bell-exclamation c-icon"></i>
-        <span class="badge badge-pill badge-danger">5</span>
+        <!-- <span class="badge badge-pill badge-danger">5</span> -->
     </a>
 
     <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
         <div class="dropdown-header bg-light">
-            <strong>You have 5 notifications</strong>
+            <strong>You have no notifications</strong>
         </div>
 
+        <!--
         <a class="dropdown-item" href="#">
             <i class="fal fa-user-plus c-icon mfe-2 text-success"></i> New user registered
         </a>
@@ -28,7 +29,9 @@
         <a class="dropdown-item" href="#">
             <i class="fad fa-tachometer-alt c-icon mfe-2 text-warning"></i> Server overloaded
         </a>
+        -->
 
+        <!--
         <div class="dropdown-header bg-light">
             <strong>Server</strong>
         </div>
@@ -62,5 +65,6 @@
             </span>
             <small class="text-muted">243GB/256GB</small>
         </a>
+        -->
     </div>
 </li>

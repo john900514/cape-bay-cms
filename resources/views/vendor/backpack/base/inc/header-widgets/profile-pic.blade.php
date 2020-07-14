@@ -3,6 +3,7 @@
         <div class="c-avatar"><img class="c-avatar-img" src="https://touchless-nfc.s3.amazonaws.com/users/51418ef0-8ddc-4e27-995d-e194a2920b42/profile-1593322673.jpeg" alt="user@email.com"></div>
     </a>
     <div class="dropdown-menu dropdown-menu-right pt-0">
+        <!--
         <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
         <a class="dropdown-item" href="#">
             <i class="fal fa-bell c-icon mfe-2"></i> Updates<span class="badge badge-info mfs-auto">42</span>
@@ -16,7 +17,7 @@
         <a class="dropdown-item" href="#">
             <i class="fal fa-comment-alt c-icon mfe-2"></i> Comments<span class="badge badge-warning mfs-auto">42</span>
         </a>
-
+        -->
         <div class="dropdown-header bg-light py-2"><strong>Settings</strong></div>
         <a class="dropdown-item" href="#">
             <i class="fal fa-user c-icon mfe-2"></i> Profile
@@ -24,15 +25,20 @@
         <a class="dropdown-item" href="#">
             <i class="fal fa-cog c-icon mfe-2"></i> Settings
         </a>
+        <!--
         <a class="dropdown-item" href="#">
             <i class="fal fa-credit-card c-icon mfe-2"></i> Payments<span class="badge badge-secondary mfs-auto">42</span>
         </a>
         <a class="dropdown-item" href="#">
             <i class="fal fa-file c-icon mfe-2"></i> Projects<span class="badge badge-primary mfs-auto">42</span>
         </a>
+        -->
         <div class="dropdown-divider"></div>
+        <!--
         <a class="dropdown-item" href="#">
-            <i class="fal fa-lock c-icon mfe-2"></i> Lock Account</a>
+            <i class="fal fa-lock c-icon mfe-2"></i> Lock Account
+        </a>
+        -->
         <a class="dropdown-item" href="logout">
             <i class="fad fa-portal-exit fa-flip c-icon mfe-2"></i> Logout
         </a>

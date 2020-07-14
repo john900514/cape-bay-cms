@@ -24,6 +24,10 @@
 
 <style>
     @media screen {
+        #app {
+            width: 100%;
+        }
+
         .c-header-brand.a {
             width: 50%;
             justify-content: left;

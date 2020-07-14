@@ -1,14 +1,15 @@
 <li class="c-header-nav-item dropdown d-md-down-none mx-2">
     <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
         <i class="far fa-envelope-open c-icon"></i>
-        <span class="badge badge-pill badge-info">7</span>
+        <!-- <span class="badge badge-pill badge-info">7</span> -->
     </a>
 
     <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
         <div class="dropdown-header bg-light">
-            <strong>You have 4 messages</strong>
+            <strong>You have no messages</strong>
         </div>
 
+        <!--
         <a class="dropdown-item" href="#">
             <div class="message">
                 <div class="py-3 mfe-3 float-left">
@@ -41,6 +42,7 @@
                 <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>
             </div>
         </a>
+
         <a class="dropdown-item" href="#">
             <div class="message">
                 <div class="py-3 mfe-3 float-left">
@@ -51,8 +53,10 @@
                 <div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>
             </div>
         </a>
+
         <a class="dropdown-item text-center border-top" href="#">
             <strong>View all messages</strong>
         </a>
+        -->
     </div>
 </li>

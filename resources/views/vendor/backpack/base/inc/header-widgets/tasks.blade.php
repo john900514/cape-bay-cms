@@ -1,13 +1,14 @@
 <li class="c-header-nav-item dropdown d-md-down-none mx-2">
     <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
         <i class="fad fa-tasks-alt c-icon"></i>
-        <span class="badge badge-pill badge-warning">15</span>
+        <!-- <span class="badge badge-pill badge-warning">15</span> -->
     </a>
     <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
         <div class="dropdown-header bg-light">
-            <strong>You have 5 pending tasks</strong>
+            <strong>You have no pending tasks</strong>
         </div>
 
+        <!--
         <a class="dropdown-item d-block" href="#">
             <div class="small mb-1">
                 Upgrade NPM &amp; Bower
@@ -66,5 +67,6 @@
         <a class="dropdown-item text-center border-top" href="#">
             <strong>View all tasks</strong>
         </a>
+        -->
     </div>
 </li>
