@@ -1,0 +1,76 @@
+# This is a sample build configuration for PHP.
+# Check our guides at https://confluence.atlassian.com/x/e8YWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: php:7.4.1-fpm
+
+pipelines:
+  branches:
+    v3-master:
+      - step:
+          name: Perform Unit Testing Production
+          caches:
+            - composer
+            - node
+          script:
+            - curl -sL https://deb.nodesource.com/setup_10.x | bash -
+            - apt-get update && apt-get install -y libzip-dev zip nodejs
+            - docker-php-ext-install zip
+            - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+            - composer install --no-interaction --prefer-dist  --optimize-autoloader
+            - ln -f -s .env.pipelines .env
+            - npm install && npm run prod
+            - vendor/bin/phpunit
+      - step:
+          name: Execute Production Deployment
+          caches:
+            - composer
+            - node
+          deployment: production
+          trigger: manual
+          script:
+            - curl -sL https://deb.nodesource.com/setup_10.x | bash -
+            - apt-get update && apt-get install -y libzip-dev zip nodejs
+            - docker-php-ext-install zip
+            - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+            - composer install --no-interaction --prefer-dist  --optimize-autoloader
+            - composer require laravel/vapor-cli
+            - ln -f -s .env.pipelines .env
+            - php artisan serve &
+            - sleep 5
+            - php artisan config:clear && vendor/bin/phpunit
+            - vendor/bin/vapor deploy production
+    v3-develop:
+      - step:
+          name: Perform Unit Testing Staging
+          caches:
+            - composer
+            - node
+          script:
+            - curl -sL https://deb.nodesource.com/setup_10.x | bash -
+            - apt-get update && apt-get install -y libzip-dev zip nodejs
+            - docker-php-ext-install zip
+            - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+            - composer install --no-interaction --prefer-dist  --optimize-autoloader
+            - ln -f -s .env.pipelines .env
+            - npm install && npm run dev
+            - php artisan serve &
+            - sleep 5
+            - php artisan config:clear && vendor/bin/phpunit
+      - step:
+          name: Execute Staging Deployment
+          caches:
+            - composer
+            - node
+          deployment: staging
+          trigger: manual
+          script:
+            - curl -sL https://deb.nodesource.com/setup_10.x | bash -
+            - apt-get update && apt-get install -y libzip-dev zip nodejs
+            - docker-php-ext-install zip
+            - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+            - composer install --no-interaction --prefer-dist  --optimize-autoloader
+            - composer require laravel/vapor-cli
+            - ln -f -s .env.pipelines .env
+            - vendor/bin/vapor deploy staging
