@@ -1,0 +1,24 @@
+id: 11487
+name: anchor-cms
+separate-vendor: true
+environments:
+  production:
+      domain: a.capeandbay.com
+      memory: 1024
+      cli-memory: 512
+      gateway-version: 2
+      runtime: php-7.4
+      build:
+        - 'composer install --no-dev'
+        - 'php artisan event:cache'
+  staging:
+      domain: a-dev.capeandbay.com
+      memory: 1024
+      cli-memory: 512
+      gateway-version: 2
+      runtime: php-7.4
+      build:
+          - 'composer install --no-dev'
+          - 'php artisan event:cache'
+      deploy:
+          - 'php artisan migrate --force'
