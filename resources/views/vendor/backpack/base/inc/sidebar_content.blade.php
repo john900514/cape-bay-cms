@@ -19,11 +19,11 @@
 </li>
 
 <li class="c-sidebar-nav-item">
-    <a href="crud-users" class="c-sidebar-nav-link" target="_self"><i class="fad fa-user-alien c-sidebar-nav-icon"></i>Users</a>
+    <a href="{!! backpack_url('crud-users') !!}" class="c-sidebar-nav-link" target="_self"><i class="fad fa-user-alien c-sidebar-nav-icon"></i>Users</a>
 </li>
 <li class="c-sidebar-nav-item">
-    <a href="crud-roles" class="c-sidebar-nav-link" target="_self"><i class="fad fa-paint-roller c-sidebar-nav-icon"></i>Roles</a>
+    <a href="{!! backpack_url('crud-roles') !!}" class="c-sidebar-nav-link" target="_self"><i class="fad fa-paint-roller c-sidebar-nav-icon"></i>Roles</a>
 </li>
 <li class="c-sidebar-nav-item">
-    <a href="crud-abilities" class="c-sidebar-nav-link" target="_self"><i class="fad fa-biking-mountain c-sidebar-nav-icon"></i>Abilities</a>
+    <a href="{!! backpack_url('crud-abilities') !!}" class="c-sidebar-nav-link" target="_self"><i class="fad fa-biking-mountain c-sidebar-nav-icon"></i>Abilities</a>
 </li>

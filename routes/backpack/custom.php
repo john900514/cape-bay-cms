@@ -21,6 +21,10 @@ Route::group([
 ], function () { // custom admin routes
 
     Route::get('/dashboard', 'Admin\DashboardController@index');
+    Route::get('/abilities', 'Admin\InternalAdminJSONController@abilities');
+    Route::get('/abilities/{role}', 'Admin\InternalAdminJSONController@role_abilities');
+
     CRUD::resource('crud-users', 'Admin\UsersCrudController');
     CRUD::resource('crud-roles', 'Admin\RolesCrudController');
+    CRUD::resource('crud-abilities', 'Admin\AbilitiesCrudController');
 }); // this should be the absolute last line of this file

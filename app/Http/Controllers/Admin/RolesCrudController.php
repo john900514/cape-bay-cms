@@ -2,6 +2,7 @@
 
 namespace AnchorCMS\Http\Controllers\Admin;
 
+use AnchorCMS\Roles;
 use Backpack\CRUD\CrudPanel;
 use Prologue\Alerts\Facades\Alert;
 use Silber\Bouncer\BouncerFacade as Bouncer;
@@ -43,10 +44,22 @@ class RolesCrudController extends CrudController
             'type' => 'text' // the kind of column to show
         ];
 
+        $abilities_box = [
+            'name' => 'assignable_abilities',
+            'label' => 'Assign Abilities',
+            'type' => 'custom_html',
+            'value' => '
+                <label>Assign Abilities</label>
+                <role-ability-assign></role-ability-assign>
+            '
+        ];
+
         $column_defs = [$name, $title];
+        $edit_create_defs = [$name, $title, $abilities_box];
         $this->crud->addColumns($column_defs);
-        $this->crud->addFields($column_defs, 'both');
+        $this->crud->addFields($edit_create_defs, 'both');
         // add asterisk for fields that are required in RolesRequest
+
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
     }
@@ -75,12 +88,54 @@ class RolesCrudController extends CrudController
         return redirect('/crud-roles');
     }
 
-    public function update(UpdateRequest $request)
+    public function update(UpdateRequest $request, Roles $role_model)
     {
         // your additional operations before save here
-        $redirect_location = parent::updateCrud($request);
+        //$redirect_location = parent::updateCrud($request);
+        if(Bouncer::is(backpack_user())->a('god', 'admin'))
+        {
+            $requested_abilities = explode(',', $request->all()['abilities']);
+
+            if(count($requested_abilities) == 1 && empty($requested_abilities[0]))
+            {
+                $requested_abilities[0] = $request->all()['abilities'];
+            }
+
+            foreach ($requested_abilities as $idx => $ab)
+            {
+                $requested_abilities[$ab] = $ab;
+                unset($requested_abilities[$idx]);
+            }
+
+            $role = $request->all()['name'];
+            $abilities = $role_model->getAssignedAbilities($role);
+
+            if(count($abilities) > 0)
+            {
+                // retract any abilities not in $requested_abilities
+                foreach ($abilities as $ability)
+                {
+                    if(!array_key_exists($ability['name'], $requested_abilities))
+                    {
+                        Bouncer::disallow($role)->to($ability['name']);
+                    }
+                }
+            }
+
+            foreach($requested_abilities as $req_ability)
+            {
+                Bouncer::allow($role)->to($req_ability);
+            }
+
+            \Alert::success(trans('backpack::crud.insert_success'))->flash();
+        }
+        else
+        {
+            \Alert::error('Access Denied. You do not have permission to update roles.')->flash();
+        }
+
         // your additional operations after save here
         // use $this->data['entry'] or $this->crud->entry
-        return $redirect_location;
+        return redirect('/crud-roles');
     }
 }

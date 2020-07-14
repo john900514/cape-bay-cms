@@ -221,7 +221,6 @@
             }
         }
     </style>
-
 @endsection
 
 @section('header')

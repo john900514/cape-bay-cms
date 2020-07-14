@@ -7,10 +7,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use GoldSpecDigital\LaravelEloquentUUID\Foundation\Auth\User as Authenticatable;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable
 {
-    use CrudTrait, Notifiable, SoftDeletes;
+    use CrudTrait, HasRolesAndAbilities, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
