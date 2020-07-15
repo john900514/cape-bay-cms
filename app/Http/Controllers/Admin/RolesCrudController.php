@@ -2,6 +2,7 @@
 
 namespace AnchorCMS\Http\Controllers\Admin;
 
+use AnchorCMS\Clients;
 use AnchorCMS\Roles;
 use Backpack\CRUD\CrudPanel;
 use Prologue\Alerts\Facades\Alert;
@@ -44,27 +45,59 @@ class RolesCrudController extends CrudController
             'type' => 'text' // the kind of column to show
         ];
 
+        $client = [
+            'name' => 'client.name',
+            'label' => 'Client',
+            'type' => 'text'
+        ];
+
+        $add_role_client_select = [
+            'name' => 'client_id',
+            'label' => 'Assign a Client',
+            'type' => 'select2_from_array',
+            'options' => Clients::getAllClientsDropList()
+        ];
+
+        $route = \Route::current()->uri();
+        $mode = 'edit';
+        if(strpos('create', $route) !== false)
+        {
+            $mode = 'create';
+        }
+
         $abilities_box = [
             'name' => 'assignable_abilities',
             'label' => 'Assign Abilities',
             'type' => 'custom_html',
-            'value' => '
+            'value' => "
                 <label>Assign Abilities</label>
-                <role-ability-assign></role-ability-assign>
-            '
+                <role-ability-assign
+                    mode='{$mode}'
+                ></role-ability-assign>
+            ",
         ];
 
-        $column_defs = [$name, $title];
-        $edit_create_defs = [$name, $title, $abilities_box];
+        if($mode == 'edit')
+        {
+            $add_role_client_select['attributes'] = [];
+            $add_role_client_select['attributes']['disabled'] = 'disabled';
+        }
+
+        $column_defs = [$name, $title, $client];
+        $edit_create_defs = [$name, $title ];
         $this->crud->addColumns($column_defs);
         $this->crud->addFields($edit_create_defs, 'both');
+
+        $create_defs = [$add_role_client_select, $abilities_box];
+        $this->crud->addFields($create_defs, 'create');
+        $this->crud->addFields($create_defs, 'edit');
         // add asterisk for fields that are required in RolesRequest
 
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request, Roles $role_model)
     {
         // your additional operations before save here
         //$redirect_location = parent::storeCrud();
@@ -75,6 +108,42 @@ class RolesCrudController extends CrudController
 
         if($new_role)
         {
+            $new_role->client_id = $request->all()['client_id'];
+            $new_role->save();
+
+            $requested_abilities = explode(',', $request->all()['abilities']);
+
+            if(count($requested_abilities) == 1 && empty($requested_abilities[0]))
+            {
+                $requested_abilities[0] = $request->all()['abilities'];
+            }
+
+            foreach ($requested_abilities as $idx => $ab)
+            {
+                $requested_abilities[$ab] = $ab;
+                unset($requested_abilities[$idx]);
+            }
+
+            $role = $request->all()['name'];
+            $abilities = $role_model->getAssignedAbilities($role);
+
+            if(count($abilities) > 0)
+            {
+                // retract any abilities not in $requested_abilities
+                foreach ($abilities as $ability)
+                {
+                    if(!array_key_exists($ability['name'], $requested_abilities))
+                    {
+                        Bouncer::disallow($role)->to($ability['name']);
+                    }
+                }
+            }
+
+            foreach($requested_abilities as $req_ability)
+            {
+                Bouncer::allow($role)->to($req_ability);
+            }
+
             Alert::success(trans('backpack::crud.insert_success'))->flash();
         }
         else
@@ -124,7 +193,10 @@ class RolesCrudController extends CrudController
 
             foreach($requested_abilities as $req_ability)
             {
-                Bouncer::allow($role)->to($req_ability);
+                if(!is_null($req_ability))
+                {
+                    Bouncer::allow($role)->to($req_ability);
+                }
             }
 
             Alert::success(trans('backpack::crud.insert_success'))->flash();

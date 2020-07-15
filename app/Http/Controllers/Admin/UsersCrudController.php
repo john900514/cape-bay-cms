@@ -4,6 +4,7 @@ namespace AnchorCMS\Http\Controllers\Admin;
 
 use AnchorCMS\Clients;
 use AnchorCMS\Jobs\User\OnboardNewUser;
+use AnchorCMS\Jobs\User\UserWasUpdated;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 
 // VALIDATION: change the requests to match your own file names if you need form validation
@@ -204,6 +205,8 @@ class UsersCrudController extends CrudController
 
         Bouncer::assign($data['role'])->to($this->crud->entry);
         Bouncer::assign($data['role'])->to(backpack_user()->find($this->crud->entry->id));
+
+        UserWasUpdated::dispatch($this->crud->entry, backpack_user())->onQueue('anchor-'.env('APP_ENV').'-emails');
 
         return $redirect_location;
     }

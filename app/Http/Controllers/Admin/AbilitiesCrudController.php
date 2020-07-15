@@ -2,6 +2,7 @@
 
 namespace AnchorCMS\Http\Controllers\Admin;
 
+use AnchorCMS\Clients;
 use Backpack\CRUD\CrudPanel;
 use Prologue\Alerts\Facades\Alert;
 use Silber\Bouncer\BouncerFacade as Bouncer;
@@ -43,9 +44,36 @@ class AbilitiesCrudController extends CrudController
             'type' => 'text' // the kind of column to show
         ];
 
-        $column_defs = [$name, $title];
+        $client = [
+            'name' => 'client.name',
+            'label' => 'Client',
+            'type' => 'text'
+        ];
+
+        $add_role_client_select = [
+            'name' => 'client_id',
+            'label' => 'Assign a Client',
+            'type' => 'select2_from_array',
+            'options' => Clients::getAllClientsDropList()
+        ];
+
+        $route = \Route::current()->uri();
+        $mode = 'edit';
+        if(strpos('create', $route) !== false)
+        {
+            $mode = 'create';
+        }
+
+        if($mode == 'edit')
+        {
+            $add_role_client_select['attributes'] = [];
+            $add_role_client_select['attributes']['disabled'] = 'disabled';
+        }
+
+        $column_defs = [$name, $title, $client];
+        $add_edit_defs = [$name, $title, $add_role_client_select];
         $this->crud->addColumns($column_defs);
-        $this->crud->addFields($column_defs, 'both');
+        $this->crud->addFields($add_edit_defs, 'both');
         // add asterisk for fields that are required in RolesRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
@@ -57,13 +85,16 @@ class AbilitiesCrudController extends CrudController
         {
             // your additional operations before save here
             //$redirect_location = parent::storeCrud();
-            $new_role = Bouncer::ability()->firstOrCreate([
+            $new_ability = Bouncer::ability()->firstOrCreate([
                 'name' => $request->all()['name'],
                 'title' => $request->all()['title']
             ]);
 
-            if($new_role)
+            if($new_ability)
             {
+                $new_ability->client_id = $request->all()['client_id'];
+                $new_ability->save();
+
                 \Alert::success(trans('backpack::crud.insert_success'))->flash();
             }
             else

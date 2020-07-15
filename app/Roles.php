@@ -12,11 +12,18 @@ class Roles extends Model
 
     protected $fillable = ['name', 'title'];
 
-    public function getAssignedAbilities($role)
+    public function getAssignedAbilities($role, $client_id = null)
     {
         $results = false;
 
-        $record = $this->whereName($role)->first();
+        $record = $this->whereName($role);
+
+        if(!is_null($client_id))
+        {
+            $record = $record->whereClientId($client_id);
+        }
+
+        $record = $record->first();
 
         if(!is_null($record))
         {
@@ -88,5 +95,10 @@ class Roles extends Model
         }
 
         return $results;
+    }
+
+    public function client()
+    {
+        return $this->hasOne('AnchorCMS\Clients', 'id', 'client_id');
     }
 }

@@ -50,15 +50,22 @@ class InternalAdminJSONController extends Controller
     {
         $results = ['success' => false, 'reason' => 'You do not have permission to access this resource'];
 
-        if(Bouncer::is(backpack_user())->a('god','admin', $role))
+        $data = $this->request->all();
+
+        if(array_key_exists('client_id', $data))
+        {
+            $assigned = $roles->getAssignedAbilities($role, $data['client_id']);
+        }
+        else
         {
             $assigned = $roles->getAssignedAbilities($role);
+        }
 
-            $results = ['success' => true, 'assigned' => []];
-            if(count($assigned) > 0)
-            {
-                $results['assigned'] = $assigned;
-            }
+
+        $results = ['success' => true, 'assigned' => []];
+        if(count($assigned) > 0)
+        {
+            $results['assigned'] = $assigned;
         }
 
         return response($results, 200);

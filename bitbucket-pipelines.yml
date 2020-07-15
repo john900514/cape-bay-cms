@@ -21,7 +21,9 @@ pipelines:
             - composer install --no-interaction --prefer-dist  --optimize-autoloader
             - ln -f -s .env.pipelines .env
             - npm install && npm run prod
-            - vendor/bin/phpunit
+            - php artisan serve &
+            - sleep 5
+            - php artisan config:clear && vendor/bin/phpunit
       - step:
           name: Execute Production Deployment
           caches:
@@ -37,9 +39,6 @@ pipelines:
             - composer install --no-interaction --prefer-dist  --optimize-autoloader
             - composer require laravel/vapor-cli
             - ln -f -s .env.pipelines .env
-            - php artisan serve &
-            - sleep 5
-            - php artisan config:clear && vendor/bin/phpunit
             - vendor/bin/vapor deploy production
     v3-develop:
       - step:

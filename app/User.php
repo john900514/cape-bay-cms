@@ -59,6 +59,5 @@ class User extends Authenticatable
         static::created(function ($user) {
             OnboardNewUser::dispatch($user, backpack_user())->onQueue('anchor-'.env('APP_ENV').'-emails');
         });
-
     }
 }

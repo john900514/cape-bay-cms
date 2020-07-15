@@ -1,6 +1,6 @@
 <template>
     <div class="form-group col-xs-12">
-        <checkbox-grid
+        <checkbox-grid v-if="showAbilities"
             :items="availableAbilities"
             :loading="loading"
             @item-checked="processChecked"
@@ -16,9 +16,11 @@
         components: {
             CheckboxGrid
         },
+        props: ['mode'],
         data() {
             return {
                 loading: false,
+                showAbilities: false,
                 selectedAbilities: [],
                 availableAbilities: ''
             };
@@ -29,8 +31,9 @@
                 let _this = this;
                 this.loading = true;
 
+                let client_id = $("[name='client_id']").val();
                 $.ajax({
-                    url: '/abilities',
+                    url: '/abilities?client_id='+client_id,
                     method: 'GET',
                     dataType: 'json',
                     success: function (data) {
@@ -46,9 +49,19 @@
                                     checked: false
                                 }
                             }
+
+                            if(_this.mode === 'edit') {
+                                _this.ajaxGetEnabledAbilities();
+                            }
+                            else {
+                                _this.loading = false;
+                            }
+                        }
+                        else {
+                            _this.loading = false;
                         }
 
-                        _this.ajaxGetEnabledAbilities();
+
                     },
                     error: function (e) {
                         console.log('Error contacting server - ',e);
@@ -60,9 +73,10 @@
                 let _this = this;
                 this.loading = true;
                 let role = $("[name='name']").val();
+                let client_id = $("[name='client_id']").val();
 
                 $.ajax({
-                    url: '/abilities/'+role,
+                    url: '/abilities/'+role+'?client_id='+client_id,
                     method: 'GET',
                     dataType: 'json',
                     success: function (data) {
@@ -104,8 +118,21 @@
             },
         },
         mounted() {
-            this.ajaxGetAllAbilities();
-            console.log('RoleAbilitySelectContainer mounted!');
+            let _this = this;
+            $("[name='client_id']").change(function () {
+                _this.ajaxGetAllAbilities();
+                _this.showAbilities = true;
+            });
+
+            let role = $("[name='name']").val();
+            let client_id = $("[name='client_id']").val();
+
+            if((role !== '') && (client_id !== '')) {
+                _this.ajaxGetAllAbilities();
+                _this.showAbilities = true;
+            }
+
+            console.log('RoleAbilitySelectContainer mounted!', this.mode);
         }
     }
 </script>
