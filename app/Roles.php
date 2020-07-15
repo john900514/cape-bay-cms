@@ -41,4 +41,52 @@ class Roles extends Model
 
         return $results;
     }
+
+    public function getClientAssignedRoles($client_id)
+    {
+        $results = false;
+
+        $records = $this->whereClientId($client_id)->get();
+
+        if(count($records) > 0)
+        {
+            $results = [];
+
+            foreach ($records as $role)
+            {
+                $results[$role->name] = $role->title;
+            }
+        }
+
+        return $results;
+    }
+
+    public static function getRoleTitle($role)
+    {
+        $results = false;
+
+        $record = self::whereName($role)->first();
+
+        if(!is_null($record))
+        {
+            $results = $record->title;
+        }
+
+        return $results;
+    }
+
+    public static function getAllRolesDropList()
+    {
+        $results = ['Select a User Role'];
+
+        $records = self::all();
+        $host_uuid = Clients::getHostClient();
+
+        if(count($records) > 0)
+        {
+
+        }
+
+        return $results;
+    }
 }

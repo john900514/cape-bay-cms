@@ -36,6 +36,7 @@
         "glyphicons-only-bootstrap": "^1.0.1",
         "install": "^0.13.0",
         "npm": "^6.14.5",
-        "pace-js": "^1.0.2"
+        "pace-js": "^1.0.2",
+        "select2": "^4.0.13"
     }
 }

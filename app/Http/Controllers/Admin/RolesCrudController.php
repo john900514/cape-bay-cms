@@ -75,11 +75,11 @@ class RolesCrudController extends CrudController
 
         if($new_role)
         {
-            \Alert::success(trans('backpack::crud.insert_success'))->flash();
+            Alert::success(trans('backpack::crud.insert_success'))->flash();
         }
         else
         {
-            \Alert::error(trans('backpack::crud.insert_fail'))->flash();
+            Alert::error(trans('backpack::crud.insert_fail'))->flash();
         }
         // your additional operations after save here
         // use $this->data['entry'] or $this->crud->entry
@@ -127,11 +127,11 @@ class RolesCrudController extends CrudController
                 Bouncer::allow($role)->to($req_ability);
             }
 
-            \Alert::success(trans('backpack::crud.insert_success'))->flash();
+            Alert::success(trans('backpack::crud.insert_success'))->flash();
         }
         else
         {
-            \Alert::error('Access Denied. You do not have permission to update roles.')->flash();
+            Alert::error('Access Denied. You do not have permission to update roles.')->flash();
         }
 
         // your additional operations after save here

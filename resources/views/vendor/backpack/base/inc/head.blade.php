@@ -76,7 +76,32 @@
     }
 </style>
 <!-- BackPack Base CSS -->
+<style>
+    .c-dark-theme .select2-selection,
+    .c-dark-theme .select2-search__field {
+        color: #e1e1e1 !important;
+        background-color: hsla(0,0%,100%,.1) !important;
+        border-color: hsla(0,0%,100%,.15) !important;
+    }
 
+    .c-dark-theme .select2-selection__rendered {
+        color: #e1e1e1 !important;
+    }
+
+    .c-dark-theme .select2-dropdown.select2-dropdown--below,
+    .c-dark-theme .select2-results__option {
+        color: #e1e1e1 !important;
+        background-color: #495057 !important;
+    }
+
+    .c-dark-theme .select2-results__option--highlighted {
+        background-color: #0a0b18 !important;
+    }
+
+    .select2-selection.select2-selection--single {
+        height: calc(1.6em + 0.75rem + 2px) !important;
+    }
+</style>
 
 
 @yield('after_styles')

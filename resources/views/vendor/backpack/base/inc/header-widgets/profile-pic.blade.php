@@ -1,6 +1,6 @@
 <li class="c-header-nav-item dropdown">
     <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-        <div class="c-avatar"><img class="c-avatar-img" src="https://touchless-nfc.s3.amazonaws.com/users/51418ef0-8ddc-4e27-995d-e194a2920b42/profile-1593322673.jpeg" alt="user@email.com"></div>
+        <div class="c-avatar"><img class="c-avatar-img" src="{!! backpack_user()->profile_img !!}" alt="Profile Image of {!! backpack_user()->username !!}"></div>
     </a>
     <div class="dropdown-menu dropdown-menu-right pt-0">
         <!--

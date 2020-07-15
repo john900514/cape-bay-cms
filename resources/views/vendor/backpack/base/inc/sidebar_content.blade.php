@@ -1,7 +1,7 @@
 <li class="c-sidebar-nav-item">
     <a href="{{ backpack_url('dashboard') }}" class="router-link-exact-active c-active c-sidebar-nav-link"><i class="c-sidebar-nav-icon fad fa-tachometer-alt-fast"></i> <span>{{ trans('backpack::base.dashboard') }}</span><span class="badge badge-primary"> NEW! </span></a>
 </li>
-<li class="c-sidebar-nav-title">Admin</li>
+<li class="c-sidebar-nav-title">Navigation</li>
 <li class="c-sidebar-nav-dropdown">
     <a class="c-sidebar-nav-dropdown-toggle" href="#">
         <i class="fad fa-link c-sidebar-nav-icon"></i>Clients
@@ -18,6 +18,10 @@
     </ul>
 </li>
 
+<li class="c-sidebar-nav-title">Admin</li>
+<li class="c-sidebar-nav-item">
+    <a href="{!! backpack_url('crud-clients') !!}" class="c-sidebar-nav-link" target="_self"><i class="fad fa-link c-sidebar-nav-icon"></i>Client Management</a>
+</li>
 <li class="c-sidebar-nav-item">
     <a href="{!! backpack_url('crud-users') !!}" class="c-sidebar-nav-link" target="_self"><i class="fad fa-user-alien c-sidebar-nav-icon"></i>Users</a>
 </li>

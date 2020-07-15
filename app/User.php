@@ -2,6 +2,7 @@
 
 namespace AnchorCMS;
 
+use AnchorCMS\Jobs\User\OnboardNewUser;
 use Backpack\CRUD\CrudTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'username', 'email', 'password',
+        'first_name', 'last_name', 'username', 'email', 'password', 'client_id',
     ];
 
     /**
@@ -43,5 +44,21 @@ class User extends Authenticatable
     public function username()
     {
         return 'username'; //or return the field which you want to use.
+    }
+
+    public function client()
+    {
+        return $this->hasOne('AnchorCMS\Clients', 'id', 'client_id');
+    }
+
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            OnboardNewUser::dispatch($user, backpack_user())->onQueue('anchor-'.env('APP_ENV').'-emails');
+        });
+
     }
 }

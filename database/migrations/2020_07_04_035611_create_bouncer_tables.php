@@ -24,6 +24,7 @@ class CreateBouncerTables extends Migration
             $table->boolean('only_owned')->default(false);
             $table->json('options')->nullable();
             $table->integer('scope')->nullable()->index();
+            $table->uuid('client_id')->nullable();
             $table->timestamps();
         });
 
@@ -33,6 +34,7 @@ class CreateBouncerTables extends Migration
             $table->string('title')->nullable();
             $table->integer('level')->unsigned()->nullable();
             $table->integer('scope')->nullable()->index();
+            $table->uuid('client_id')->nullable();
             $table->timestamps();
 
             $table->unique(

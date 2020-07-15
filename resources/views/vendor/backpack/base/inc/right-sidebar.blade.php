@@ -105,7 +105,7 @@
     <div class="tab-pane p-3" id="messages" role="tabpanel">
         <div class="message">
             <div class="py-3 pb-5 mr-3 float-left">
-                <div class="c-avatar"><img class="c-avatar-img" src="https://touchless-nfc.s3.amazonaws.com/users/51418ef0-8ddc-4e27-995d-e194a2920b42/profile-1593322673.jpeg" alt="{!! backpack_user()->email !!}"><span class="c-avatar-status bg-success"></span></div>
+                <div class="c-avatar"><img class="c-avatar-img" src="{!! backpack_user()->profile_img !!}" alt="Profile Image of {!! backpack_user()->username !!}"></div>
             </div>
             <div><small class="text-muted">No Messages</small><small class="text-muted float-right mt-1">1:52 PM</small></div>
             <div class="text-truncate font-weight-bold">Your Messages Will Appear Here</div><small class="text-muted">Try back later!</small>

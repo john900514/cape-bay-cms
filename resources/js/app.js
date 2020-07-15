@@ -20,6 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('role-ability-assign', require('./components/containers/RoleAbilitySelectContainer.vue').default);
+Vue.component('user-client-role-ability-assign', require('./components/containers/UserClientRoleAbilitySelectContainer.vue').default);
 
 //Vue.component('checkbox-grid', require('./components/presenters/CheckboxGridComponent.vue').default);
 

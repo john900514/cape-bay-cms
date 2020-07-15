@@ -14,9 +14,7 @@ class AddProfileImgUrlToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            Schema::table('users', function (Blueprint $table) {
-                $table->uuid('profile_img')->nullable()->after('remember_token');
-            });
+            $table->string('profile_img')->nullable()->after('remember_token');
         });
     }
 
@@ -28,9 +26,7 @@ class AddProfileImgUrlToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            Schema::table('users', function (Blueprint $table) {
-                $table->dropColumn('profile_img')->nullable();
-            });
+            $table->dropColumn('profile_img')->nullable();
         });
     }
 }
