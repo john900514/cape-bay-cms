@@ -23,7 +23,7 @@ environments:
       gateway-version: 2
       runtime: php-7.4
       queues:
-        - anchor-production-emails
+        - anchor-staging-emails
       build:
           - 'composer install --no-dev'
           - 'php artisan event:cache'
