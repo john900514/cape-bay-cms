@@ -28,6 +28,16 @@ class UsersCrudController extends CrudController
             $this->crud->hasAccessOrFail('');
         }
 
+        if(backpack_user()->cannot('edit-users'))
+        {
+            $this->crud->denyAccess('update');
+        }
+
+        if(backpack_user()->cannot('delete-users'))
+        {
+            $this->crud->denyAccess('delete');
+        }
+
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Basic Information
