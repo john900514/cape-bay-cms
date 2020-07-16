@@ -12,6 +12,12 @@
 @section('content')
     <div class="">
         <div class="col-md-12 col-md-offset-12">
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                    <?php session()->forget('status'); ?>
+                </div>
+            @endif
             <h3 class="text-center m-b-20">{{ $title }}</h3>
             <div class="box">
                 <div class="box-body">

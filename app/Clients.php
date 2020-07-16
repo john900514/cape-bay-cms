@@ -54,7 +54,7 @@ class Clients extends Model
 
         if(!is_null($model))
         {
-            $results = $model->uuid;
+            $results = $model->id;
         }
 
         return $results;

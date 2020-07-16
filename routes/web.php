@@ -18,3 +18,6 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return redirect('dashboard');
 });
+
+Route::get('/registration', 'UserRegistrationController@render_complete_registration');
+Route::post('/registration', 'UserRegistrationController@complete_registration');

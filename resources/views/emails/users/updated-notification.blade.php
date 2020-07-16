@@ -2,7 +2,7 @@
     <p>Hello, {!! $updated_user->first_name . ' ' . $updated_user->last_name !!}!</p>
 
     <br />
-    <p>We detected an update to your account, which appears to have been done by {!! ($same_user) ? 'you' : "{$user_who_made_update->first_name} {$user_who_made_update->last_name}" !!} at {!! $updated_user->updated_at !!}. </p>
+    <p>We detected an update to your account, which appears to have been done by {!! ($same_user) ? 'you' : "{$user_who_made_update->first_name} {$user_who_made_update->last_name}" !!} at {!! $updated_at !!}. </p>
     @if($same_user)
         <p> If this is a mistake, please login immediately and change your password.</p>
     @else

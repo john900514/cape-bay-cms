@@ -23,6 +23,11 @@ class UsersCrudController extends CrudController
 {
     public function setup()
     {
+        if(backpack_user()->cannot('create-users'))
+        {
+            $this->crud->hasAccessOrFail('');
+        }
+
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Basic Information
@@ -31,6 +36,13 @@ class UsersCrudController extends CrudController
         $this->crud->setModel('AnchorCMS\User');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/crud-users');
         $this->crud->setEntityNameStrings('AnchorCMS User', 'AnchorCMS Users');
+
+        $host_client_uuid = Clients::getHostClient();
+
+        if(backpack_user()->client_id != $host_client_uuid)
+        {
+            $this->crud->addClause('where', 'client_id', '=', backpack_user()->client_id);
+        }
 
         /*
         |--------------------------------------------------------------------------

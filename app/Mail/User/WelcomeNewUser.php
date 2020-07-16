@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UserWasUpdated extends Mailable
+class WelcomeNewUser extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -37,17 +37,20 @@ class UserWasUpdated extends Mailable
         // @todo - add timezone to users table, default America/NewYork, but central for trufit.
         $to='America/New_York';
         $format='Y-m-d H:i:s';
-        $date=date($args['updated_user']->updated_at);// UTC time
+        $date=date($args['new_user']->created_at);// UTC time
         date_default_timezone_set($from);
         $newDatetime = strtotime($date);
         date_default_timezone_set($to);
-        $time_updated = date($format, $newDatetime);
+        $time_created = date($format, $newDatetime);
         date_default_timezone_set('UTC');
 
-        $args['updated_at'] = $time_updated;
+        $client = $args['new_user']->client()->first();
+
+        $args['client_name'] = $client->name;
+        $args['created_at'] = $time_created;
 
         return $this->from(env('MAIL_FROM_ADDRESS','automailer@mail.capeandbay.com'), env('MAIL_FROM_NAME'))
-            ->subject('We Detected An Update to your AnchorCMS Account!')
-            ->view('emails.users.updated-notification', $args);
+            ->subject('Welcome to AnchorCMS! Finish Creating Your Account')
+            ->view('emails.users.created-notification', $args);
     }
 }

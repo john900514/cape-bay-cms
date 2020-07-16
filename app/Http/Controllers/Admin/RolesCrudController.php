@@ -18,6 +18,7 @@ use AnchorCMS\Http\Requests\RolesRequest as UpdateRequest;
  */
 class RolesCrudController extends CrudController
 {
+
     public function setup()
     {
         /*

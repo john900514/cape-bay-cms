@@ -2,6 +2,7 @@
 
 namespace AnchorCMS\Jobs\User;
 
+use AnchorCMS\Mail\User\WelcomeNewUser;
 use AnchorCMS\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,9 +35,16 @@ class OnboardNewUser implements ShouldQueue
      */
     public function handle()
     {
+        // Prepare and fire NewUser Email with Completion Link
+        $payload = [
+            'new_user' => $this->new_user,
+            'user_who_created_user' => $this->creator,
+        ];
+
+        Mail::to($this->new_user->email)->send(new WelcomeNewUser($payload));
+
         /**
          * Steps
-         * 1. Prepare and fire NewUser Email with Completion Link
          * @todo - create subscription pipeline
          * @todo - create notification table and model
          * 2. Fire New User Created Notification to Host Client Admins
